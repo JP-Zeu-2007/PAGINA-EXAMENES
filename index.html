@@ -306,7 +306,7 @@
         .iframe-wrapper iframe {
             display: block;
             width: 100%;
-            height: 620px;
+            height: 700px;
             border: 0;
             background: #fff;
         }
@@ -446,10 +446,8 @@
             <div class="iframe-wrapper">
                 <iframe 
                     id="iframe-wordpad"
-                    src="https://jp-zeu-2007.github.io/WordPad/"
+                    src="./wordpad/index.html"
                     title="Simulador de WordPad"
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
-                    allow="clipboard-read; clipboard-write"
                 ></iframe>
             </div>
 
@@ -476,7 +474,7 @@
         const { createClient } = supabase;
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const NOMBRE_BUCKET = 'capturas-evaluacion'; // <-- Crea este bucket en Supabase Storage
+        const NOMBRE_BUCKET = 'capturas-evaluacion'; // <-- Bucket en Supabase Storage
 
         let estudianteActual = null;
         let preguntasFVMezcladas = [];
@@ -1026,33 +1024,42 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ================= SERIE IV: TOMAR CAPTURA Y FINALIZAR =================
+        // ================= SERIE IV: TOMAR CAPTURA (DEL IFRAME) Y FINALIZAR =================
         async function tomarCapturaYFinalizar() {
             const btn = document.getElementById('btn-finalizar-todo');
             const mensajeEstado = document.getElementById('mensaje-estado');
             const imgPreview = document.getElementById('img-preview');
+            const iframe = document.getElementById('iframe-wordpad');
 
             btn.disabled = true;
             btn.textContent = '📸 Capturando pantalla...';
             mensajeEstado.style.color = '#a5b4fc';
-            mensajeEstado.textContent = 'Capturando la ventana de WordPad...';
+            mensajeEstado.textContent = 'Capturando tu trabajo en WordPad...';
 
             try {
-                const wrapper = document.querySelector('.iframe-wrapper');
+                // Acceder al documento interno del iframe (mismo origen = permitido)
+                const docInterno = iframe.contentDocument || iframe.contentWindow.document;
+                const bodyInterno = docInterno.body;
 
-                const canvas = await html2canvas(wrapper, {
+                if (!bodyInterno) {
+                    throw new Error('No se pudo acceder al contenido del simulador. Verifica que esté en ./wordpad/index.html');
+                }
+
+                // Capturar el contenido interno del iframe
+                const canvas = await html2canvas(bodyInterno, {
                     backgroundColor: '#ffffff',
                     scale: 1,
                     useCORS: true,
-                    allowTaint: false,
-                    logging: false
+                    allowTaint: true,
+                    logging: false,
+                    width: iframe.clientWidth,
+                    height: iframe.clientHeight,
+                    windowWidth: iframe.clientWidth,
+                    windowHeight: iframe.clientHeight
                 });
 
                 const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-
-                if (!blob) {
-                    throw new Error('No se pudo generar la imagen de captura.');
-                }
+                if (!blob) throw new Error('No se pudo generar la imagen de captura.');
 
                 const urlPreview = URL.createObjectURL(blob);
                 imgPreview.src = urlPreview;
@@ -1063,7 +1070,7 @@
                 const timestamp = Date.now();
                 const nombreArchivo = `${estudianteActual.codigo}_${timestamp}.png`;
 
-                const { data: uploadData, error: uploadError } = await _supabase
+                const { error: uploadError } = await _supabase
                     .storage
                     .from(NOMBRE_BUCKET)
                     .upload(nombreArchivo, blob, {
@@ -1072,9 +1079,7 @@
                         upsert: false
                     });
 
-                if (uploadError) {
-                    throw new Error('Error al subir la imagen: ' + uploadError.message);
-                }
+                if (uploadError) throw new Error('Error al subir la imagen: ' + uploadError.message);
 
                 const { data: urlData } = _supabase
                     .storage
@@ -1085,14 +1090,11 @@
 
                 let punteoSerie3 = 0;
                 conexiones.forEach(c => {
-                    if (c.idIzq === c.idDer) {
-                        punteoSerie3 += 1;
-                    }
+                    if (c.idIzq === c.idDer) punteoSerie3 += 1;
                 });
 
-                // Serie IV: queda pendiente de revisión del docente (0 puntos automáticos)
+                // Serie IV: pendiente de revisión del docente
                 const punteoSerie4 = 0;
-
                 const punteoTotal = punteoSerie1 + punteoSerie2 + punteoSerie3 + punteoSerie4;
 
                 mensajeEstado.textContent = 'Guardando resultados en la base de datos...';
@@ -1112,12 +1114,10 @@
                     .from('resultados_evaluacion')
                     .insert([datosResultado]);
 
-                if (insertError) {
-                    throw new Error('Error al guardar en la base de datos: ' + insertError.message);
-                }
+                if (insertError) throw new Error('Error al guardar en la base de datos: ' + insertError.message);
 
                 mensajeEstado.style.color = '#34d399';
-                mensajeEstado.textContent = `✅ ¡Evaluación enviada! Punteo automático: ${punteoTotal}/30 (Serie IV pendiente de revisión del docente).`;
+                mensajeEstado.textContent = `✅ ¡Evaluación enviada! Punteo automático: ${punteoTotal}/30 (Serie IV pendiente de revisión).`;
 
                 alert(
                     `¡Excelente trabajo, ${estudianteActual.nombres}!\n\n` +
@@ -1125,8 +1125,7 @@
                     `- Serie II (Selección Múltiple): ${punteoSerie2}/10\n` +
                     `- Serie III (Unión de Columnas): ${punteoSerie3}/10\n` +
                     `- Serie IV (Práctica WordPad): Pendiente de revisión del docente\n\n` +
-                    `Punteo automático: ${punteoTotal}/30 puntos.\n\n` +
-                    `Tu captura fue guardada correctamente. El docente revisará tu práctica.`
+                    `Punteo automático: ${punteoTotal}/30 puntos.`
                 );
 
                 btn.textContent = '✅ Evaluación Enviada';
