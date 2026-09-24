@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Texto Avanzado - WordPad Pro</title>
+    <!-- Tailwind CSS for modern professional styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for robust UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #cbd5e1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* App container layout */
+        .app-layout {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* Sidebar gallery */
+        .sidebar-gallery {
+            width: 300px;
+            background-color: #1e293b;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #334155;
+            z-index: 20;
+            flex-shrink: 0;
+        }
+
+        /* Main workspace */
+        .workspace {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: #f1f5f9;
+        }
+
+        /* WordPad Page Canvas */
+        .document-page {
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2), 0 4px 10px -4px rgba(0, 0, 0, 0.1);
+            min-height: 1100px;
+            width: 850px;
+            max-width: 100%;
+            margin: 2rem auto;
+            background: white;
+            padding: 4rem 4.5rem;
+            outline: none;
+            position: relative;
+            user-select: text;
+            overflow-wrap: break-word;
+        }
+
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        /* Image wrapper for absolute or inline positioning with pointer-events handling */
+        .resizable-image-wrapper {
+            position: absolute;
+            display: inline-block;
+            cursor: move;
+            user-select: none;
+            touch-action: none;
+            z-index: 10;
+            padding: 4px;
+        }
+        .resizable-image-wrapper img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            border-radius: 4px;
+        }
+        .resizable-image-wrapper.selected {
+            outline: 2px dashed #2563eb;
+            outline-offset: 2px;
+            background-color: rgba(37, 99, 235, 0.03);
+        }
+
+        /* Resize handles */
+        .resize-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #2563eb;
+            border: 1px solid white;
+            border-radius: 50%;
+            display: none;
+        }
+        .resizable-image-wrapper.selected .resize-handle {
+            display: block;
+        }
+        .handle-nw { top: -6px; left: -6px; cursor: nwse-resize; }
+        .handle-ne { top: -6px; right: -6px; cursor: nesw-resize; }
+        .handle-sw { bottom: -6px; left: -6px; cursor: nesw-resize; }
+        .handle-se { bottom: -6px; right: -6px; cursor: nwse-resize; }
+
+        /* Gallery grid in sidebar */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        /* List styling overrides */
+        #editorArea ul {
+            list-style-type: disc !important;
+            padding-left: 40px !important;
+            margin: 10px 0 !important;
+        }￼
+        #editorArea ol {
+            list-style-type: decimal !important;
+            padding-left: 40px !important;
+            margin: 10px 0 !important;
+        }
+        #editorArea li {
+            margin-bottom: 4px;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.relative{position:relative}.z-30{z-index:30}.z-40{z-index:40}.flex{display:flex}.hidden{display:none}.h-4{height:1rem}.h-5{height:1.25rem}.h-8{height:2rem}.h-24{height:6rem}.h-full{height:100%}.w-5{width:1.25rem}.w-8{width:2rem}.w-full{width:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.cursor-pointer{cursor:pointer}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-0{border-width:0px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/50{background-color:rgb(15 23 42 / 0.5)}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.object-cover{object-fit:cover}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-2{padding:0.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pr-3{padding-right:0.75rem}.text-center{text-align:center}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-wide{letter-spacing:0.025em}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:border-blue-500:hover{--tw-border-opacity:1;border-color:rgb(59 130 246 / var(--tw-border-opacity, 1))}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.hover\:text-red-300:hover{--tw-text-opacity:1;color:rgb(252 165 165 / var(--tw-text-opacity, 1))}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-blue-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(59 130 246 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}</style></head>
+<body>
+
+    <div class="app-layout">
+        
+        <!-- Sidebar Image Gallery -->
+        <aside class="sidebar-gallery">
+            <div class="p-4 border-b border-slate-700 flex items-center justify-between">
+                <h2 class="font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-images text-blue-400"></i> Galería (20+ Imágenes)</h2>
+            </div>
+            
+            <!-- Category Filter Pills -->
+            <div class="px-4 py-3 border-b border-slate-700 bg-slate-900/50 flex flex-wrap gap-1.5 text-xs">
+                <button onclick="filterGallery('all')" class="gallery-tab px-2.5 py-1 rounded bg-blue-600 text-white font-medium transition">Todas</button>
+                <button onclick="filterGallery('paisaje')" class="gallery-tab px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Paisajes</button>
+                <button onclick="filterGallery('animal')" class="gallery-tab px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Animales</button>
+                <button onclick="filterGallery('personaje')" class="gallery-tab px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Personajes</button>
+                <button onclick="filterGallery('arte')" class="gallery-tab px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Arte</button>
+                <button onclick="filterGallery('tecnologia')" class="gallery-tab px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Tech</button>
+            </div>
+
+            <!-- Scrollable Gallery Grid -->
+            <div class="p-4 overflow-y-auto flex-1">
+                <div id="sidebarGalleryGrid" class="gallery-grid"><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Montaña Alpina" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Montaña Alpina</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Atardecer Playa" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Atardecer Playa</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Bosque Místico" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Bosque Místico</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Cascada Natural" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Cascada Natural</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1456926631375-92c8ce872def?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Leopardo" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Leopardo</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1516934024046-a12f4afe2636?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Zorro Rojo" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Zorro Rojo</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1521651201144-634f700b36ef?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Águila Real" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Águila Real</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Elefante" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Elefante</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Avatar Creativo" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Avatar Creativo</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Ejecutivo" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Ejecutivo</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Diseñador" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Diseñador</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Estudiante" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Estudiante</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Pintura Abstracta" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Pintura Abstracta</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Graffiti Urbano" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Graffiti Urbano</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Escultura Clásica" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Escultura Clásica</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Paleta Colores" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Paleta Colores</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Espacio Tech" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Espacio Tech</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Código Fuente" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Código Fuente</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Gadgets" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Gadgets</div>
+                </div><div class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group">
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Servidor Red" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">Servidor Red</div>
+                </div></div>
+            </div>
+
+            <div class="p-3 bg-slate-900 border-t border-slate-700 text-xs text-slate-400 text-center">
+                Haz clic en cualquier imagen para insertarla.
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <div class="workspace">
+            
+            <!-- Top Ribbon Toolbar -->
+            <header class="bg-slate-900 text-white shadow-md z-30 flex flex-col flex-shrink-0">
+                <!-- Top Menu Bar -->
+                <div class="flex items-center justify-between px-4 py-2 border-b border-slate-800 text-sm">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-file-word text-blue-400 text-xl"></i>
+                        <span class="font-semibold tracking-wide">WordPad Pro - Editor Libre</span>
+                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Escritura en Tiempo Real</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="saveDocument()" class="hover:bg-slate-800 px-3 py-1 rounded transition text-xs flex items-center gap-1.5"><i class="fa-solid fa-download"></i> Guardar HTML</button>
+                        <button onclick="printDocument()" class="hover:bg-slate-800 px-3 py-1 rounded transition text-xs flex items-center gap-1.5"><i class="fa-solid fa-print"></i> Imprimir</button>
+                    </div>
+                </div>
+
+                <!-- Formatting Controls Bar -->
+                <div class="bg-slate-100 text-slate-700 px-4 py-2 flex flex-wrap items-center gap-2 border-b border-slate-300 text-sm">
+                    
+                    <!-- Font Family & Size -->
+                    <div class="flex items-center space-x-1 pr-3 border-r border-slate-300">
+                        <select id="fontFamilySelect" onchange="formatDoc('fontName', this.value)" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Consolas">Consolas</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Comic Sans MS">Comic Sans MS</option>
+                        </select>
+                        <select id="fontSizeSelect" onchange="formatDoc('fontSize', this.value)" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="1">Muy Pequeña</option>
+                            <option value="2">Pequeña</option>
+                            <option value="3" selected="">Normal</option>
+                            <option value="4">Mediana</option>
+                            <option value="5">Grande</option>
+                            <option value="6">Muy Grande</option>
+                            <option value="7">Máxima</option>
+                        </select>
+                    </div>
+
+                    <!-- Text Styles -->
+                    <div class="flex items-center space-x-1 pr-3 border-r border-slate-300">
+                        <button onclick="formatDoc('bold')" title="Negrita" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center font-bold"><i class="fa-solid fa-bold"></i></button>
+                        <button onclick="formatDoc('italic')" title="Cursiva" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center italic"><i class="fa-solid fa-italic"></i></button>
+                        <button onclick="formatDoc('underline')" title="Subrayado" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center underline"><i class="fa-solid fa-underline"></i></button>
+                        <button onclick="formatDoc('strikeThrough')" title="Tachado" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-strikethrough"></i></button>
+                    </div>
+
+                    <!-- Colors -->
+                    <div class="flex items-center space-x-2 pr-3 border-r border-slate-300 text-xs">
+                        <label for="textColor" title="Color de Texto" class="cursor-pointer flex items-center gap-1 hover:bg-slate-200 p-1.5 rounded">
+                            <i class="fa-solid fa-font text-slate-700"></i>
+                            <input type="color" id="textColor" onchange="formatDoc('foreColor', this.value)" class="w-5 h-5 border-0 cursor-pointer bg-transparent">
+                        </label>
+                        <label for="textBgColor" title="Color de Resaltado" class="cursor-pointer flex items-center gap-1 hover:bg-slate-200 p-1.5 rounded">
+                            <i class="fa-solid fa-highlighter text-slate-700"></i>
+                            <input type="color" id="textBgColor" value="#ffff00" onchange="formatDoc('hiliteColor', this.value)" class="w-5 h-5 border-0 cursor-pointer bg-transparent">
+                        </label>
+                    </div>
+
+                    <!-- Alignment -->
+                    <div class="flex items-center space-x-1 pr-3 border-r border-slate-300">
+                        <button onclick="formatDoc('justifyLeft')" title="Alinear a la Izquierda" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-align-left"></i></button>
+                        <button onclick="formatDoc('justifyCenter')" title="Centrar" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-align-center"></i></button>
+                        <button onclick="formatDoc('justifyRight')" title="Alinear a la Derecha" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-align-right"></i></button>
+                        <button onclick="formatDoc('justifyFull')" title="Justificar" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-align-justify"></i></button>
+                    </div>
+
+                    <!-- Lists -->
+                    <div class="flex items-center space-x-1 pr-3 border-r border-slate-300">
+                        <button onclick="formatDoc('insertUnorderedList')" title="Viñetas" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-list-ul"></i></button>
+                        <button onclick="formatDoc('insertOrderedList')" title="Lista Numerada" class="p-1.5 hover:bg-slate-200 rounded w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-list-ol"></i></button>
+                    </div>
+
+                    <!-- Image Upload Button -->
+                    <div class="flex items-center space-x-2">
+                        <label class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded cursor-pointer text-xs font-medium flex items-center gap-1.5 shadow-sm transition">
+                            <i class="fa-solid fa-upload"></i> Subir Imagen PC
+                            <input type="file" id="imageUpload" accept="image/*" class="hidden" onchange="uploadImage(event)">
+                        </label>
+                    </div>
+
+                </div>
+            </header>
+
+            <!-- Scrollable Document Area -->
+            <main class="flex-1 overflow-y-auto px-4 py-6">
+                <div id="editorArea" class="document-page focus:outline-none text-slate-800 leading-relaxed text-base" contenteditable="true" spellcheck="false">
+                    <h1 style="font-size: 26px; font-weight: bold; margin-bottom: 12px; color: #1e293b;">Bienvenido a WordPad Pro</h1>
+                    <p>Este editor te permite escribir libremente en cualquier parte del documento, seleccionar texto con total normalidad, aplicar formatos profesionales y arrastrar o redimensionar imágenes en tiempo real con total fluidez.</p><p><br></p><p><br></p><p><br></p><p><br></p>
+                    <p><br></p>
+                    <p>Haz clic en cualquier lugar para empezar a redactar tus ideas. Utiliza la galería lateral izquierda para insertar imágenes prediseñadas instantáneamente.</p>
+                <div class="resizable-image-wrapper" style="width: 240px; height: 160px; left: 359.746px; top: 292.813px;"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&amp;fit=crop&amp;w=600&amp;q=80"><div class="resize-handle handle-nw"></div><div class="resize-handle handle-ne"></div><div class="resize-handle handle-sw"></div><div class="resize-handle handle-se"></div></div></div>
+            </main>
+        </div>
+
+    </div>
+
+    <!-- Floating Image Controller (Appears when an image is selected) -->
+    <div id="imageController" class="fixed bg-slate-900 text-white px-3 py-2 rounded-lg shadow-2xl z-40 flex items-center gap-3 text-xs border border-slate-700 hidden" style="top: 428.181px; left: 688.315px;">
+        <span class="font-semibold text-blue-400">Imagen Seleccionada:</span>
+        <button onclick="resizeSelectedImage(0.85)" class="bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded transition"><i class="fa-solid fa-magnifying-glass-minus"></i> Reducir</button>
+        <button onclick="resizeSelectedImage(1.15)" class="bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded transition"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</button>
+        <span class="border-r border-slate-700 h-4"></span>
+        <button onclick="deleteSelectedImage()" class="text-red-400 hover:text-red-300 p-1 rounded transition font-medium flex items-center gap-1"><i class="fa-solid fa-trash"></i> Eliminar</button>
+    </div>
+
+    <script>
+        // 20+ Preset Images Data Catalog
+        const presetImages = [
+            { id: 1, category: 'paisaje', name: 'Montaña Alpina', url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80' },
+            { id: 2, category: 'paisaje', name: 'Atardecer Playa', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80' },
+            { id: 3, category: 'paisaje', name: 'Bosque Místico', url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80' },
+            { id: 4, category: 'paisaje', name: 'Cascada Natural', url: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80' },
+            { id: 5, category: 'animal', name: 'Leopardo', url: 'https://images.unsplash.com/photo-1456926631375-92c8ce872def?auto=format&fit=crop&w=600&q=80' },
+            { id: 6, category: 'animal', name: 'Zorro Rojo', url: 'https://images.unsplash.com/photo-1516934024046-a12f4afe2636?auto=format&fit=crop&w=600&q=80' },
+            { id: 7, category: 'animal', name: 'Águila Real', url: 'https://images.unsplash.com/photo-1521651201144-634f700b36ef?auto=format&fit=crop&w=600&q=80' },
+            { id: 8, category: 'animal', name: 'Elefante', url: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=600&q=80' },
+            { id: 9, category: 'personaje', name: 'Avatar Creativo', url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80' },
+            { id: 10, category: 'personaje', name: 'Ejecutivo', url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80' },
+            { id: 11, category: 'personaje', name: 'Diseñador', url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80' },
+            { id: 12, category: 'personaje', name: 'Estudiante', url: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80' },
+            { id: 13, category: 'arte', name: 'Pintura Abstracta', url: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=600&q=80' },
+            { id: 14, category: 'arte', name: 'Graffiti Urbano', url: 'https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=600&q=80' },
+            { id: 15, category: 'arte', name: 'Escultura Clásica', url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80' },
+            { id: 16, category: 'arte', name: 'Paleta Colores', url: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80' },
+            { id: 17, category: 'tecnologia', name: 'Espacio Tech', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80' },
+            { id: 18, category: 'tecnologia', name: 'Código Fuente', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80' },
+            { id: 19, category: 'tecnologia', name: 'Gadgets', url: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80' },
+            { id: 20, category: 'tecnologia', name: 'Servidor Red', url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80' }
+        ];
+
+        let selectedWrapper = null;
+        const editorArea = document.getElementById('editorArea');
+        const imageController = document.getElementById('imageController');
+
+        // Render sidebar gallery items
+        function renderGallery(category = 'all') {
+            const grid = document.getElementById('sidebarGalleryGrid');
+            grid.innerHTML = '';
+            
+            const filtered = category === 'all' ? presetImages : presetImages.filter(img => img.category === category);
+            
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-800 border border-slate-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-500 transition cursor-pointer flex flex-col group';
+                card.innerHTML = `
+                    <div class="h-24 overflow-hidden bg-slate-900 relative">
+                        <img src="${item.url}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+                    </div>
+                    <div class="p-2 text-xs font-medium text-slate-200 truncate text-center">${item.name}</div>
+                `;
+                card.addEventListener('click', () => {
+                    insertImageToEditor(item.url);
+                });
+                grid.appendChild(card);
+            });
+        }
+
+        function filterGallery(category) {
+            const tabs = document.querySelectorAll('.gallery-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-blue-600', 'text-white');
+                tab.classList.add('bg-slate-800', 'text-slate-300');
+                if (tab.textContent.toLowerCase().includes(category === 'all' ? 'tod' : category)) {
+                    tab.classList.add('bg-blue-600', 'text-white');
+                    tab.classList.remove('bg-slate-800', 'text-slate-300');
+                }
+            });
+            renderGallery(category);
+        }
+
+        // Exec format commands on text
+        function formatDoc(command, value = null) {
+            document.execCommand(command, false, value);
+            editorArea.focus();
+        }
+
+        // Upload image from local computer
+        function uploadImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    insertImageToEditor(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+            event.target.value = '';
+        }
+
+        // Insert interactive resizable image into the document
+        function insertImageToEditor(url) {
+            editorArea.focus();
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'resizable-image-wrapper';
+            wrapper.style.width = '240px';
+            wrapper.style.height = '160px';
+            
+            // Place near top-left inside editor page area
+            wrapper.style.left = '80px';
+            wrapper.style.top = '120px';
+
+            const img = document.createElement('img');
+            img.src = url;
+            wrapper.appendChild(img);
+
+            // Add resize handles
+            ['nw', 'ne', 'sw', 'se'].forEach(dir => {
+                const handle = document.createElement('div');
+                handle.className = `resize-handle handle-${dir}`;
+                wrapper.appendChild(handle);
+            });
+
+            editorArea.appendChild(wrapper);
+            setupImageInteractions(wrapper);
+            selectImageWrapper(wrapper);
+        }
+
+        // Real-time drag and resize interaction engine
+        function setupImageInteractions(wrapper) {
+            let isDragging = false;
+            let isResizing = false;
+            let currentHandle = null;
+            let startX, startY, startLeft, startTop, startWidth, startHeight;
+
+            wrapper.addEventListener('pointerdown', function(e) {
+                if (e.target.classList.contains('resize-handle')) {
+                    isResizing = true;
+                    currentHandle = e.target;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = wrapper.offsetWidth;
+                    startHeight = wrapper.offsetHeight;
+                    startLeft = wrapper.offsetLeft;
+                    startTop = wrapper.offsetTop;
+                    e.stopPropagation();
+                    e.preventDefault();
+                } else {
+                    isDragging = true;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startLeft = wrapper.offsetLeft;
+                    startTop = wrapper.offsetTop;
+                    selectImageWrapper(wrapper);
+                    e.stopPropagation();
+                }
+                wrapper.setPointerCapture(e.pointerId);
+            });
+
+            wrapper.addEventListener('pointermove', function(e) {
+                if (isDragging) {
+                    const dx = e.clientX - startX;
+                    const dy = e.clientY - startY;
+                    wrapper.style.left = `${Math.max(0, startLeft + dx)}px`;
+                    wrapper.style.top = `${Math.max(0, startTop + dy)}px`;
+                    showImageController(wrapper);
+                } else if (isResizing) {
+                    const dx = e.clientX - startX;
+                    const dy = e.clientY - startY;
+                    if (currentHandle.classList.contains('handle-se')) {
+                        wrapper.style.width = `${Math.max(80, startWidth + dx)}px`;
+                        wrapper.style.height = `${Math.max(60, startHeight + dy)}px`;
+                    } else if (currentHandle.classList.contains('handle-sw')) {
+                        const newWidth = Math.max(80, startWidth - dx);
+                        wrapper.style.width = `${newWidth}px`;
+                        wrapper.style.left = `${startLeft + (startWidth - newWidth)}px`;
+                        wrapper.style.height = `${Math.max(60, startHeight + dy)}px`;
+                    } else if (currentHandle.classList.contains('handle-ne')) {
+                        wrapper.style.width = `${Math.max(80, startWidth + dx)}px`;
+                        const newHeight = Math.max(60, startHeight - dy);
+                        wrapper.style.height = `${newHeight}px`;
+                        wrapper.style.top = `${startTop + (startHeight - newHeight)}px`;
+                    } else if (currentHandle.classList.contains('handle-nw')) {
+                        const newWidth = Math.max(80, startWidth - dx);
+                        const newHeight = Math.max(60, startHeight - dy);
+                        wrapper.style.width = `${newWidth}px`;
+                        wrapper.style.left = `${startLeft + (startWidth - newWidth)}px`;
+                        wrapper.style.height = `${newHeight}px`;
+                        wrapper.style.top = `${startTop + (startHeight - newHeight)}px`;
+                    }
+                    showImageController(wrapper);
+                }
+            });
+
+            wrapper.addEventListener('pointerup', function(e) {
+                isDragging = false;
+                isResizing = false;
+                wrapper.releasePointerCapture(e.pointerId);
+            });
+        }
+
+        function selectImageWrapper(wrapper) {
+            if (selectedWrapper) {
+                selectedWrapper.classList.remove('selected');
+            }
+            selectedWrapper = wrapper;
+            selectedWrapper.classList.add('selected');
+            showImageController(wrapper);
+        }
+
+        // Deselect when clicking outside image wrapper
+        document.addEventListener('click', function(e) {
+            if (selectedWrapper && !selectedWrapper.contains(e.target) && !imageController.contains(e.target)) {
+                selectedWrapper.classList.remove('selected');
+                selectedWrapper = null;
+                imageController.classList.add('hidden');
+            }
+        });
+
+        function showImageController(wrapper) {
+            const rect = wrapper.getBoundingClientRect();
+            imageController.style.top = `${window.scrollY + rect.top - 50}px`;
+            imageController.style.left = `${window.scrollX + rect.left}px`;
+            imageController.classList.remove('hidden');
+        }
+
+        function resizeSelectedImage(factor) {
+            if (selectedWrapper) {
+                const currentWidth = selectedWrapper.clientWidth;
+                const currentHeight = selectedWrapper.clientHeight;
+                selectedWrapper.style.width = `${Math.max(80, currentWidth * factor)}px`;
+                selectedWrapper.style.height = `${Math.max(60, currentHeight * factor)}px`;
+                showImageController(selectedWrapper);
+            }
+        }
+
+        function deleteSelectedImage() {
+            if (selectedWrapper) {
+                selectedWrapper.remove();
+                selectedWrapper = null;
+                imageController.classList.add('hidden');
+            }
+        }
+
+        // Save & Print functions
+        function saveDocument() {
+            const content = editorArea.innerHTML;
+            const fullHtml = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Documento WordPad Pro</title><style>body{font-family:Arial,sans-serif;padding:40px;max-width:850px;margin:auto;color:#333;line-height:1.6;}.resizable-image-wrapper{position:absolute;display:inline-block;}img{max-width:100%;}</style></head><body>${content}</body></html>`;
+            const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'documento_wordpad_pro.html';
+            a.click();
+        }
+
+        function printDocument() {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`<!DOCTYPE html><html><head><title>Imprimir</title><style>body{font-family:Arial,sans-serif;padding:20px;line-height:1.6;}</style></head><body>${editorArea.innerHTML}</body></html>`);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => { printWindow.print(); printWindow.close(); }, 250);
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGallery('all');
+            const existingWrappers = editorArea.querySelectorAll('.resizable-image-wrapper');
+            existingWrappers.forEach(wrapper => {
+                setupImageInteractions(wrapper);
+                wrapper.addEventListener('click', (e) => { e.stopPropagation(); selectImageWrapper(wrapper); });
+            });
+        });
+    </script>
+
+</body></html>
