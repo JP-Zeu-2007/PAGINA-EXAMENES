@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Virtual de Computación</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --success: #10b981;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --border-color: #e5e7eb;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            transition: background-color 0.5s, color 0.5s;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: background-color 0.5s, box-shadow 0.5s;
+        }
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            transition: border-color 0.5s;
+        }
+        h2 { color: var(--primary); margin: 0; transition: color 0.5s; }
+        .student-badge {
+            font-size: 0.9rem;
+            color: #4b5563;
+            background: #eef2ff;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: background-color 0.5s, color 0.5s;
+        }
+        .serie-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            transition: color 0.5s;
+        }
+        .instructions {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            transition: color 0.5s;
+        }
+        .question-card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            transition: background-color 0.5s, border-color 0.5s;
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #1f2937;
+            transition: color 0.5s;
+        }
+        .options {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .options-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 500;
+        }
+        .btn-accion {
+            margin-top: 2rem;
+            width: 100%;
+            padding: 0.85rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-accion:hover { background-color: var(--primary-hover); }
+        .btn-accion:disabled { background-color: #9ca3af; cursor: not-allowed; }
+        
+        .login-card-inner { text-align: center; }
+        .input-group { margin-bottom: 1.5rem; text-align: left; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
+        input[type="text"] {
+            width: 100%; padding: 0.75rem; border: 1px solid #d1d5db;
+            border-radius: 0.5rem; font-size: 1rem; box-sizing: border-box; outline: none;
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+        #mensaje-error { margin-top: 1rem; color: #dc2626; font-size: 0.9rem; font-weight: 600; }
+        .student-info-box {
+            background: #eef2ff; padding: 1rem; border-radius: 0.5rem;
+            margin-bottom: 1.5rem; text-align: left; display: none;
+        }
+        #mensaje-estado {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Estilos específicos para Unión de Columnas */
+        .matching-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        #svg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 11;
+        }
+        .match-item {
+            background: #f9fafb;
+            border: 2px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            user-select: none;
+        }
+        .match-item:hover {
+            border-color: var(--primary);
+            background: #eef2ff;
+        }
+        .match-item.selected {
+            border-color: var(--primary);
+            background: #e0e7ff;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        .match-item.connected {
+            border-color: var(--success);
+            background: #ecfdf5;
+        }
+        .badge-num {
+            background: #e5e7eb;
+            color: #374151;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .match-item.connected .badge-num {
+            background: var(--success);
+            color: white;
+        }
+        .matching-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+        .btn-secundario {
+            background-color: #e5e7eb;
+            color: #374151;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-secundario:hover { background-color: #d1d5db; }
+
+        /* ================== TEMA OSCURO SERIE IV ================== */
+        body.tema-oscuro {
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --text-color: #f9fafb;
+            --border-color: #374151;
+        }
+        body.tema-oscuro .container {
+            background: #1f2937;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            border: 1px solid #374151;
+        }
+        body.tema-oscuro .header-info {
+            border-bottom-color: #374151;
+        }
+        body.tema-oscuro h2 {
+            color: #a5b4fc;
+        }
+        body.tema-oscuro .student-badge {
+            background: #312e81;
+            color: #e0e7ff;
+        }
+        body.tema-oscuro .serie-title {
+            color: #e5e7eb;
+        }
+        body.tema-oscuro .instructions {
+            color: #9ca3af;
+        }
+        body.tema-oscuro .question-card {
+            background: #111827;
+            border-color: #374151;
+        }
+        body.tema-oscuro .question-text {
+            color: #f3f4f6;
+        }
+        body.tema-oscuro label {
+            color: #e5e7eb;
+        }
+        body.tema-oscuro .match-item {
+            background: #111827;
+            border-color: #374151;
+            color: #e5e7eb;
+        }
+        body.tema-oscuro .match-item:hover {
+            background: #312e81;
+            border-color: #818cf8;
+        }
+        body.tema-oscuro .match-item.selected {
+            background: #3730a3;
+            border-color: #a5b4fc;
+        }
+        body.tema-oscuro .match-item.connected {
+            background: #064e3b;
+            border-color: #34d399;
+        }
+        body.tema-oscuro .badge-num {
+            background: #374151;
+            color: #f9fafb;
+        }
+        body.tema-oscuro .btn-secundario {
+            background-color: #374151;
+            color: #f9fafb;
+        }
+        body.tema-oscuro .btn-secundario:hover {
+            background-color: #4b5563;
+        }
+        body.tema-oscuro .matching-actions {
+            border-top-color: #374151;
+        }
+
+        /* Serie IV: iframe + botón captura */
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 2px solid #374151;
+            background: #000;
+            margin-bottom: 1.5rem;
+        }
+        .iframe-wrapper iframe {
+            display: block;
+            width: 100%;
+            height: 620px;
+            border: 0;
+            background: #fff;
+        }
+        .btn-captura {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+            transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+        }
+        .btn-captura:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(16, 185, 129, 0.5);
+        }
+        .btn-captura:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .aviso-captura {
+            background: #78350f;
+            color: #fde68a;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            border-left: 4px solid #f59e0b;
+        }
+        .preview-captura {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .preview-captura img {
+            max-width: 100%;
+            border-radius: 0.5rem;
+            border: 2px solid #374151;
+            display: none;
+        }
+    </style>
+    <!-- SDK de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- html2canvas para capturar la ventana del iframe -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- ================= PANTALLA 1: INGRESO CON CÓDIGO ================= -->
+        <div id="seccion-login" class="login-card-inner">
+            <h2>Evaluación Virtual</h2>
+            <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 2rem;">Ingresa tu código único de estudiante</p>
+            
+            <div class="input-group">
+                <label for="codigo">Código Único:</label>
+                <input type="text" id="codigo" placeholder="Ej: DP-2026-6" autocomplete="off">
+            </div>
+            
+            <div id="info-estudiante" class="student-info-box">
+                <p><strong>Estudiante:</strong> <span id="nombre-estudiante-txt"></span></p>
+                <p><strong>Grado:</strong> <span id="grado-estudiante-txt"></span></p>
+            </div>
+
+            <button class="btn-accion" id="btn-validar" onclick="verificarCodigo()">Validar Código</button>
+            <p id="mensaje-error"></p>
+        </div>
+
+        <!-- ================= PANTALLA 2: EVALUACIÓN (SERIE I) ================= -->
+        <div id="seccion-serie1" style="display: none;">
+            <div class="header-info">
+                <h2>Evaluación de Computación</h2>
+                <div class="student-badge" id="badge-info-s1">Cargando...</div>
+            </div>
+            <div class="serie-title" id="titulo-grado-s1">Serie I: Falsos y Verdaderos (Valor: 10 Puntos)</div>
+            <div class="instructions">Lee cada frase. Selecciona V si es verdad o F si es mentira.</div>
+            <div id="preguntas-fv"></div>
+            <button class="btn-accion" onclick="procesarSerie1()">Siguiente Serie &rarr;</button>
+        </div>
+
+        <!-- ================= PANTALLA 3: EVALUACIÓN (SERIE II) ================= -->
+        <div id="seccion-serie2" style="display: none;">
+            <div class="header-info">
+                <h2>Evaluación de Computación</h2>
+                <div class="student-badge" id="badge-info-s2">Cargando...</div>
+            </div>
+            <div class="serie-title" id="titulo-grado-s2">Serie II: Selección Múltiple (Valor: 10 Puntos)</div>
+            <div class="instructions">Lee cada pregunta y marca la respuesta correcta.</div>
+            <div id="preguntas-sm"></div>
+            <button class="btn-accion" onclick="procesarSerie2()">Siguiente Serie &rarr;</button>
+        </div>
+
+        <!-- ================= PANTALLA 4: EVALUACIÓN (SERIE III - UNIÓN) ================= -->
+        <div id="seccion-serie3" style="display: none;">
+            <div class="header-info">
+                <h2>Evaluación de Computación</h2>
+                <div class="student-badge" id="badge-info-s3">Cargando...</div>
+            </div>
+            <div class="serie-title" id="titulo-grado-s3">Serie III: Unión de Columnas (Valor: 10 Puntos)</div>
+            <div class="instructions">Haz clic en un elemento de la columna izquierda y luego haz clic en su pareja correspondiente de la columna derecha para unirlos con una línea. Si te equivocas, vuelve a hacer clic en cualquiera para deshacer.</div>
+            
+            <div class="matching-wrapper" id="matching-container">
+                <svg id="svg-canvas"></svg>
+                <div class="column" id="col-izquierda"></div>
+                <div class="column" id="col-derecha"></div>
+            </div>
+
+            <div class="matching-actions">
+                <button class="btn-secundario" onclick="reiniciarUniones()">Borrar Líneas</button>
+                <div id="score-display" style="font-weight: bold; color: var(--success);">Conectados: 0 / 10</div>
+                <button class="btn-secundario" onclick="deshacerUltimaUnion()">Deshacer Última</button>
+            </div>
+
+            <button class="btn-accion" id="btn-pasar-s4" onclick="pasarASerie4()">Ir a la Serie IV (Práctica) &rarr;</button>
+        </div>
+
+        <!-- ================= PANTALLA 5: EVALUACIÓN (SERIE IV - PRÁCTICA) ================= -->
+        <div id="seccion-serie4" style="display: none;">
+            <div class="header-info">
+                <h2>Serie IV: Práctica</h2>
+                <div class="student-badge" id="badge-info-s4">Cargando...</div>
+            </div>
+            <div class="serie-title" id="titulo-grado-s4">Serie IV: Práctica en WordPad (Revisión del Docente)</div>
+            <div class="instructions">
+                Utiliza el simulador de WordPad que ves en la pantalla y debes escribir el cuento de los 3 cerditos, de Caperucita Roja o Cenicienta con tus palabras. Colócale color rojo al título y que sea más grande que el resto del texto, la historia déjala de color negro y al final coloca cuáles eran los personajes principales con color azul.
+            </div>
+
+            <div class="iframe-wrapper">
+                <iframe 
+                    id="iframe-wordpad"
+                    src="https://jp-zeu-2007.github.io/WordPad/"
+                    title="Simulador de WordPad"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+                    allow="clipboard-read; clipboard-write"
+                ></iframe>
+            </div>
+
+            <div class="aviso-captura">
+                ⚠️ Cuando termines tu práctica, presiona el botón verde para <strong>tomar la captura</strong> y enviar toda la evaluación. Asegúrate de que tu trabajo se vea completo en la ventana.
+            </div>
+
+            <div class="preview-captura">
+                <img id="img-preview" alt="Vista previa de la captura">
+            </div>
+
+            <button class="btn-captura" id="btn-finalizar-todo" onclick="tomarCapturaYFinalizar()">
+                📸 Tomar Captura y Finalizar Evaluación
+            </button>
+            <p id="mensaje-estado"></p>
+        </div>
+
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://eqhlrmonlrdgskjsiueb.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxaGxybW9ubHJkZ3NranNpdWViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxMTYwMzMsImV4cCI6MjEwNTY5MjAzM30.YJpjDzOK19QMNW22qDrgIZzO5sRbmSPqtBFds1YpbJQ';
+        
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const NOMBRE_BUCKET = 'capturas-evaluacion'; // <-- Crea este bucket en Supabase Storage
+
+        let estudianteActual = null;
+        let preguntasFVMezcladas = [];
+        let preguntasSMMezcladas = [];
+        let paresOriginalesActivos = [];
+        let derechaMezclada = [];
+        
+        let punteoSerie1 = 0;
+        let punteoSerie2 = 0;
+        let elementoSeleccionadoIzq = null;
+        let conexiones = [];
+
+        const coloresLineas = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16', '#6366f1', '#f97316'];
+
+        function obtenerNombreGrado(gradoNum) {
+            switch(String(gradoNum).trim()) {
+                case '2': return 'Segundo Primaria';
+                case '3': return 'Tercer Primaria';
+                case '4': return 'Cuarto Primaria';
+                case '5': return 'Quinto Primaria';
+                case '6': return 'Sexto Primaria';
+                default: return `${gradoNum} Primaria`;
+            }
+        }
+
+        // ================= BANCOS DE DATOS POR GRADO =================
+
+        const bancoFV_2 = [
+            { id: 1, texto: "WordPad sirve para escribir textos.", respuesta: "V" },
+            { id: 2, texto: "Para abrir WordPad, lo buscamos en la computadora.", respuesta: "V" },
+            { id: 3, texto: "En WordPad NO se pueden poner imágenes.", respuesta: "F" },
+            { id: 4, texto: "En WordPad puedes escribir cuentos y cartas.", respuesta: "V" },
+            { id: 5, texto: "Paint sirve para dibujar y pintar.", respuesta: "V" },
+            { id: 6, texto: "En Paint solo se puede escribir.", respuesta: "F" },
+            { id: 7, texto: "En Paint NO se puede dibujar.", respuesta: "F" },
+            { id: 8, texto: "En Paint podemos hacer dibujos con muchos colores.", respuesta: "V" },
+            { id: 9, texto: "WordPad sirve para dibujar.", respuesta: "F" },
+            { id: 10, texto: "En WordPad podemos escribir tareas de la escuela.", respuesta: "V" }
+        ];
+        const bancoSM_2 = [
+            { id: 1, texto: "¿Qué es internet?", opciones: [{letra: 'a', texto: 'Un dibujo'}, {letra: 'b', texto: 'Una gran red que conecta a todo el mundo'}, {letra: 'c', texto: 'Un lápiz de color'}], respuesta: 'b' },
+            { id: 2, texto: "¿Qué es Google Chrome?", opciones: [{letra: 'a', texto: 'Un navegador de internet'}, {letra: 'b', texto: 'Un programa para dibujar'}, {letra: 'c', texto: 'Un cuaderno'}], respuesta: 'a' },
+            { id: 3, texto: "¿Para qué sirve un navegador como Google Chrome?", opciones: [{letra: 'a', texto: 'Para navegar en internet'}, {letra: 'b', texto: 'Para pintar'}, {letra: 'c', texto: 'Para escribir cuentos'}], respuesta: 'a' },
+            { id: 4, texto: "¿Qué necesitamos para usar Google Chrome?", opciones: [{letra: 'a', texto: 'Internet'}, {letra: 'b', texto: 'Una impresora'}, {letra: 'c', texto: 'Pinturas'}], respuesta: 'a' },
+            { id: 5, texto: "¿Qué SÍ debemos buscar en internet?", opciones: [{letra: 'a', texto: 'Tareas y cosas de la escuela'}, {letra: 'b', texto: 'Videos para aprender'}, {letra: 'c', texto: 'Las dos anteriores son correctas'}], respuesta: 'c' },
+            { id: 6, texto: "¿Qué NO debemos buscar en internet?", opciones: [{letra: 'a', texto: 'Cuentos infantiles'}, {letra: 'b', texto: 'Cosas feas o peligrosas'}, {letra: 'c', texto: 'Dibujos para colorear'}], respuesta: 'b' },
+            { id: 7, texto: "Si algo en internet me da miedo o me hace sentir mal, ¿qué hago?", opciones: [{letra: 'a', texto: 'Me quedo callado'}, {letra: 'b', texto: 'Le cuento a un adulto de confianza'}, {letra: 'c', texto: 'Lo veo otra vez'}], respuesta: 'b' },
+            { id: 8, texto: "¿Podemos hablar con personas desconocidas en internet?", opciones: [{letra: 'a', texto: 'Sí, siempre'}, {letra: 'b', texto: 'No, es peligroso'}, {letra: 'c', texto: 'Solo si me dan dulces'}], respuesta: 'b' },
+            { id: 9, texto: "¿Qué SÍ es bueno hacer en internet?", opciones: [{letra: 'a', texto: 'Aprender cosas nuevas'}, {letra: 'b', texto: 'Ver videos educativos'}, {letra: 'c', texto: 'Las dos anteriores son correctas'}], respuesta: 'c' },
+            { id: 10, texto: "¿Qué NO es bueno hacer en internet?", opciones: [{letra: 'a', texto: 'Ver videos de animales'}, {letra: 'b', texto: 'Dar mis datos personales a desconocidos'}, {letra: 'c', texto: 'Escuchar música'}], respuesta: 'b' }
+        ];
+        const bancoUnion_2 = [
+            { id: 1, izquierda: "Paint", derecha: "f) Sirve para dibujar y pintar con colores." },
+            { id: 2, izquierda: "Internet", derecha: "b) Es una gran red que conecta a todo el mundo." },
+            { id: 3, izquierda: "Impresora", derecha: "a) Sirve para imprimir en papel lo que hacemos." },
+            { id: 4, izquierda: "Google Chrome", derecha: "i) Es un navegador para entrar a internet." },
+            { id: 5, izquierda: "Texto", derecha: "h) Son letras y palabras que escribimos." },
+            { id: 6, izquierda: "WordPad", derecha: "d) Sirve para escribir textos y cuentos." },
+            { id: 7, izquierda: "Mouse", derecha: "c) Sirve para mover el cursor en la pantalla." },
+            { id: 8, izquierda: "Imagen", derecha: "g) Es un dibujo o foto que podemos ver." },
+            { id: 9, izquierda: "Teclado", derecha: "j) Sirve para escribir letras y números." },
+            { id: 10, izquierda: "Computadora", derecha: "e) Es una máquina que sirve para hacer muchas cosas." }
+        ];
+
+        const bancoFV_3 = [
+            { id: 101, texto: "Un archivo puede ser una foto, un cuento o una canción.", respuesta: "V" },
+            { id: 102, texto: "Para escribir bien en la computadora, debemos sentarnos derechos.", respuesta: "V" },
+            { id: 103, texto: "Está bien encorvarse cuando escribimos en el teclado.", respuesta: "F" },
+            { id: 104, texto: "Las carpetas sirven para guardar y ordenar archivos.", respuesta: "V" },
+            { id: 105, texto: "Podemos ponerle nombre a una carpeta.", respuesta: "V" },
+            { id: 106, texto: "No importa cómo nos sentemos, igual escribimos bien.", respuesta: "F" },
+            { id: 107, texto: "En una carpeta podemos guardar muchos archivos.", respuesta: "V" },
+            { id: 108, texto: "Debemos tener los pies bien puestos en el piso cuando escribimos.", respuesta: "V" },
+            { id: 109, texto: "Las carpetas solo sirven para borrar cosas.", respuesta: "F" },
+            { id: 110, texto: "Podemos hacer carpetas dentro de otras carpetas.", respuesta: "V" }
+        ];
+        const bancoSM_3 = [
+            { id: 201, texto: "¿Qué es Word?", opciones: [{letra: 'a', texto: 'Un programa para escribir textos'}, {letra: 'b', texto: 'Un programa para dibujar'}, {letra: 'c', texto: 'Un juego'}], respuesta: 'a' },
+            { id: 202, texto: "¿Para qué sirve Word?", opciones: [{letra: 'a', texto: 'Para hacer tareas y escribir textos'}, {letra: 'b', texto: 'Para escuchar música'}, {letra: 'c', texto: 'Para apagar la computadora'}], respuesta: 'a' },
+            { id: 203, texto: "¿Qué puedes hacer en Word?", opciones: [{letra: 'a', texto: 'Escribir cuentos y tareas'}, {letra: 'b', texto: 'Poner imágenes'}, {letra: 'c', texto: 'Las dos anteriores son correctas'}], respuesta: 'c' },
+            { id: 204, texto: "¿Puedes cambiarle el color a las letras en Word?", opciones: [{letra: 'a', texto: 'Sí, puedo elegir muchos colores'}, {letra: 'b', texto: 'No, siempre son negras'}, {letra: 'c', texto: 'Solo puedo ponerlas azules'}], respuesta: 'a' },
+            { id: 205, texto: "¿Puedes cambiarle el tamaño a las letras en Word?", opciones: [{letra: 'a', texto: 'Sí, puedo hacerlas grandes o pequeñas'}, {letra: 'b', texto: 'No, siempre son del mismo tamaño'}, {letra: 'c', texto: 'Solo se pueden hacer pequeñas'}], respuesta: 'a' },
+            { id: 206, texto: "¿Puedes cambiarle el tipo de letra (fuente) en Word?", opciones: [{letra: 'a', texto: 'Sí, puedo elegir entre muchas letras'}, {letra: 'b', texto: 'No, solo hay una letra'}, {letra: 'c', texto: 'Solo puedo usar letra de carta'}], respuesta: 'a' },
+            { id: 207, texto: "¿Es cierto que en Word solo puedes hacer textos pequeños?", opciones: [{letra: 'a', texto: 'Sí, solo textos pequeños'}, {letra: 'b', texto: 'No, puedes hacer textos grandes o pequeños'}, {letra: 'c', texto: 'Sí, no se puede agrandar'}], respuesta: 'b' },
+            { id: 208, texto: "¿Puedes insertar imágenes en Word?", opciones: [{letra: 'a', texto: 'Sí, puedo poner dibujos y fotos'}, {letra: 'b', texto: 'No, solo letras'}, {letra: 'c', texto: 'Solo puedo dibujar con el lápiz'}], respuesta: 'a' },
+            { id: 209, texto: "¿Cuál de estas opciones NO es un sistema operativo?", opciones: [{letra: 'a', texto: 'Windows'}, {letra: 'b', texto: 'Linux'}, {letra: 'c', texto: 'Word'}], respuesta: 'c' },
+            { id: 210, texto: "¿Cuál de estas opciones SÍ es un sistema operativo?", opciones: [{letra: 'a', texto: 'Windows'}, {letra: 'b', texto: 'Word'}, {letra: 'c', texto: 'Paint'}], respuesta: 'a' }
+        ];
+        const bancoUnion_3 = [
+            { id: 1, izquierda: "Word", derecha: "f) Es un programa para escribir textos y tareas." },
+            { id: 2, izquierda: "Formato de texto", derecha: "b) Es ponerle estilo a las letras, como negrita o cursiva." },
+            { id: 3, izquierda: "Fuente", derecha: "d) Es el tipo de letra que usamos, como Arial o Times New Roman." },
+            { id: 4, izquierda: "Tamaño de letra", derecha: "j) Es hacer las letras más grandes o más pequeñas." },
+            { id: 5, izquierda: "Color", derecha: "h) Es lo que cambia el color de las letras o del fondo." },
+            { id: 6, izquierda: "Insertar imágenes", derecha: "g) Es poner dibujos o fotos dentro de un texto." },
+            { id: 7, izquierda: "Hoja o espacio de trabajo", derecha: "a) Es el espacio blanco donde escribimos en Word." },
+            { id: 8, izquierda: "Postura correcta", derecha: "e) Es sentarse derecho con los pies en el piso." },
+            { id: 9, izquierda: "No encorvarse", derecha: "i) Es no doblar la espalda cuando escribimos." },
+            { id: 10, izquierda: "Mecanografía", derecha: "c) Es el arte de escribir rápido y bien con el teclado." }
+        ];
+
+        const bancoFV_4 = [
+            { id: 301, texto: "En Word podemos insertar formas como círculos, cuadrados y estrellas.", respuesta: "V" },
+            { id: 302, texto: "A una forma en Word se le puede poner una imagen como relleno.", respuesta: "V" },
+            { id: 303, texto: "La estrella es una forma que podemos usar en Word.", respuesta: "V" },
+            { id: 304, texto: "En Word podemos insertar imágenes.", respuesta: "V" },
+            { id: 305, texto: "El icono de Word es de color verde.", respuesta: "F" },
+            { id: 306, texto: "Word sirve para escribir cartas.", respuesta: "V" },
+            { id: 307, texto: "Word no me sirve para hacer impresiones.", respuesta: "F" },
+            { id: 308, texto: "Word no deja imprimir aunque tenga una impresora conectada.", respuesta: "F" },
+            { id: 309, texto: "En Word solo puedo escribir, no puedo poner formas.", respuesta: "F" },
+            { id: 310, texto: "Las formas en Word se pueden cambiar de color.", respuesta: "V" }
+        ];
+        const bancoSM_4 = [
+            { id: 401, texto: "¿Para qué sirve PowerPoint?", opciones: [{letra: 'a', texto: 'Para hacer presentaciones con diapositivas'}, {letra: 'b', texto: 'Para dibujar'}, {letra: 'c', texto: 'Para escuchar música'}], respuesta: 'a' },
+            { id: 402, texto: "¿De qué color es el icono de PowerPoint?", opciones: [{letra: 'a', texto: 'Verde'}, {letra: 'b', texto: 'Naranja o rojo'}, {letra: 'c', texto: 'Morado'}], respuesta: 'b' },
+            { id: 403, texto: "¿Cuándo me sirve PowerPoint?", opciones: [{letra: 'a', texto: 'Para hacer una presentación de un tema'}, {letra: 'b', texto: 'Para hacer una tarea'}, {letra: 'c', texto: 'Las dos anteriores son correctas'}], respuesta: 'c' },
+            { id: 404, texto: "¿A qué le puedo colocar animación en PowerPoint?", opciones: [{letra: 'a', texto: 'A los textos, imágenes y formas'}, {letra: 'b', texto: 'Solo al fondo'}, {letra: 'c', texto: 'A nada'}], respuesta: 'a' },
+            { id: 405, texto: "¿La transición en PowerPoint es entre...?", opciones: [{letra: 'a', texto: 'Una diapositiva y otra'}, {letra: 'b', texto: 'Una letra y otra'}, {letra: 'c', texto: 'Un color y otro'}], respuesta: 'a' },
+            { id: 406, texto: "¿Para qué me sirve la pestaña Diseño en PowerPoint?", opciones: [{letra: 'a', texto: 'Para elegir colores y estilos bonitos'}, {letra: 'b', texto: 'Para borrar todo'}, {letra: 'c', texto: 'Para apagar la computadora'}], respuesta: 'a' },
+            { id: 407, texto: "¿Qué puedo hacer en PowerPoint?", opciones: [{letra: 'a', texto: 'Poner imágenes y textos'}, {letra: 'b', texto: 'Poner animaciones'}, {letra: 'c', texto: 'Las dos anteriores son correctas'}], respuesta: 'c' },
+            { id: 408, texto: "¿Puedo poner formas en PowerPoint?", opciones: [{letra: 'a', texto: 'Sí, como círculos y estrellas'}, {letra: 'b', texto: 'No, solo letras'}, {letra: 'c', texto: 'Solo cuadrados'}], respuesta: 'a' },
+            { id: 409, texto: "¿Puedo cambiar el color de las letras en PowerPoint?", opciones: [{letra: 'a', texto: 'Sí, puedo elegir muchos colores'}, {letra: 'b', texto: 'No, siempre son negras'}, {letra: 'c', texto: 'Solo puedo ponerlas rojas'}], respuesta: 'a' },
+            { id: 410, texto: "¿PowerPoint sirve para hacer presentaciones grandes o pequeñas?", opciones: [{letra: 'a', texto: 'Solo pequeñas'}, {letra: 'b', texto: 'Solo grandes'}, {letra: 'c', texto: 'De cualquier tamaño'}], respuesta: 'c' }
+        ];
+        const bancoUnion_4 = [
+            { id: 1, izquierda: "Formas en Word", derecha: "f) Son figuras como círculos, cuadrados y estrellas." },
+            { id: 2, izquierda: "Relleno de forma", derecha: "i) Es ponerle un color o imagen por dentro a una forma." },
+            { id: 3, izquierda: "Insertar imágenes", derecha: "d) Es poner dibujos o fotos dentro de un texto." },
+            { id: 4, izquierda: "Formato de texto", derecha: "b) Es ponerle estilo a las letras, como negrita o cursiva." },
+            { id: 5, izquierda: "Color de texto", derecha: "e) Es el color que le pongo a las letras." },
+            { id: 6, izquierda: "Diapositiva (de PowerPoint)", derecha: "j) Es cada hoja o cuadro de una presentación de PowerPoint." },
+            { id: 7, izquierda: "Hoja (de Word)", derecha: "a) Es el espacio blanco donde escribimos en Word." },
+            { id: 8, izquierda: "Presentación", derecha: "h) Es el conjunto de todas las diapositivas de PowerPoint." },
+            { id: 9, izquierda: "Animación", derecha: "c) Es el efecto de movimiento que le pongo a las cosas en PowerPoint." },
+            { id: 10, izquierda: "Transición", derecha: "g) Es el efecto que hay entre una diapositiva y otra." }
+        ];
+
+        const bancoFV_5 = [
+            { id: 501, texto: "Visio sirve para hacer diagramas y dibujos ordenados.", respuesta: "V" },
+            { id: 502, texto: "Draw.io sirve para hacer diagramas en internet.", respuesta: "V" },
+            { id: 503, texto: "Un diagrama sirve para ordenar ideas.", respuesta: "V" },
+            { id: 504, texto: "Internet es como una red invisible que conecta a todo el mundo.", respuesta: "V" },
+            { id: 505, texto: "Con un correo electrónico puedo comunicarme con mis amigos.", respuesta: "V" },
+            { id: 506, texto: "No puedo trabajar en grupo por internet.", respuesta: "F" },
+            { id: 507, texto: "Puedo usar programas para hacer presentaciones como Google Presentaciones.", respuesta: "V" },
+            { id: 508, texto: "Dos personas pueden entrar al mismo documento al mismo tiempo.", respuesta: "V" },
+            { id: 509, texto: "El correo electrónico es único para cada persona.", respuesta: "V" },
+            { id: 510, texto: "Visio y Draw.io sirven para lo mismo: hacer diagramas.", respuesta: "V" }
+        ];
+        const bancoSM_5 = [
+            { id: 601, texto: "¿Cuál de estas es una extensión o dominio de correo electrónico?", opciones: [{letra: 'a', texto: '@gmail.com'}, {letra: 'b', texto: '@cuaderno'}, {letra: 'c', texto: '@lapiz'}], respuesta: 'a' },
+            { id: 602, texto: "¿Cuál de estas es una dirección de correo electrónico?", opciones: [{letra: 'a', texto: 'maria@gmail.com'}, {letra: 'b', texto: 'maria123'}, {letra: 'c', texto: 'www.maria'}], respuesta: 'a' },
+            { id: 603, texto: "¿Para qué sirve un correo electrónico?", opciones: [{letra: 'a', texto: 'Para enviar y recibir mensajes'}, {letra: 'b', texto: 'Para dibujar'}, {letra: 'c', texto: 'Para apagar la computadora'}], respuesta: 'a' },
+            { id: 604, texto: "¿Puedo enviarle correos a...?", opciones: [{letra: 'a', texto: 'Mis amigos y familiares'}, {letra: 'b', texto: 'Nadie'}, {letra: 'c', texto: 'Solo a mí mismo'}], respuesta: 'a' },
+            { id: 605, texto: "¿Un correo electrónico solo puede incluir texto?", opciones: [{letra: 'a', texto: 'Sí, solo texto'}, {letra: 'b', texto: 'No, también imágenes y archivos'}, {letra: 'c', texto: 'Solo dibujos'}], respuesta: 'b' },
+            { id: 606, texto: "¿Quién es el que recibe el correo?", opciones: [{letra: 'a', texto: 'El receptor'}, {letra: 'b', texto: 'El remitente'}, {letra: 'c', texto: 'El profesor'}], respuesta: 'a' },
+            { id: 607, texto: "¿Quién es el que redacta y envía el correo?", opciones: [{letra: 'a', texto: 'El emisor'}, {letra: 'b', texto: 'El destinatario'}, {letra: 'c', texto: 'El internet'}], respuesta: 'a' },
+            { id: 608, texto: "Google Docs es como...", opciones: [{letra: 'a', texto: 'Word, pero en internet'}, {letra: 'b', texto: 'Paint'}, {letra: 'c', texto: 'Un juego'}], respuesta: 'a' },
+            { id: 609, texto: "¿Cuál de los siguientes NO es un programa para trabajar en grupo en línea?", opciones: [{letra: 'a', texto: 'Google Docs'}, {letra: 'b', texto: 'Google Presentaciones'}, {letra: 'c', texto: 'Paint'}], respuesta: 'c' },
+            { id: 610, texto: "Elige el correo que es de tipo gmail.com:", opciones: [{letra: 'a', texto: 'pedro@gmail.com'}, {letra: 'b', texto: 'pedro@yahoo.com'}, {letra: 'c', texto: 'pedro@hotmail.com'}], respuesta: 'a' },
+            { id: 611, texto: "Elige el correo que es de tipo yahoo:", opciones: [{letra: 'a', texto: 'ana@yahoo.com'}, {letra: 'b', texto: 'ana@gmail.com'}, {letra: 'c', texto: 'ana@hotmail.com'}], respuesta: 'a' }
+        ];
+        const bancoUnion_5 = [
+            { id: 1, izquierda: "Diapositiva (de PowerPoint)", derecha: "d) Es cada hoja o cuadro de una presentación." },
+            { id: 2, izquierda: "Presentación", derecha: "b) Es el conjunto de todas las diapositivas." },
+            { id: 3, izquierda: "Animación", derecha: "e) Es el efecto de movimiento que le pongo a las cosas." },
+            { id: 4, izquierda: "Diseño", derecha: "j) Son los colores y estilos bonitos de una presentación." },
+            { id: 5, izquierda: "Transición", derecha: "g) Es el efecto que hay entre una diapositiva y otra." },
+            { id: 6, izquierda: "Word", derecha: "f) Es un programa para escribir textos y tareas." },
+            { id: 7, izquierda: "Google Documentos", derecha: "a) Es un programa para escribir textos, como Word pero en internet." },
+            { id: 8, izquierda: "Excel", derecha: "i) Es un programa para hacer tablas y cuentas." },
+            { id: 9, izquierda: "Google Hojas de Cálculo", derecha: "c) Es un programa para hacer tablas y cuentas, como Excel pero en internet." },
+            { id: 10, izquierda: "Correo electrónico", derecha: "h) Sirve para enviar y recibir mensajes por internet." }
+        ];
+
+        const bancoFV_6 = [
+            { id: 701, texto: "PowerPoint me sirve para crear cartas.", respuesta: "F" },
+            { id: 702, texto: "PowerPoint sirve para poner películas.", respuesta: "F" },
+            { id: 703, texto: "En PowerPoint puedo colocar solo 3 imágenes.", respuesta: "F" },
+            { id: 704, texto: "En PowerPoint no le puedo poner animación a nada.", respuesta: "F" },
+            { id: 705, texto: "Puedo cambiar el color de las cosas en mi presentación.", respuesta: "V" },
+            { id: 706, texto: "Google Sites es para crear correos.", respuesta: "F" },
+            { id: 707, texto: "Puedo hacer un catálogo digital de perfumes con Google Sites.", respuesta: "V" },
+            { id: 708, texto: "Puedo hacer un menú de un restaurante con Google Sites.", respuesta: "V" },
+            { id: 709, texto: "Google Sites tiene el icono amarillo.", respuesta: "F" },
+            { id: 710, texto: "En PowerPoint puedo poner muchas imágenes si quiero.", respuesta: "V" }
+        ];
+        const bancoSM_6 = [
+            { id: 801, texto: "¿En Google Sites se hacen...?", opciones: [{letra: 'a', texto: 'Páginas web'}, {letra: 'b', texto: 'Dibujos'}, {letra: 'c', texto: 'Canciones'}], respuesta: 'a' },
+            { id: 802, texto: "¿Google Sites tiene icono de color...?", opciones: [{letra: 'a', texto: 'Azul y blanco'}, {letra: 'b', texto: 'Rojo'}, {letra: 'c', texto: 'Verde'}], respuesta: 'a' },
+            { id: 803, texto: "En PowerPoint, las hojas o cada cuadro de presentación se llama...", opciones: [{letra: 'a', texto: 'Diapositiva'}, {letra: 'b', texto: 'Hoja'}, {letra: 'c', texto: 'Cuaderno'}], respuesta: 'a' },
+            { id: 804, texto: "¿Qué NO le puedo poner a PowerPoint?", opciones: [{letra: 'a', texto: 'Un videojuego'}, {letra: 'b', texto: 'Imágenes'}, {letra: 'c', texto: 'Animaciones'}], respuesta: 'a' },
+            { id: 805, texto: "¿En qué situación me es útil PowerPoint?", opciones: [{letra: 'a', texto: 'Para hacer una presentación de un tema'}, {letra: 'b', texto: 'Para lavar la ropa'}, {letra: 'c', texto: 'Para cocinar'}], respuesta: 'a' },
+            { id: 806, texto: "¿En qué situación me es útil Google Sites?", opciones: [{letra: 'a', texto: 'Para crear una página web de mi negocio'}, {letra: 'b', texto: 'Para pintar'}, {letra: 'c', texto: 'Para escuchar música'}], respuesta: 'a' },
+            { id: 807, texto: "Si publico mi página, ¿qué pasa?", opciones: [{letra: 'a', texto: 'Mi página estará en internet'}, {letra: 'b', texto: 'Mi página se borra'}, {letra: 'c', texto: 'Mi página se guarda en mi cuaderno'}], respuesta: 'a' },
+            { id: 808, texto: "¿Qué puedo hacer en Google Sites?", opciones: [{letra: 'a', texto: 'Crear páginas web'}, {letra: 'b', texto: 'Poner imágenes y textos'}, {letra: 'c', texto: 'Las dos anteriores son correctas'}], respuesta: 'c' },
+            { id: 809, texto: "¿Puedo poner animación a las cosas en PowerPoint?", opciones: [{letra: 'a', texto: 'Sí, a textos, imágenes y formas'}, {letra: 'b', texto: 'No, a nada'}, {letra: 'c', texto: 'Solo al fondo'}], respuesta: 'a' },
+            { id: 810, texto: "¿Cuál de estos NO puedo hacer en PowerPoint?", opciones: [{letra: 'a', texto: 'Poner imágenes'}, {letra: 'b', texto: 'Poner animaciones'}, {letra: 'c', texto: 'Hacer llamadas telefónicas'}], respuesta: 'c' }
+        ];
+        const bancoUnion_6 = [
+            { id: 1, izquierda: "Diapositiva (de PowerPoint)", derecha: "b) Es cada hoja o cuadro de una presentación." },
+            { id: 2, izquierda: "Presentación", derecha: "f) Es el conjunto de todas las diapositivas." },
+            { id: 3, izquierda: "Animación", derecha: "d) Es el efecto de movimiento que le pongo a las cosas." },
+            { id: 4, izquierda: "Diseño", derecha: "j) Son los colores y estilos bonitos de una presentación." },
+            { id: 5, izquierda: "Transición", derecha: "h) Es el efecto que hay entre una diapositiva y otra." },
+            { id: 6, izquierda: "La nube", derecha: "a) Es un lugar en internet donde guardamos archivos y podemos verlos desde cualquier lugar." },
+            { id: 7, izquierda: "Página web", derecha: "i) Es un documento que podemos ver en internet." },
+            { id: 8, izquierda: "Google Sites", derecha: "c) Es un programa para crear páginas web." },
+            { id: 9, izquierda: "Menú en página web", derecha: "e) Es una lista de opciones que aparece en una página web." },
+            { id: 10, izquierda: "Enlace", derecha: "g) Es un texto o imagen que al hacer clic me lleva a otro lugar." }
+        ];
+
+        // ================= PASO 1: VERIFICAR CÓDIGO Y BLOQUEO =================
+        async function verificarCodigo() {
+            const codigoInput = document.getElementById('codigo').value.trim();
+            const mensajeError = document.getElementById('mensaje-error');
+            const btnValidar = document.getElementById('btn-validar');
+            
+            mensajeError.textContent = '';
+
+            if (!codigoInput) {
+                mensajeError.textContent = 'Por favor, ingresa tu código único.';
+                return;
+            }
+
+            btnValidar.textContent = 'Verificando datos...';
+            btnValidar.disabled = true;
+
+            const { data: estudianteData, error: estudianteError } = await _supabase
+                .from('estudiantes')
+                .select('*')
+                .eq('codigo', codigoInput)
+                .maybeSingle();
+
+            if (estudianteError || !estudianteData) {
+                mensajeError.textContent = 'Código no encontrado en la base de datos.';
+                btnValidar.textContent = 'Validar Código';
+                btnValidar.disabled = false;
+                return;
+            }
+
+            estudianteActual = estudianteData;
+            const gradoLimpio = String(estudianteData.grado).trim();
+
+            document.getElementById('nombre-estudiante-txt').textContent = `${estudianteData.nombres} ${estudianteData.apellidos}`;
+            document.getElementById('grado-estudiante-txt').textContent = obtenerNombreGrado(gradoLimpio);
+            document.getElementById('info-estudiante').style.display = 'block';
+
+            const gradosHabilitados = ['2', '3', '4', '5', '6'];
+
+            if (!gradosHabilitados.includes(gradoLimpio)) {
+                mensajeError.style.color = '#d97706';
+                mensajeError.textContent = `Hola ${estudianteData.nombres}, tu evaluación para este grado aún no está habilitada.`;
+                btnValidar.textContent = 'No disponible';
+                btnValidar.disabled = true;
+                return;
+            }
+
+            const { data: evaluacionesPrevias, error: errorExamen } = await _supabase
+                .from('resultados_evaluacion')
+                .select('*')
+                .eq('codigo_estudiante', codigoInput);
+
+            if (evaluacionesPrevias && evaluacionesPrevias.length > 0) {
+                mensajeError.style.color = '#d97706';
+                mensajeError.textContent = `¡Hola ${estudianteData.nombres}! Tú ya realizaste el examen, no puedes volver a hacerlo.`;
+                btnValidar.textContent = 'Evaluación ya realizada';
+                btnValidar.disabled = true;
+                return;
+            }
+
+            mensajeError.style.color = '#dc2626';
+            btnValidar.textContent = 'Comenzar Evaluación';
+            btnValidar.disabled = false;
+            btnValidar.setAttribute('onclick', 'iniciarEvaluacion()');
+        }
+
+        // ================= PASO 2: INICIALIZAR Y CARGAR CUESTIONARIO =================
+        function iniciarEvaluacion() {
+            document.getElementById('seccion-login').style.display = 'none';
+            document.getElementById('seccion-serie1').style.display = 'block';
+
+            const gradoLimpio = String(estudianteActual.grado).trim();
+            const nombreGradoTexto = obtenerNombreGrado(gradoLimpio);
+
+            const infoBadge = `${estudianteActual.nombres} | ${nombreGradoTexto}`;
+            document.getElementById('badge-info-s1').textContent = infoBadge;
+            document.getElementById('badge-info-s2').textContent = infoBadge;
+            document.getElementById('badge-info-s3').textContent = infoBadge;
+            document.getElementById('badge-info-s4').textContent = infoBadge;
+
+            document.getElementById('titulo-grado-s1').textContent = `Serie I: Falsos y Verdaderos - (${nombreGradoTexto})`;
+            document.getElementById('titulo-grado-s2').textContent = `Serie II: Selección Múltiple - (${nombreGradoTexto})`;
+            document.getElementById('titulo-grado-s3').textContent = `Serie III: Unión de Columnas - (${nombreGradoTexto})`;
+            document.getElementById('titulo-grado-s4').textContent = `Serie IV: Práctica en WordPad - (${nombreGradoTexto})`;
+
+            cargarPreguntasPorNumero(gradoLimpio);
+        }
+
+        function barajarArreglo(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function cargarPreguntasPorNumero(gradoNum) {
+            let bancoFV = [];
+            let bancoSM = [];
+            let bancoUnion = [];
+
+            if (gradoNum === '2') {
+                bancoFV = bancoFV_2; bancoSM = bancoSM_2; bancoUnion = bancoUnion_2;
+            } else if (gradoNum === '3') {
+                bancoFV = bancoFV_3; bancoSM = bancoSM_3; bancoUnion = bancoUnion_3;
+            } else if (gradoNum === '4') {
+                bancoFV = bancoFV_4; bancoSM = bancoSM_4; bancoUnion = bancoUnion_4;
+            } else if (gradoNum === '5') {
+                bancoFV = bancoFV_5; bancoSM = bancoSM_5; bancoUnion = bancoUnion_5;
+            } else if (gradoNum === '6') {
+                bancoFV = bancoFV_6; bancoSM = bancoSM_6; bancoUnion = bancoUnion_6;
+            }
+
+            preguntasFVMezcladas = barajarArreglo(bancoFV);
+            preguntasSMMezcladas = barajarArreglo(bancoSM);
+            paresOriginalesActivos = bancoUnion;
+            derechaMezclada = barajarArreglo(bancoUnion);
+
+            const contenedorFV = document.getElementById('preguntas-fv');
+            let htmlFV = '';
+            preguntasFVMezcladas.forEach((p, index) => {
+                htmlFV += `
+                    <div class="question-card">
+                        <div class="question-text">${index + 1}. ${p.texto}</div>
+                        <div class="options">
+                            <label><input type="radio" name="fv_${p.id}" value="V"> Verdadero (V)</label>
+                            <label><input type="radio" name="fv_${p.id}" value="F"> Falso (F)</label>
+                        </div>
+                    </div>
+                `;
+            });
+            contenedorFV.innerHTML = htmlFV;
+
+            const contenedorSM = document.getElementById('preguntas-sm');
+            let htmlSM = '';
+            preguntasSMMezcladas.forEach((p, index) => {
+                let opcionesHtml = '';
+                p.opciones.forEach(op => {
+                    opcionesHtml += `<label><input type="radio" name="sm_${p.id}" value="${op.letra}"> ${op.letra}) ${op.texto}</label>`;
+                });
+                htmlSM += `
+                    <div class="question-card">
+                        <div class="question-text">${index + 1}. ${p.texto}</div>
+                        <div class="options-col">${opcionesHtml}</div>
+                    </div>
+                `;
+            });
+            contenedorSM.innerHTML = htmlSM;
+        }
+
+        // ================= SERIE I: PROCESAR =================
+        function procesarSerie1() {
+            let respondidasTodas = true;
+            punteoSerie1 = 0;
+
+            preguntasFVMezcladas.forEach(p => {
+                const seleccionada = document.querySelector(`input[name="fv_${p.id}"]:checked`);
+                if (!seleccionada) {
+                    respondidasTodas = false;
+                } else if (seleccionada.value === p.respuesta) {
+                    punteoSerie1 += 1;
+                }
+            });
+
+            if (!respondidasTodas) {
+                alert('Por favor, responde todos los enunciados de Falso y Verdadero antes de continuar.');
+                return;
+            }
+
+            document.getElementById('seccion-serie1').style.display = 'none';
+            document.getElementById('seccion-serie2').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= SERIE II: PROCESAR =================
+        function procesarSerie2() {
+            let respondidasTodas = true;
+            punteoSerie2 = 0;
+
+            preguntasSMMezcladas.forEach(p => {
+                const seleccionada = document.querySelector(`input[name="sm_${p.id}"]:checked`);
+                if (!seleccionada) {
+                    respondidasTodas = false;
+                } else if (seleccionada.value === p.respuesta) {
+                    punteoSerie2 += 1;
+                }
+            });
+
+            if (!respondidasTodas) {
+                alert('Por favor, responde todas las preguntas de Selección Múltiple antes de continuar.');
+                return;
+            }
+
+            document.getElementById('seccion-serie2').style.display = 'none';
+            document.getElementById('seccion-serie3').style.display = 'block';
+            
+            renderizarColumnasUnion();
+            window.addEventListener('resize', actualizarLineasSVG);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= SERIE III: LÓGICA DE UNIÓN DE COLUMNAS =================
+        function renderizarColumnasUnion() {
+            const colIzq = document.getElementById('col-izquierda');
+            const colDer = document.getElementById('col-derecha');
+
+            colIzq.innerHTML = '';
+            colDer.innerHTML = '';
+
+            paresOriginalesActivos.forEach((par, index) => {
+                const conectado = conexiones.find(c => c.idIzq === par.id);
+                const claseConectado = conectado ? 'connected' : '';
+                colIzq.innerHTML += `
+                    <div class="match-item ${claseConectado}" id="izq-${par.id}" onclick="seleccionarIzquierda(${par.id})">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <span class="badge-num">${index + 1}</span>
+                            <span>${par.izquierda}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            derechaMezclada.forEach((par, index) => {
+                const conectado = conexiones.find(c => c.idDer === par.id);
+                const claseConectado = conectado ? 'connected' : '';
+                colDer.innerHTML += `
+                    <div class="match-item ${claseConectado}" id="der-${par.id}" onclick="seleccionarDerecha(${par.id})">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; width: 100%; justify-content: space-between;">
+                            <span>${par.derecha}</span>
+                            <span class="badge-num">${String.fromCharCode(65 + index)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            actualizarLineasSVG();
+            document.getElementById('score-display').textContent = `Conectados: ${conexiones.length} / 10`;
+        }
+
+        function seleccionarIzquierda(id) {
+            const indiceExistente = conexiones.findIndex(c => c.idIzq === id);
+            if (indiceExistente !== -1) {
+                conexiones.splice(indiceExistente, 1);
+                elementoSeleccionadoIzq = null;
+                renderizarColumnasUnion();
+                return;
+            }
+
+            document.querySelectorAll('#col-izquierda .match-item').forEach(el => el.classList.remove('selected'));
+            elementoSeleccionadoIzq = id;
+            document.getElementById(`izq-${id}`).classList.add('selected');
+        }
+
+        function seleccionarDerecha(idDer) {
+            const indiceExistente = conexiones.findIndex(c => c.idDer === idDer);
+            if (indiceExistente !== -1) {
+                conexiones.splice(indiceExistente, 1);
+                renderizarColumnasUnion();
+                return;
+            }
+
+            if (elementoSeleccionadoIzq !== null) {
+                conexiones = conexiones.filter(c => c.idIzq !== elementoSeleccionadoIzq);
+                const colorAsignado = coloresLineas[conexiones.length % coloresLineas.length];
+
+                conexiones.push({
+                    idIzq: elementoSeleccionadoIzq,
+                    idDer: idDer,
+                    color: colorAsignado
+                });
+
+                elementoSeleccionadoIzq = null;
+                renderizarColumnasUnion();
+            } else {
+                alert("Primero haz clic en un elemento de la columna izquierda.");
+            }
+        }
+
+        function reiniciarUniones() {
+            conexiones = [];
+            elementoSeleccionadoIzq = null;
+            renderizarColumnasUnion();
+        }
+
+        function deshacerUltimaUnion() {
+            if (conexiones.length > 0) {
+                conexiones.pop();
+                elementoSeleccionadoIzq = null;
+                renderizarColumnasUnion();
+            }
+        }
+
+        function actualizarLineasSVG() {
+            const svg = document.getElementById('svg-canvas');
+            const container = document.getElementById('matching-container');
+            if (!container) return;
+            const containerRect = container.getBoundingClientRect();
+            
+            let svgContent = '';
+
+            conexiones.forEach(conexion => {
+                const elIzq = document.getElementById(`izq-${conexion.idIzq}`);
+                const elDer = document.getElementById(`der-${conexion.idDer}`);
+
+                if (elIzq && elDer) {
+                    const rectIzq = elIzq.getBoundingClientRect();
+                    const rectDer = elDer.getBoundingClientRect();
+
+                    const x1 = rectIzq.right - containerRect.left;
+                    const y1 = rectIzq.top + (rectIzq.height / 2) - containerRect.top;
+                    
+                    const x2 = rectDer.left - containerRect.left;
+                    const y2 = rectDer.top + (rectDer.height / 2) - containerRect.top;
+
+                    svgContent += `<path d="M ${x1} ${y1} C ${x1 + 60} ${y1}, ${x2 - 60} ${y2}, ${x2} ${y2}" stroke="${conexion.color}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+                }
+            });
+
+            svg.innerHTML = svgContent;
+        }
+
+        // ================= SERIE IV: PASAR A PRÁCTICA (TEMA OSCURO) =================
+        function pasarASerie4() {
+            if (conexiones.length < 10) {
+                alert('Por favor, completa todas las uniones de las columnas (deben ser 10) antes de pasar a la Serie IV.');
+                return;
+            }
+
+            document.getElementById('seccion-serie3').style.display = 'none';
+            document.getElementById('seccion-serie4').style.display = 'block';
+
+            document.body.classList.add('tema-oscuro');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= SERIE IV: TOMAR CAPTURA Y FINALIZAR =================
+        async function tomarCapturaYFinalizar() {
+            const btn = document.getElementById('btn-finalizar-todo');
+            const mensajeEstado = document.getElementById('mensaje-estado');
+            const imgPreview = document.getElementById('img-preview');
+
+            btn.disabled = true;
+            btn.textContent = '📸 Capturando pantalla...';
+            mensajeEstado.style.color = '#a5b4fc';
+            mensajeEstado.textContent = 'Capturando la ventana de WordPad...';
+
+            try {
+                const wrapper = document.querySelector('.iframe-wrapper');
+
+                const canvas = await html2canvas(wrapper, {
+                    backgroundColor: '#ffffff',
+                    scale: 1,
+                    useCORS: true,
+                    allowTaint: false,
+                    logging: false
+                });
+
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+
+                if (!blob) {
+                    throw new Error('No se pudo generar la imagen de captura.');
+                }
+
+                const urlPreview = URL.createObjectURL(blob);
+                imgPreview.src = urlPreview;
+                imgPreview.style.display = 'block';
+
+                mensajeEstado.textContent = 'Subiendo captura a la nube...';
+
+                const timestamp = Date.now();
+                const nombreArchivo = `${estudianteActual.codigo}_${timestamp}.png`;
+
+                const { data: uploadData, error: uploadError } = await _supabase
+                    .storage
+                    .from(NOMBRE_BUCKET)
+                    .upload(nombreArchivo, blob, {
+                        contentType: 'image/png',
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+
+                if (uploadError) {
+                    throw new Error('Error al subir la imagen: ' + uploadError.message);
+                }
+
+                const { data: urlData } = _supabase
+                    .storage
+                    .from(NOMBRE_BUCKET)
+                    .getPublicUrl(nombreArchivo);
+
+                const urlPublica = urlData.publicUrl;
+
+                let punteoSerie3 = 0;
+                conexiones.forEach(c => {
+                    if (c.idIzq === c.idDer) {
+                        punteoSerie3 += 1;
+                    }
+                });
+
+                // Serie IV: queda pendiente de revisión del docente (0 puntos automáticos)
+                const punteoSerie4 = 0;
+
+                const punteoTotal = punteoSerie1 + punteoSerie2 + punteoSerie3 + punteoSerie4;
+
+                mensajeEstado.textContent = 'Guardando resultados en la base de datos...';
+
+                const datosResultado = {
+                    codigo_estudiante: estudianteActual.codigo,
+                    punteo_s1: punteoSerie1,
+                    punteo_s2: punteoSerie2,
+                    punteo_s3: punteoSerie3,
+                    punteo_s4: punteoSerie4,
+                    punteo_total: punteoTotal,
+                    captura_practica: urlPublica,
+                    estado: 'Completado'
+                };
+
+                const { error: insertError } = await _supabase
+                    .from('resultados_evaluacion')
+                    .insert([datosResultado]);
+
+                if (insertError) {
+                    throw new Error('Error al guardar en la base de datos: ' + insertError.message);
+                }
+
+                mensajeEstado.style.color = '#34d399';
+                mensajeEstado.textContent = `✅ ¡Evaluación enviada! Punteo automático: ${punteoTotal}/30 (Serie IV pendiente de revisión del docente).`;
+
+                alert(
+                    `¡Excelente trabajo, ${estudianteActual.nombres}!\n\n` +
+                    `- Serie I (F/V): ${punteoSerie1}/10\n` +
+                    `- Serie II (Selección Múltiple): ${punteoSerie2}/10\n` +
+                    `- Serie III (Unión de Columnas): ${punteoSerie3}/10\n` +
+                    `- Serie IV (Práctica WordPad): Pendiente de revisión del docente\n\n` +
+                    `Punteo automático: ${punteoTotal}/30 puntos.\n\n` +
+                    `Tu captura fue guardada correctamente. El docente revisará tu práctica.`
+                );
+
+                btn.textContent = '✅ Evaluación Enviada';
+                btn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 5000);
+
+            } catch (error) {
+                console.error('Error detallado:', error);
+                mensajeEstado.style.color = '#f87171';
+                mensajeEstado.textContent = `❌ Error: ${error.message}`;
+                btn.disabled = false;
+                btn.textContent = '📸 Reintentar Tomar Captura y Finalizar';
+            }
+        }
+    </script>
+</body>
+</html>
