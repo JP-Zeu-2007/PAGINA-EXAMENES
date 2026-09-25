@@ -55,17 +55,20 @@
         .datos-alumno strong {
             color: #1f2937;
         }
-        .visor-pdf {
+        .visor-imagen {
             width: 100%;
-            height: 80vh;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             overflow: hidden;
+            background: #f9fafb;
+            padding: 10px;
+            text-align: center;
         }
-        .visor-pdf iframe {
+        .visor-imagen img {
             width: 100%;
-            height: 100%;
-            border: 0;
+            height: auto;
+            display: block;
+            border-radius: 6px;
         }
         .btn-descargar {
             display: inline-block;
@@ -175,7 +178,7 @@
                     <p><strong>Punteo:</strong> ${(examen.punteo_total || 0) + (examen.punteo_extra || 0)} / 40 pts</p>
                 </div>
                 <div class="mensaje-error">
-                    ⏳ El PDF del examen aún no ha sido publicado.<br>
+                    ⏳ El examen aún no ha sido publicado.<br>
                     Por favor, contacta al docente.
                 </div>
             `;
@@ -194,11 +197,13 @@
                 <p><strong>Grado:</strong> ${obtenerNombreGrado(est.grado)}</p>
                 <p><strong>Punteo:</strong> ${total} / 40 pts</p>
             </div>
-            <div class="visor-pdf">
-                <iframe src="${examen.pdf_url}#toolbar=1&navpanes=0"></iframe>
+            <div class="visor-imagen">
+                <img src="${examen.pdf_url}" alt="Examen de ${est.nombres}">
             </div>
             <div style="text-align:center;">
-                <a href="${examen.pdf_url}" target="_blank" class="btn-descargar">📥 Descargar PDF</a>
+                <a href="${examen.pdf_url}" target="_blank" download="examen_${est.codigo}.png" class="btn-descargar">
+                    📥 Descargar Imagen del Examen
+                </a>
             </div>
         `;
     }
