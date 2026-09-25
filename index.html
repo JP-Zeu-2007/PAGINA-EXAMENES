@@ -29,7 +29,7 @@
         }
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1100px;
             background: var(--card-bg);
             padding: 2.5rem;
             border-radius: 1rem;
@@ -64,8 +64,9 @@
             transition: color 0.5s;
         }
         .instructions {
-            color: #6b7280;
-            font-size: 0.9rem;
+            color: #4b5563;
+            font-size: 1.15rem;
+            line-height: 1.6;
             margin-bottom: 1.5rem;
             transition: color 0.5s;
         }
@@ -81,6 +82,7 @@
             font-weight: 600;
             margin-bottom: 0.75rem;
             color: #1f2937;
+            font-size: 1.05rem;
             transition: color 0.5s;
         }
         .options {
@@ -99,6 +101,7 @@
             align-items: center;
             gap: 0.4rem;
             font-weight: 500;
+            font-size: 1.05rem;
         }
         .btn-accion {
             margin-top: 2rem;
@@ -170,7 +173,7 @@
             border-radius: 0.75rem;
             cursor: pointer;
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
@@ -239,53 +242,22 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
             border: 1px solid #374151;
         }
-        body.tema-oscuro .header-info {
-            border-bottom-color: #374151;
-        }
+        body.tema-oscuro .header-info { border-bottom-color: #374151; }
         body.tema-oscuro h2 { color: #a5b4fc; }
-        body.tema-oscuro .student-badge {
-            background: #312e81;
-            color: #e0e7ff;
-        }
+        body.tema-oscuro .student-badge { background: #312e81; color: #e0e7ff; }
         body.tema-oscuro .serie-title { color: #e5e7eb; }
-        body.tema-oscuro .instructions { color: #9ca3af; }
-        body.tema-oscuro .question-card {
-            background: #111827;
-            border-color: #374151;
-        }
+        body.tema-oscuro .instructions { color: #d1d5db; }
+        body.tema-oscuro .question-card { background: #111827; border-color: #374151; }
         body.tema-oscuro .question-text { color: #f3f4f6; }
         body.tema-oscuro label { color: #e5e7eb; }
-        body.tema-oscuro .match-item {
-            background: #111827;
-            border-color: #374151;
-            color: #e5e7eb;
-        }
-        body.tema-oscuro .match-item:hover {
-            background: #312e81;
-            border-color: #818cf8;
-        }
-        body.tema-oscuro .match-item.selected {
-            background: #3730a3;
-            border-color: #a5b4fc;
-        }
-        body.tema-oscuro .match-item.connected {
-            background: #064e3b;
-            border-color: #34d399;
-        }
-        body.tema-oscuro .badge-num {
-            background: #374151;
-            color: #f9fafb;
-        }
-        body.tema-oscuro .btn-secundario {
-            background-color: #374151;
-            color: #f9fafb;
-        }
-        body.tema-oscuro .btn-secundario:hover {
-            background-color: #4b5563;
-        }
-        body.tema-oscuro .matching-actions {
-            border-top-color: #374151;
-        }
+        body.tema-oscuro .match-item { background: #111827; border-color: #374151; color: #e5e7eb; }
+        body.tema-oscuro .match-item:hover { background: #312e81; border-color: #818cf8; }
+        body.tema-oscuro .match-item.selected { background: #3730a3; border-color: #a5b4fc; }
+        body.tema-oscuro .match-item.connected { background: #064e3b; border-color: #34d399; }
+        body.tema-oscuro .badge-num { background: #374151; color: #f9fafb; }
+        body.tema-oscuro .btn-secundario { background-color: #374151; color: #f9fafb; }
+        body.tema-oscuro .btn-secundario:hover { background-color: #4b5563; }
+        body.tema-oscuro .matching-actions { border-top-color: #374151; }
 
         /* Serie IV: iframe */
         .iframe-wrapper {
@@ -335,20 +307,124 @@
             color: #fde68a;
             padding: 0.75rem 1rem;
             border-radius: 0.5rem;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             margin-top: 1rem;
             border-left: 4px solid #f59e0b;
         }
-        .preview-captura {
-            margin-top: 1rem;
+
+        /* Serie IV de 2do: layout de 2 columnas */
+        .wordpad-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .caja-texto {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            color: #78350f;
+        }
+        .caja-texto h4 {
+            margin: 0 0 0.75rem 0;
+            color: #92400e;
+            font-size: 1.05rem;
+        }
+        .caja-texto .texto-copiar {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #000;
+            margin-bottom: 1rem;
+            border: 1px solid #fbbf24;
+        }
+        .caja-texto .ejemplo {
+            background: #fffbeb;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #78350f;
+            border-left: 3px solid #f59e0b;
+        }
+        body.tema-oscuro .caja-texto {
+            background: #422006;
+            border-color: #d97706;
+            color: #fde68a;
+        }
+        body.tema-oscuro .caja-texto h4 { color: #fbbf24; }
+        body.tema-oscuro .caja-texto .texto-copiar {
+            background: #1f2937;
+            color: #f3f4f6;
+            border-color: #4b5563;
+        }
+        body.tema-oscuro .caja-texto .ejemplo {
+            background: #1c1917;
+            color: #fde68a;
+        }
+
+        /* Modal de confirmación de foto */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.activo {
+            display: flex;
+        }
+        .modal-contenido {
+            background: #fff;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .modal-contenido h3 {
+            margin: 0 0 16px 0;
+            color: #1f2937;
             text-align: center;
         }
-        .preview-captura img {
-            max-width: 100%;
-            border-radius: 0.5rem;
-            border: 2px solid #374151;
-            display: none;
+        .modal-contenido img {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            margin-bottom: 20px;
         }
+        .modal-acciones {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-modal {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-confirmar {
+            background: #10b981;
+            color: white;
+        }
+        .btn-confirmar:hover { background: #059669; }
+        .btn-recapturar {
+            background: #f59e0b;
+            color: white;
+        }
+        .btn-recapturar:hover { background: #d97706; }
 
         /* Serie Extra */
         .extra-card {
@@ -381,18 +457,12 @@
             border-radius: 0.4rem;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             user-select: none;
             transition: all 0.15s;
         }
-        .extra-palabra:hover {
-            background: #c7d2fe;
-            transform: scale(1.05);
-        }
-        .extra-palabra.colocada {
-            background: #d1fae5;
-            color: #065f46;
-        }
+        .extra-palabra:hover { background: #c7d2fe; transform: scale(1.05); }
+        .extra-palabra.colocada { background: #d1fae5; color: #065f46; }
         .extra-palabras-disponibles {
             display: flex;
             flex-wrap: wrap;
@@ -401,36 +471,58 @@
             background: #f3f4f6;
             border-radius: 0.5rem;
         }
-        body.tema-oscuro .extra-card {
+        body.tema-oscuro .extra-card { background: #111827; border-color: #374151; }
+        body.tema-oscuro .extra-oracion { background: #1f2937; border-color: #4b5563; }
+        body.tema-oscuro .extra-palabra { background: #312e81; color: #e0e7ff; }
+        body.tema-oscuro .extra-palabra:hover { background: #3730a3; }
+        body.tema-oscuro .extra-palabra.colocada { background: #064e3b; color: #a7f3d0; }
+        body.tema-oscuro .extra-palabras-disponibles { background: #1f2937; }
+
+        /* Serie IV Parte 2 - Gmail */
+        .gmail-panel {
+            background: #fff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 2px solid #e5e7eb;
+        }
+        body.tema-oscuro .gmail-panel {
             background: #111827;
             border-color: #374151;
         }
-        body.tema-oscuro .extra-oracion {
-            background: #1f2937;
-            border-color: #4b5563;
+        .btn-gmail {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #ea4335, #c5221f);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.15rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s;
         }
-        body.tema-oscuro .extra-palabra {
-            background: #312e81;
-            color: #e0e7ff;
+        .btn-gmail:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(234, 67, 53, 0.4);
         }
-        body.tema-oscuro .extra-palabra:hover {
-            background: #3730a3;
+        .btn-espera {
+            background: #9ca3af !important;
+            cursor: not-allowed !important;
         }
-        body.tema-oscuro .extra-palabra.colocada {
-            background: #064e3b;
-            color: #a7f3d0;
+        .aviso-espera {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+            font-style: italic;
         }
-        body.tema-oscuro .extra-palabras-disponibles {
-            background: #1f2937;
-        }
+        body.tema-oscuro .aviso-espera { color: #9ca3af; }
 
-        /* Panel de examen calificado */
-        .panel-examen-listo {
-            margin-top: 1rem;
-        }
-        .panel-examen-listo .btn-accion {
-            margin-top: 0.75rem;
-        }
+        /* Panel examen calificado */
+        .panel-examen-listo { margin-top: 1rem; }
+        .panel-examen-listo .btn-accion { margin-top: 0.75rem; }
         .btn-qr-alumno {
             background: linear-gradient(135deg, #f59e0b, #d97706) !important;
         }
@@ -438,13 +530,9 @@
             background: linear-gradient(135deg, #d97706, #b45309) !important;
         }
     </style>
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- html2canvas (para capturar WordPad) -->
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <!-- html2pdf (para generar el PDF de QR del alumno) -->
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
-    <!-- QRCode -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
 </head>
 <body>
@@ -454,7 +542,7 @@
         <!-- PANTALLA 1: LOGIN -->
         <div id="seccion-login" class="login-card-inner">
             <h2>Evaluación Virtual</h2>
-            <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 2rem;">Ingresa tu código único de estudiante</p>
+            <p style="color: #6b7280; font-size: 1rem; margin-bottom: 2rem;">Ingresa tu código único de estudiante</p>
             
             <div class="input-group">
                 <label for="codigo">Código Único:</label>
@@ -518,33 +606,91 @@
             <button class="btn-accion" onclick="pasarASerie4()">Ir a la Serie IV (Práctica) &rarr;</button>
         </div>
 
-        <!-- SERIE IV -->
+        <!-- SERIE IV - PARTE 1 (WordPad) -->
         <div id="seccion-serie4" style="display: none;">
             <div class="header-info">
                 <h2>Serie IV: Práctica</h2>
                 <div class="student-badge" id="badge-info-s4">Cargando...</div>
             </div>
             <div class="serie-title" id="titulo-grado-s4">Serie IV: Práctica en WordPad (Revisión del Docente)</div>
-            <div class="instructions">
-                Utiliza el simulador de WordPad y escribe el cuento de los 3 cerditos, de Caperucita Roja o Cenicienta con tus palabras. Colócale color rojo al título y que sea más grande que el resto del texto, la historia déjala de color negro y al final coloca cuáles eran los personajes principales con color azul.
+            <div class="instructions" id="instrucciones-s4"></div>
+
+            <!-- Layout especial SOLO para 2do -->
+            <div id="layout-2do" class="wordpad-layout" style="display: none;">
+                <div class="caja-texto">
+                    <h4>📝 Texto para copiar:</h4>
+                    <div class="texto-copiar">
+                        Mi computadora es una maquina que me ayuda a hacer la tarea de la escuela. Con ella puedo escribir, dibujar y aprender cosas nuevas cada dia.
+                    </div>
+                    <h4>✍️ Al final escribe:</h4>
+                    <div class="ejemplo">
+                        Nombre: David Alexander Lopez Reyes<br>
+                        Grado: 2do Primaria<br>
+                        Pais: Guatemala<br>
+                        Edad: 8 Años
+                    </div>
+                </div>
+                <div>
+                    <div class="iframe-wrapper">
+                        <iframe id="iframe-wordpad" src="./wordpad/index.html" title="Simulador de WordPad"></iframe>
+                    </div>
+                </div>
             </div>
 
-            <div class="iframe-wrapper">
-                <iframe id="iframe-wordpad" src="./wordpad/index.html" title="Simulador de WordPad"></iframe>
+            <!-- Layout normal para otros grados -->
+            <div id="layout-normal" style="display: none;">
+                <div class="iframe-wrapper">
+                    <iframe id="iframe-wordpad-normal" src="./wordpad/index.html" title="Simulador de WordPad"></iframe>
+                </div>
             </div>
 
             <div class="aviso-captura">
                 ⚠️ <strong>Asegúrate de que TODO tu texto se vea en la pantalla del simulador antes de capturar.</strong> Así tal como lo ves, lo verá el profesor. Cuando estés listo, presiona el botón verde.
             </div>
 
-            <div class="preview-captura">
-                <img id="img-preview" alt="Vista previa de la captura">
-            </div>
-
             <button class="btn-captura" id="btn-finalizar-todo" onclick="tomarCapturaYPasarAExtra()">
-                📸 Tomar Captura y Continuar a Serie Extra
+                📸 Tomar Captura y Continuar
             </button>
             <p id="mensaje-estado"></p>
+        </div>
+
+        <!-- SERIE IV - PARTE 2 (Gmail) - SOLO 5TO -->
+        <div id="seccion-serie4-gmail" style="display: none;">
+            <div class="header-info">
+                <h2>Serie IV - Parte 2: Correo</h2>
+                <div class="student-badge" id="badge-info-s4-gmail">Cargando...</div>
+            </div>
+            <div class="serie-title">Serie IV: Envío de Correo Electrónico</div>
+            
+            <div class="gmail-panel">
+                <div class="instructions" style="font-size: 1.15rem; line-height: 1.7;">
+                    <strong>📧 Instrucciones:</strong><br><br>
+                    Debes usar el simulador que ya practicaste para crear <strong>5 cuentas de Google diferentes</strong>, tal como lo hiciste en clase.<br><br>
+                    Luego, entra a tu <strong>Gmail real</strong> y envía un correo a:<br>
+                    <strong style="color: #ea4335; font-size: 1.2rem;">pinedaj5448@gmail.com</strong><br><br>
+                    El correo debe contener:<br>
+                    ✅ Un saludo cordial<br>
+                    ✅ Una lista de <strong>10 animales diferentes</strong><br>
+                    ✅ Tu nombre completo al final<br><br>
+                    <strong style="color: #dc2626;">⚠️ MUCHO CUIDADO con lo que escribes.</strong><br>
+                    El profesor revisará este correo cuando entregues el examen. Cualquier falta de respeto o contenido inapropiado afectará tu nota.
+                </div>
+
+                <a href="https://mail.google.com" target="_blank" class="btn-gmail">
+                    📧 Abrir Gmail en una nueva pestaña
+                </a>
+
+                <p class="aviso-espera">
+                    Una vez hayas enviado el correo, presiona el botón de abajo para continuar.
+                </p>
+            </div>
+
+            <button class="btn-captura" id="btn-continuar-gmail" onclick="continuarASerieExtra()" disabled style="background: #9ca3af;">
+                Continuar a Serie Extra &rarr;
+            </button>
+            <p class="aviso-espera" id="aviso-espera-txt">
+                ⏳ Espera 30 segundos para poder continuar...
+            </p>
         </div>
 
         <!-- SERIE EXTRA -->
@@ -568,6 +714,25 @@
 
     </div>
 
+    <!-- MODAL DE CONFIRMACIÓN DE FOTO -->
+    <div class="modal-overlay" id="modal-foto">
+        <div class="modal-contenido">
+            <h3>📸 Revisa tu captura antes de continuar</h3>
+            <p style="text-align: center; color: #6b7280; margin-top: 0;">
+                Así es como el profesor verá tu trabajo. Si falta algo, puedes volver a capturar.
+            </p>
+            <img id="img-modal-preview" alt="Vista previa de la captura">
+            <div class="modal-acciones">
+                <button class="btn-modal btn-recapturar" onclick="volverACapturar()">
+                    🔄 Volver a capturar
+                </button>
+                <button class="btn-modal btn-confirmar" onclick="confirmarCaptura()">
+                    ✅ Se ve bien, continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const SUPABASE_URL = 'https://eqhlrmonlrdgskjsiueb.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxaGxybW9ubHJkZ3NranNpdWViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxMTYwMzMsImV4cCI6MjEwNTY5MjAzM30.YJpjDzOK19QMNW22qDrgIZzO5sRbmSPqtBFds1YpbJQ';
@@ -576,10 +741,7 @@
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const NOMBRE_BUCKET = 'capturas-evaluacion';
-
-        // ================== URL DE VER-EXAMEN ==================
         const URL_VER_EXAMEN = 'https://jp-zeu-2007.github.io/PAGINA-EXAMENES/ver-examen/';
-        // ========================================================
 
         let estudianteActual = null;
         let preguntasFVMezcladas = [];
@@ -594,6 +756,7 @@
         let elementoSeleccionadoIzq = null;
         let conexiones = [];
         let capturaTemporal = null;
+        let esGrado5to = false;
 
         let examenCompleto = {
             serie1: [],
@@ -654,7 +817,7 @@
             { id: 10, izquierda: "Computadora", derecha: "e) Es una máquina que sirve para hacer muchas cosas." }
         ];
         const bancoExtra_2 = [
-            { id: 1, oracionCorrecta: "¿Qué es internet?", palabrasDesordenadas: ["internet?", "es", "¿Qué"] },
+            { id: 1, oracionCorrecta: "El internet es como una red invisible que conecta a todo el mundo", palabrasDesordenadas: ["El", "internet", "es", "como", "una", "red", "invisible", "que", "conecta", "a", "todo", "el", "mundo"] },
             { id: 2, oracionCorrecta: "WordPad sirve para escribir textos", palabrasDesordenadas: ["para", "WordPad", "textos", "sirve", "escribir"] },
             { id: 3, oracionCorrecta: "Un navegador sirve para entrar a internet", palabrasDesordenadas: ["para", "sirve", "navegador", "entrar", "Un", "a", "internet"] }
         ];
@@ -781,7 +944,7 @@
             { id: 10, izquierda: "Correo electrónico", derecha: "h) Sirve para enviar y recibir mensajes por internet." }
         ];
         const bancoExtra_5 = [
-            { id: 1, oracionCorrecta: "El correo electrónico sirve para enviar mensajes", palabrasDesordenadas: ["para", "correo", "El", "mensajes", "electrónico", "sirve", "enviar"] },
+            { id: 1, oracionCorrecta: "El correo electronico sirve para enviar mensajes", palabrasDesordenadas: ["para", "correo", "El", "mensajes", "electronico", "sirve", "enviar"] },
             { id: 2, oracionCorrecta: "Google Docs es como Word pero en internet", palabrasDesordenadas: ["en", "es", "Word", "Docs", "pero", "Google", "internet", "como"] },
             { id: 3, oracionCorrecta: "Visio sirve para hacer diagramas ordenados", palabrasDesordenadas: ["hacer", "diagramas", "sirve", "Visio", "ordenados", "para"] }
         ];
@@ -823,7 +986,7 @@
             { id: 10, izquierda: "Enlace", derecha: "g) Es un texto o imagen que al hacer clic me lleva a otro lugar." }
         ];
         const bancoExtra_6 = [
-            { id: 1, oracionCorrecta: "Google Sites sirve para crear páginas web", palabrasDesordenadas: ["web", "crear", "para", "Google", "páginas", "Sites", "sirve"] },
+            { id: 1, oracionCorrecta: "Google Sites sirve para crear paginas web", palabrasDesordenadas: ["web", "crear", "para", "Google", "paginas", "Sites", "sirve"] },
             { id: 2, oracionCorrecta: "PowerPoint sirve para hacer presentaciones animadas", palabrasDesordenadas: ["animadas", "sirve", "PowerPoint", "hacer", "para", "presentaciones"] },
             { id: 3, oracionCorrecta: "La nube guarda archivos en internet", palabrasDesordenadas: ["en", "archivos", "La", "internet", "nube", "guarda"] }
         ];
@@ -860,6 +1023,7 @@
 
             estudianteActual = estudianteData;
             const gradoLimpio = String(estudianteData.grado).trim();
+            esGrado5to = gradoLimpio === '5';
 
             document.getElementById('nombre-estudiante-txt').textContent = `${estudianteData.nombres} ${estudianteData.apellidos}`;
             document.getElementById('grado-estudiante-txt').textContent = obtenerNombreGrado(gradoLimpio);
@@ -875,7 +1039,6 @@
                 return;
             }
 
-            // Verificar si ya hizo el examen
             const { data: evaluacionPrevia } = await _supabase
                 .from('resultados_evaluacion')
                 .select('*')
@@ -903,13 +1066,12 @@
                 return;
             }
 
-            // No ha hecho el examen
             btnValidar.textContent = 'Comenzar Evaluación';
             btnValidar.disabled = false;
             btnValidar.setAttribute('onclick', 'iniciarEvaluacion()');
         }
 
-        // ================= PANEL DE EXAMEN YA CALIFICADO =================
+        // ================= PANEL EXAMEN LISTO =================
         function mostrarPanelExamenListo(estudiante, examen) {
             const btnValidar = document.getElementById('btn-validar');
             const mensajeError = document.getElementById('mensaje-error');
@@ -946,7 +1108,7 @@
             `;
         }
 
-        // ================= DESCARGAR QR/ENLACE DEL ALUMNO =================
+        // ================= DESCARGAR QR ALUMNO =================
         async function descargarInvitacionExamen(codigo, nombreCompleto, gradoTexto) {
             try {
                 if (typeof QRCode === 'undefined' || !QRCode.toDataURL) {
@@ -1031,6 +1193,7 @@
             document.getElementById('badge-info-s2').textContent = infoBadge;
             document.getElementById('badge-info-s3').textContent = infoBadge;
             document.getElementById('badge-info-s4').textContent = infoBadge;
+            document.getElementById('badge-info-s4-gmail').textContent = infoBadge;
             document.getElementById('badge-info-extra').textContent = infoBadge;
 
             document.getElementById('titulo-grado-s1').textContent = `Serie I: Falsos y Verdaderos - (${nombreGradoTexto})`;
@@ -1038,6 +1201,22 @@
             document.getElementById('titulo-grado-s3').textContent = `Serie III: Unión de Columnas - (${nombreGradoTexto})`;
             document.getElementById('titulo-grado-s4').textContent = `Serie IV: Práctica en WordPad - (${nombreGradoTexto})`;
             document.getElementById('titulo-grado-extra').textContent = `Serie Extra: Ordena la Oración - (${nombreGradoTexto})`;
+
+            // Configurar instrucciones de la Serie IV según el grado
+            const instruccionesS4 = document.getElementById('instrucciones-s4');
+            if (gradoLimpio === '2') {
+                instruccionesS4.innerHTML = `En la parte izquierda de la página verás un cuadro con un pequeño texto que debes escribir en el simulador de WordPad. Copia el texto tal como aparece. Al final, escribe tu nombre completo, grado, país y edad. Abajo verás un ejemplo.`;
+                document.getElementById('layout-2do').style.display = 'grid';
+                document.getElementById('layout-normal').style.display = 'none';
+            } else if (gradoLimpio === '5') {
+                instruccionesS4.innerHTML = `En la parte izquierda de la página verás un cuadro con un pequeño texto breve que debes escribir en el simulador de WordPad. Debes escribir lo mismo, e insertar dos imágenes relacionadas. Al final escribe tu nombre completo, tu grado, tu país y cuántos años tienes. En la pantalla verás un ejemplo.`;
+                document.getElementById('layout-2do').style.display = 'none';
+                document.getElementById('layout-normal').style.display = 'block';
+            } else {
+                instruccionesS4.innerHTML = `Utiliza el simulador de WordPad y escribe el cuento de los 3 cerditos, de Caperucita Roja o Cenicienta con tus palabras. Colócale color rojo al título y que sea más grande que el resto del texto, la historia déjala de color negro y al final coloca cuáles eran los personajes principales con color azul.`;
+                document.getElementById('layout-2do').style.display = 'none';
+                document.getElementById('layout-normal').style.display = 'block';
+            }
 
             cargarPreguntasPorNumero(gradoLimpio);
         }
@@ -1303,12 +1482,12 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ================= SERIE IV: CAPTURAR Y PASAR A EXTRA =================
+        // ================= SERIE IV: CAPTURAR Y MOSTRAR MODAL =================
         async function tomarCapturaYPasarAExtra() {
             const btn = document.getElementById('btn-finalizar-todo');
             const mensajeEstado = document.getElementById('mensaje-estado');
-            const imgPreview = document.getElementById('img-preview');
-            const iframe = document.getElementById('iframe-wordpad');
+            const iframeId = (String(estudianteActual.grado).trim() === '2') ? 'iframe-wordpad' : 'iframe-wordpad-normal';
+            const iframe = document.getElementById(iframeId);
 
             btn.disabled = true;
             btn.textContent = '📸 Capturando pantalla...';
@@ -1335,27 +1514,78 @@
                 capturaTemporal = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
                 if (!capturaTemporal) throw new Error('No se pudo generar la captura.');
 
-                const urlPreview = URL.createObjectURL(capturaTemporal);
-                imgPreview.src = urlPreview;
-                imgPreview.style.display = 'block';
-
                 examenCompleto.serie4 = {
                     texto_escrito: bodyInterno.innerText || bodyInterno.textContent || ''
                 };
 
-                setTimeout(() => {
-                    document.getElementById('seccion-serie4').style.display = 'none';
-                    document.getElementById('seccion-extra').style.display = 'block';
-                    renderizarSerieExtra();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 800);
+                // Mostrar modal de confirmación
+                const urlPreview = URL.createObjectURL(capturaTemporal);
+                document.getElementById('img-modal-preview').src = urlPreview;
+                document.getElementById('modal-foto').classList.add('activo');
+
+                btn.disabled = false;
+                btn.textContent = '📸 Tomar Captura y Continuar';
+                mensajeEstado.textContent = '';
 
             } catch (error) {
                 console.error(error);
                 alert('Error al capturar: ' + error.message);
                 btn.disabled = false;
-                btn.textContent = '📸 Tomar Captura y Continuar a Serie Extra';
+                btn.textContent = '📸 Tomar Captura y Continuar';
             }
+        }
+
+        function volverACapturar() {
+            document.getElementById('modal-foto').classList.remove('activo');
+            document.getElementById('mensaje-estado').textContent = 'Puedes seguir editando tu texto. Cuando termines, vuelve a presionar el botón verde.';
+        }
+
+        function confirmarCaptura() {
+            document.getElementById('modal-foto').classList.remove('activo');
+
+            // Si es 5to, pasar a la Serie IV Parte 2 (Gmail). Si no, pasar directo a Serie Extra.
+            if (esGrado5to) {
+                document.getElementById('seccion-serie4').style.display = 'none';
+                document.getElementById('seccion-serie4-gmail').style.display = 'block';
+                iniciarEsperaGmail();
+            } else {
+                document.getElementById('seccion-serie4').style.display = 'none';
+                document.getElementById('seccion-extra').style.display = 'block';
+                renderizarSerieExtra();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= SERIE IV PARTE 2: GMAIL (SOLO 5TO) =================
+        function iniciarEsperaGmail() {
+            const btn = document.getElementById('btn-continuar-gmail');
+            const aviso = document.getElementById('aviso-espera-txt');
+            let segundos = 30;
+
+            btn.disabled = true;
+            btn.style.background = '#9ca3af';
+            aviso.textContent = `⏳ Espera ${segundos} segundos para poder continuar...`;
+            aviso.style.color = '#6b7280';
+
+            const intervalo = setInterval(() => {
+                segundos--;
+                aviso.textContent = `⏳ Espera ${segundos} segundos para poder continuar...`;
+
+                if (segundos <= 0) {
+                    clearInterval(intervalo);
+                    btn.disabled = false;
+                    btn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+                    aviso.textContent = '✅ ¡Listo! Ya puedes continuar.';
+                    aviso.style.color = '#10b981';
+                }
+            }, 1000);
+        }
+
+        function continuarASerieExtra() {
+            document.getElementById('seccion-serie4-gmail').style.display = 'none';
+            document.getElementById('seccion-extra').style.display = 'block';
+            renderizarSerieExtra();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ================= SERIE EXTRA =================
