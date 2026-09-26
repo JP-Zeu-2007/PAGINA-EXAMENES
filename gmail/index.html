@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Educativo - Creación de Cuenta Google</title>
+    <style>
+        :root {
+            --bg-dark: #202124;
+            --card-bg: #111318;
+            --input-bg: #111318;
+            --text-main: #e3e2e6;
+            --text-sub: #c4c6d0;
+            --blue-accent: #a8c7fa;
+            --blue-btn: #a8c7fa;
+            --btn-text: #062e6f;
+            --border-color: #8e918f;
+            --error-red: #f2b8b5;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Google Sans', Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Barra Superior Educativa */
+        .top-bar {
+            background-color: #2b2d30;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #444746;
+        }
+
+        .top-bar h1 {
+            font-size: 16px;
+            color: #e3e2e6;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background: #3c4043;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .tab-btn.active {
+            background: #a8c7fa;
+            color: #062e6f;
+        }
+
+        .open-pop-btn {
+            background: #34a853;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Contenedor Principal */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Tarjeta de Google */
+        .google-card {
+            background-color: var(--card-bg);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 420px;
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .left-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .right-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .google-logo {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+        }
+
+        .left-col h2 {
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: #e3e2e6;
+        }
+
+        .left-col p {
+            font-size: 16px;
+            color: var(--text-sub);
+        }
+
+        /* Inputs de Google */
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .google-input {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 16px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .google-input:focus {
+            border-color: var(--blue-accent);
+            border-width: 2px;
+        }
+
+        .input-label {
+            position: absolute;
+            left: 12px;
+            top: -10px;
+            background-color: var(--card-bg);
+            padding: 0 4px;
+            font-size: 12px;
+            color: var(--blue-accent);
+        }
+
+        .input-subtext {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        .email-suffix {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            color: var(--text-sub);
+            pointer-events: none;
+        }
+
+        /* Botones estilo Google */
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .btn-next {
+            background-color: var(--blue-btn);
+            color: var(--btn-text);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-next:hover {
+            opacity: 0.9;
+        }
+
+        .btn-back {
+            background: transparent;
+            color: var(--blue-accent);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: auto; /* Empuja el botón a la izquierda */
+        }
+
+        .btn-back:hover {
+            background: rgba(168, 199, 250, 0.08);
+        }
+
+        .btn-sec {
+            background: transparent;
+            color: var(--blue-accent);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-gen-pass {
+            background: #2b2d30;
+            color: var(--blue-accent);
+            border: 1px solid var(--blue-accent);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .error-msg {
+            color: var(--error-red);
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .show-pass-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 40px;
+            font-size: 12px;
+            color: var(--text-sub);
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-links span {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* --- LISTA DE CUENTAS GUARDADAS --- */
+        .account-list-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .account-card-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #3c4043;
+            background: #181a1d;
+            transition: 0.2s;
+        }
+
+        .account-card-item:hover {
+            background: #25282c;
+        }
+
+        .acc-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .acc-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .acc-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .acc-email {
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        .add-account-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px dashed var(--blue-accent);
+            background: transparent;
+            color: var(--blue-accent);
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .add-account-btn:hover {
+            background: rgba(168, 199, 250, 0.08);
+        }
+
+        /* VISTA DE MENSAJES */
+        #messages-view {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            background: #1e1e1e;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        .msg-app-header {
+            background: #252525;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .msg-phone-number {
+            background: #333;
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: var(--blue-accent);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .msg-list {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .msg-item {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 4px solid transparent;
+        }
+
+        .msg-item:hover {
+            background: #333;
+        }
+
+        .msg-item.google-msg {
+            border-left-color: #4285f4;
+        }
+
+        .msg-sender {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .msg-preview {
+            color: #aaa;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .msg-full-body {
+            display: none;
+            margin-top: 10px;
+            color: #ddd;
+            font-size: 14px;
+            border-top: 1px solid #444;
+            padding-top: 10px;
+        }
+
+        .msg-item.expanded .msg-full-body {
+            display: block;
+        }
+
+        .code-highlight {
+            background: #062e6f;
+            color: #a8c7fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .step-panel { display: none; width: 100%; }
+        .step-panel.active { display: flex; }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR EDUCACIONAL -->
+    <div class="top-bar">
+        <h1>Simulador Educativo: Registro de Cuenta de Google</h1>
+        <div class="nav-tabs">
+            <button class="tab-btn active" id="tab-google" onclick="switchTab('google')">Pantalla de Registro</button>
+            <button class="tab-btn" id="tab-msg" onclick="switchTab('msg')">Mensajes SMS <span id="msg-badge"></span></button>
+            <button class="open-pop-btn" onclick="openMessageWindow()">↗ Abrir Mensajes en otra Ventana</button>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="main-container">
+
+        <!-- INTERFAZ REGISTRO GOOGLE -->
+        <div id="google-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div class="google-card">
+                
+                <!-- PASO 1: NOMBRE -->
+                <div id="step-1" class="step-panel active">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Crea una Cuenta de Google</h2>
+                        <p>Ingresa tu nombre</p>
+                    </div>
+                    <div class="right-col">
+                        <div class="input-group">
+                            <span class="input-label">Nombre</span>
+                            <input type="text" id="input-fname" class="google-input">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-label">Apellido (opcional)</span>
+                            <input type="text" id="input-lname" class="google-input">
+                        </div>
+                        <div id="err-step1" class="error-msg">Ingresa un nombre para continuar</div>
+                        <div class="btn-group">
+                            <button class="btn-next" onclick="nextStep(1)">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 2: INFORMACIÓN BÁSICA (CORREGIDO A 12 MESES) -->
+                <div id="step-2" class="step-panel">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Información básica</h2>
+                        <p>Completa tu fecha de nacimiento y género.</p>
+                    </div>
+                    <div class="right-col">
+                        <div style="display: flex; gap: 10px;">
+                            <div class="input-group" style="flex: 1;">
+                                <span class="input-label">Día</span>
+                                <input type="number" id="input-day" class="google-input" placeholder="23">
+                            </div>
+                            <div class="input-group" style="flex: 1.5;">
+                                <span class="input-label">Mes</span>
+                                <select id="input-month" class="google-input" style="background: var(--card-bg);">
+                                    <option value="Enero">Enero</option>
+                                    <option value="Febrero">Febrero</option>
+                                    <option value="Marzo">Marzo</option>
+                                    <option value="Abril">Abril</option>
+                                    <option value="Mayo" selected>Mayo</option>
+                                    <option value="Junio">Junio</option>
+                                    <option value="Julio">Julio</option>
+                                    <option value="Agosto">Agosto</option>
+                                    <option value="Septiembre">Septiembre</option>
+                                    <option value="Octubre">Octubre</option>
+                                    <option value="Noviembre">Noviembre</option>
+                                    <option value="Diciembre">Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="input-group" style="flex: 1;">
+                                <span class="input-label">Año</span>
+                                <input type="number" id="input-year" class="google-input" placeholder="2000">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-label">Género</span>
+                            <select id="input-gender" class="google-input" style="background: var(--card-bg);">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Prefiero no decirlo</option>
+                            </select>
+                        </div>
+                        <div id="err-step2" class="error-msg">Completa la fecha correctamente</div>
+                        <div class="btn-group">
+                            <button class="btn-back" onclick="prevStep(2)">Atrás</button>
+                            <button class="btn-next" onclick="nextStep(2)">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 3: NOMBRE DE USUARIO / CORREO -->
+                <div id="step-3" class="step-panel">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Cómo acceder</h2>
+                        <p>Crea una dirección de Gmail para acceder a tu cuenta de Google</p>
+                    </div>
+                    <div class="right-col">
+                        <div class="input-group">
+                            <span class="input-label">Nombre de usuario</span>
+                            <input type="text" id="input-username" class="google-input" style="padding-right: 110px;">
+                            <span class="email-suffix">@gmail.com</span>
+                        </div>
+                        <div class="input-subtext">Puedes usar letras, números y signos de puntuación</div>
+                        <div id="err-step3" class="error-msg">Ingresa un usuario válido (mínimo 4 caracteres)</div>
+                        <div class="btn-group">
+                            <button class="btn-back" onclick="prevStep(3)">Atrás</button>
+                            <button class="btn-next" onclick="nextStep(3)">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 4: CONTRASEÑA -->
+                <div id="step-4" class="step-panel">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Crea una contraseña segura</h2>
+                        <p>Crea una contraseña segura con letras, números y símbolos combinados.</p>
+                    </div>
+                    <div class="right-col">
+                        <button class="btn-gen-pass" onclick="generatePassword()">⚡ Generar contraseña segura para ti</button>
+                        
+                        <div class="input-group">
+                            <span class="input-label">Contraseña</span>
+                            <input type="password" id="input-pass" class="google-input">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-label">Confirmar</span>
+                            <input type="password" id="input-pass-confirm" class="google-input">
+                        </div>
+                        
+                        <label class="show-pass-container">
+                            <input type="checkbox" onchange="togglePasswordVisibility(this)"> Mostrar contraseña
+                        </label>
+
+                        <div id="err-step4" class="error-msg">Debes usar al menos 8 caracteres, combinando letras, números y símbolos.</div>
+                        <div class="btn-group">
+                            <button class="btn-back" onclick="prevStep(4)">Atrás</button>
+                            <button class="btn-next" onclick="nextStep(4)">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 5: VERIFICACIÓN ANTI-ROBOT (SMS) -->
+                <div id="step-5" class="step-panel">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Demuestra que no eres un robot</h2>
+                        <p>Recibirás un código de verificación por mensaje de texto (SMS).</p>
+                    </div>
+                    <div class="right-col">
+                        <p style="font-size:12px; color:var(--text-sub); margin-bottom:10px;">
+                            💡 <b>Instrucción:</b> Ingresa un número telefónico para recibir el mensaje en el simulador.
+                        </p>
+                        <div class="input-group">
+                            <span class="input-label">Número de teléfono</span>
+                            <input type="text" id="input-phone" class="google-input" placeholder="+502 5555-0199">
+                        </div>
+                        <div class="input-subtext">Google verificará este número mediante SMS.</div>
+                        <div id="err-step5" class="error-msg">Por favor ingresa un número de teléfono.</div>
+                        <div class="btn-group">
+                            <button class="btn-back" onclick="prevStep(5)">Atrás</button>
+                            <button class="btn-next" onclick="sendSMSCode()">Enviar Código</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 5.5: INGRESO DEL CÓDIGO -->
+                <div id="step-5-code" class="step-panel">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Ingresa el código de verificación</h2>
+                        <p>Revisa la aplicación de Mensajes SMS para ver el código de 6 dígitos enviado por Google.</p>
+                    </div>
+                    <div class="right-col">
+                        <div class="input-group">
+                            <span class="input-label">Ingresa el código</span>
+                            <input type="text" id="input-sms-code" class="google-input" placeholder="G-______">
+                        </div>
+                        <div id="err-step5-code" class="error-msg">Código incorrecto. Revisa tu aplicación de Mensajes.</div>
+                        <div class="btn-group">
+                            <button class="btn-back" onclick="prevStep('5-code')">Atrás</button>
+                            <button class="btn-next" onclick="verifySMSCode()">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 6: CORREO RECUPERACIÓN -->
+                <div id="step-6" class="step-panel">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Agrega un correo de recuperación</h2>
+                        <p>La dirección que Google usará para comunicarse contigo si detecta actividad inusual.</p>
+                    </div>
+                    <div class="right-col">
+                        <div class="input-group">
+                            <span class="input-label">Dirección de correo electrónico alternativa</span>
+                            <input type="email" id="input-recovery" class="google-input" placeholder="correo@ejemplo.com">
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn-back" onclick="prevStep(6)">Atrás</button>
+                            <button class="btn-sec" onclick="nextStep(6, true)">Omitir</button>
+                            <button class="btn-next" onclick="nextStep(6, false)">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 7: REVISIÓN FINAL -->
+                <div id="step-7" class="step-panel">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Revisa la información de tu cuenta</h2>
+                        <p>Puedes usar esta dirección de correo electrónico para acceder en otro momento.</p>
+                    </div>
+                    <div class="right-col" style="justify-content: center; align-items: flex-start;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                            <div id="avatar-circle" style="width: 48px; height: 48px; border-radius: 50%; background: #d93025; color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">
+                                A
+                            </div>
+                            <div>
+                                <div id="display-fullname" style="font-size: 16px; font-weight: 500; color: #fff;">Estudiante</div>
+                                <div id="display-email" style="font-size: 14px; color: var(--text-sub);">usuario@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="width: 100%;">
+                            <button class="btn-back" onclick="prevStep(7)">Atrás</button>
+                            <button class="btn-next" onclick="finishSimulation()">Finalizar Registro</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO FINAL: LISTA DE CUENTAS CREADAS -->
+                <div id="step-accounts" class="step-panel">
+                    <div class="left-col">
+                        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                        <h2>Cuentas creadas</h2>
+                        <p>Elegir una cuenta o agregar una nueva dirección de correo electrónico.</p>
+                    </div>
+                    <div class="right-col" style="justify-content: flex-start;">
+                        <div class="account-list-container" id="created-accounts-list">
+                            <!-- Aquí se van agregando dinámicamente las cuentas -->
+                        </div>
+                        
+                        <button class="add-account-btn" onclick="addNewAccount()">
+                            <span style="font-size:20px; font-weight:bold;">+</span> Usar otra cuenta
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer">
+                <div>Español (Latinoamérica)</div>
+                <div class="footer-links">
+                    <span>Ayuda</span>
+                    <span>Privacidad</span>
+                    <span>Condiciones</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERFAZ MENSAJES (GOOGLE MESSAGES SIMULATOR) -->
+        <div id="messages-view">
+            <div class="msg-app-header">
+                <div>
+                    <strong style="font-size: 18px;">💬 Mensajes de Google</strong>
+                    <div style="font-size:12px; color:#aaa;">Simulador de Bandeja de Entrada SMS</div>
+                </div>
+                <div>
+                    Tu número: <span class="msg-phone-number" id="sim-phone-display">+502 5555-0199</span>
+                </div>
+            </div>
+            <div class="msg-list" id="msg-container">
+                
+                <div class="msg-item" onclick="toggleMsgExpand(this)">
+                    <div class="msg-sender">
+                        <span>BANCORP</span>
+                        <span style="font-size: 11px; color:#888;">Ayer</span>
+                    </div>
+                    <div class="msg-preview">Tu retiro por $50.00 fue exitoso...</div>
+                    <div class="msg-full-body">
+                        Tu retiro por $50.00 fue exitoso en la sucursal Central. Si no fuiste tú, comunícate inmediatamente al soporte técnico.
+                    </div>
+                </div>
+
+                <div class="msg-item" onclick="toggleMsgExpand(this)">
+                    <div class="msg-sender">
+                        <span>Discord</span>
+                        <span style="font-size: 11px; color:#888;">Hace 2 días</span>
+                    </div>
+                    <div class="msg-preview">Tu código de inicio de sesión es 492011.</div>
+                    <div class="msg-full-body">
+                        Tu código de inicio de sesión para Discord es 492011. No compartas este código con nadie.
+                    </div>
+                </div>
+
+                <div class="msg-item" onclick="toggleMsgExpand(this)">
+                    <div class="msg-sender">
+                        <span>TikTok</span>
+                        <span style="font-size: 11px; color:#888;">Hace 5 días</span>
+                    </div>
+                    <div class="msg-preview">[TikTok] 883-102 es tu código de verificación.</div>
+                    <div class="msg-full-body">
+                        [TikTok] 883-102 es tu código de verificación. f328fH29
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ESTADO GLOBAL
+        const registeredAccounts = []; // Array donde se acumulan las cuentas
+        let simulatedData = {
+            fname: '',
+            lname: '',
+            username: '',
+            password: '',
+            phone: '+502 5555-0199',
+            generatedCode: ''
+        };
+
+        const avatarColors = ['#d93025', '#1a73e8', '#1e8e3e', '#f9ab00', '#a142f4', '#e37400'];
+
+        const channel = new BroadcastChannel('gmail_simulator_channel');
+
+        channel.onmessage = (event) => {
+            if (event.data.type === 'NEW_SMS') {
+                addSmsToUI(event.data.code);
+            }
+        };
+
+        function switchTab(tab) {
+            document.getElementById('tab-google').classList.remove('active');
+            document.getElementById('tab-msg').classList.remove('active');
+            
+            if (tab === 'google') {
+                document.getElementById('tab-google').classList.add('active');
+                document.getElementById('google-view').style.display = 'flex';
+                document.getElementById('messages-view').style.display = 'none';
+            } else {
+                document.getElementById('tab-msg').classList.add('active');
+                document.getElementById('google-view').style.display = 'none';
+                document.getElementById('messages-view').style.display = 'block';
+                document.getElementById('msg-badge').innerText = '';
+            }
+        }
+
+        function toggleMsgExpand(element) {
+            element.classList.toggle('expanded');
+        }
+
+        function generatePassword() {
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+            let pass = "";
+            for (let i = 0; i < 12; i++) {
+                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('input-pass').value = pass;
+            document.getElementById('input-pass-confirm').value = pass;
+        }
+
+        function togglePasswordVisibility(checkbox) {
+            const type = checkbox.checked ? 'text' : 'password';
+            document.getElementById('input-pass').type = type;
+            document.getElementById('input-pass-confirm').type = type;
+        }
+
+        // NAVEGACIÓN HACIA ATRÁS
+        function prevStep(currentStep) {
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            
+            let prevStepNum;
+            if (currentStep === '5-code') {
+                prevStepNum = '5';
+            } else {
+                prevStepNum = currentStep - 1;
+            }
+
+            document.getElementById(`step-${prevStepNum}`).classList.add('active');
+        }
+
+        // VALIDACIONES Y NAVEGACIÓN HACIA ADELANTE
+        function nextStep(currentStep) {
+            let isValid = true;
+
+            if (currentStep === 1) {
+                const fname = document.getElementById('input-fname').value.trim();
+                if (!fname) {
+                    showError('err-step1', 'Ingresa un nombre para continuar');
+                    isValid = false;
+                } else {
+                    simulatedData.fname = fname;
+                    simulatedData.lname = document.getElementById('input-lname').value.trim();
+                    hideError('err-step1');
+                }
+            }
+
+            if (currentStep === 2) {
+                const day = document.getElementById('input-day').value;
+                const year = document.getElementById('input-year').value;
+                if (!day || !year || day < 1 || day > 31 || year < 1920 || year > 2026) {
+                    showError('err-step2', 'Por favor ingresa una fecha de nacimiento válida.');
+                    isValid = false;
+                } else {
+                    hideError('err-step2');
+                }
+            }
+
+            if (currentStep === 3) {
+                const user = document.getElementById('input-username').value.trim();
+                if (user.length < 4) {
+                    showError('err-step3', 'El nombre de usuario debe tener al menos 4 caracteres.');
+                    isValid = false;
+                } else {
+                    simulatedData.username = user + "@gmail.com";
+                    hideError('err-step3');
+                }
+            }
+
+            if (currentStep === 4) {
+                const pass = document.getElementById('input-pass').value;
+                const passConfirm = document.getElementById('input-pass-confirm').value;
+                const passRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+
+                if (!passRegex.test(pass)) {
+                    showError('err-step4', 'Usa 8 caracteres o más con una combinación de letras, números y símbolos.');
+                    isValid = false;
+                } else if (pass !== passConfirm) {
+                    showError('err-step4', 'Las contraseñas no coinciden. Inténtalo de nuevo.');
+                    isValid = false;
+                } else {
+                    simulatedData.password = pass;
+                    hideError('err-step4');
+                }
+            }
+
+            if (currentStep === 6) {
+                document.getElementById('display-fullname').innerText = `${simulatedData.fname} ${simulatedData.lname}`;
+                document.getElementById('display-email').innerText = simulatedData.username;
+                document.getElementById('avatar-circle').innerText = simulatedData.fname.charAt(0).toUpperCase();
+            }
+
+            if (isValid) {
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+                let nextStepNum = currentStep + 1;
+                if (document.getElementById(`step-${nextStepNum}`)) {
+                    document.getElementById(`step-${nextStepNum}`).classList.add('active');
+                }
+            }
+        }
+
+        function sendSMSCode() {
+            const phone = document.getElementById('input-phone').value.trim();
+            if (!phone) {
+                showError('err-step5', 'Por favor ingresa un número telefónico');
+                return;
+            }
+            hideError('err-step5');
+            simulatedData.phone = phone;
+            document.getElementById('sim-phone-display').innerText = phone;
+
+            const code = Math.floor(100000 + Math.random() * 900000).toString();
+            simulatedData.generatedCode = code;
+
+            channel.postMessage({ type: 'NEW_SMS', code: code });
+            addSmsToUI(code);
+
+            document.getElementById('msg-badge').innerText = '🔴 (1 Nuevo)';
+            document.getElementById('step-5').classList.remove('active');
+            document.getElementById('step-5-code').classList.add('active');
+        }
+
+        function addSmsToUI(code) {
+            const msgContainer = document.getElementById('msg-container');
+            const newMsgHtml = `
+                <div class="msg-item google-msg expanded" onclick="toggleMsgExpand(this)">
+                    <div class="msg-sender">
+                        <span style="color:#a8c7fa;">G-Google</span>
+                        <span style="font-size: 11px; color:#a8c7fa;">Ahora mismo</span>
+                    </div>
+                    <div class="msg-preview">G-${code} es tu código de verificación de Google.</div>
+                    <div class="msg-full-body">
+                        G-<span class="code-highlight">${code}</span> es tu código de verificación de Google. No compartas este código con nadie por razones de seguridad.
+                    </div>
+                </div>
+            `;
+            msgContainer.insertAdjacentHTML('afterbegin', newMsgHtml);
+        }
+
+        function verifySMSCode() {
+            const entered = document.getElementById('input-sms-code').value.trim().replace('G-', '');
+            if (entered === simulatedData.generatedCode) {
+                hideError('err-step5-code');
+                document.getElementById('step-5-code').classList.remove('active');
+                document.getElementById('step-6').classList.add('active');
+            } else {
+                showError('err-step5-code', 'Código incorrecto. Revisa tu aplicación de Mensajes.');
+            }
+        }
+
+        function openMessageWindow() {
+            const win = window.open("", "SMSWindow", "width=450,height=600");
+            win.document.write(`
+                <html>
+                <head>
+                    <title>Mensajes SMS - Simulador</title>
+                    <style>
+                        body { background: #1e1e1e; color: white; font-family: sans-serif; padding: 20px; }
+                        .msg-item { background: #2a2a2a; border-radius: 8px; padding: 12px; margin-bottom: 10px; border-left: 4px solid #4285f4; }
+                        .code { background: #062e6f; color: #a8c7fa; padding: 2px 6px; font-weight: bold; font-size: 18px; }
+                    </style>
+                </head>
+                <body>
+                    <h3>💬 Mensajes de Google</h3>
+                    <p style="font-size:12px; color:#aaa;">Teléfono simulado: ${simulatedData.phone}</p>
+                    <hr style="border-color:#444; margin-bottom:15px;">
+                    <div id="popup-msg-list">
+                        ${simulatedData.generatedCode ? `
+                            <div class="msg-item">
+                                <strong>G-Google</strong><br><br>
+                                G-<span class="code">${simulatedData.generatedCode}</span> es tu código de verificación de Google.
+                            </div>
+                        ` : '<p style="color:#888;">Esperando mensajes...</p>'}
+                    </div>
+                    <script>
+                        const ch = new BroadcastChannel('gmail_simulator_channel');
+                        ch.onmessage = (e) => {
+                            if(e.data.type === 'NEW_SMS') {
+                                document.getElementById('popup-msg-list').innerHTML = \`
+                                    <div class="msg-item">
+                                        <strong>G-Google</strong><br><br>
+                                        G-<span class="code">\${e.data.code}</span> es tu código de verificación de Google.
+                                    </div>
+                                \` + document.getElementById('popup-msg-list').innerHTML;
+                            }
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+        }
+
+        // GUARDAR CUENTA Y MOSTRAR LISTA
+        function finishSimulation() {
+            // Guardar la cuenta actual en la lista acumulativa
+            const randomColor = avatarColors[registeredAccounts.length % avatarColors.length];
+            registeredAccounts.push({
+                fullName: `${simulatedData.fname} ${simulatedData.lname}`,
+                email: simulatedData.username,
+                initial: simulatedData.fname.charAt(0).toUpperCase(),
+                color: randomColor
+            });
+
+            // Renderizar la lista de cuentas
+            renderAccountList();
+
+            // Ocultar paso 7 y mostrar panel de lista de cuentas
+            document.getElementById('step-7').classList.remove('active');
+            document.getElementById('step-accounts').classList.add('active');
+        }
+
+        function renderAccountList() {
+            const container = document.getElementById('created-accounts-list');
+            container.innerHTML = '';
+
+            registeredAccounts.forEach(acc => {
+                const item = `
+                    <div class="account-card-item">
+                        <div class="acc-avatar" style="background: ${acc.color};">
+                            ${acc.initial}
+                        </div>
+                        <div class="acc-info">
+                            <span class="acc-name">${acc.fullName}</span>
+                            <span class="acc-email">${acc.email}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += item;
+            });
+        }
+
+        // AGREGAR OTRA CUENTA (REINICIAR FORMULARIO PRESERVANDO CUENTAS)
+        function addNewAccount() {
+            // Limpiar variables de la cuenta anterior
+            simulatedData = {
+                fname: '',
+                lname: '',
+                username: '',
+                password: '',
+                phone: '+502 5555-0199',
+                generatedCode: ''
+            };
+
+            // Limpiar inputs del DOM
+            document.getElementById('input-fname').value = '';
+            document.getElementById('input-lname').value = '';
+            document.getElementById('input-day').value = '';
+            document.getElementById('input-year').value = '';
+            document.getElementById('input-username').value = '';
+            document.getElementById('input-pass').value = '';
+            document.getElementById('input-pass-confirm').value = '';
+            document.getElementById('input-phone').value = '';
+            document.getElementById('input-sms-code').value = '';
+            document.getElementById('input-recovery').value = '';
+
+            // Volver al Paso 1
+            document.getElementById('step-accounts').classList.remove('active');
+            document.getElementById('step-1').classList.add('active');
+        }
+
+        function showError(id, text) {
+            const el = document.getElementById(id);
+            el.innerText = text;
+            el.style.display = 'block';
+        }
+
+        function hideError(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
