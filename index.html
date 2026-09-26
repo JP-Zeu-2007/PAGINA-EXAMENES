@@ -142,7 +142,6 @@
             font-weight: 600;
         }
 
-        /* Unión de Columnas */
         .matching-wrapper {
             position: relative;
             display: flex;
@@ -181,67 +180,32 @@
             position: relative;
             user-select: none;
         }
-        .match-item:hover {
-            border-color: var(--primary);
-            background: #eef2ff;
-        }
-        .match-item.selected {
-            border-color: var(--primary);
-            background: #e0e7ff;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-        }
-        .match-item.connected {
-            border-color: var(--success);
-            background: #ecfdf5;
-        }
+        .match-item:hover { border-color: var(--primary); background: #eef2ff; }
+        .match-item.selected { border-color: var(--primary); background: #e0e7ff; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); }
+        .match-item.connected { border-color: var(--success); background: #ecfdf5; }
         .badge-num {
-            background: #e5e7eb;
-            color: #374151;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
-            flex-shrink: 0;
+            background: #e5e7eb; color: #374151;
+            width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: bold; flex-shrink: 0;
         }
-        .match-item.connected .badge-num {
-            background: var(--success);
-            color: white;
-        }
+        .match-item.connected .badge-num { background: var(--success); color: white; }
         .matching-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;
         }
         .btn-secundario {
-            background-color: #e5e7eb;
-            color: #374151;
-            border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
+            background-color: #e5e7eb; color: #374151; border: none;
+            padding: 0.6rem 1rem; border-radius: 0.5rem;
+            font-weight: 600; cursor: pointer;
         }
         .btn-secundario:hover { background-color: #d1d5db; }
 
-        /* TEMA OSCURO (Series IV y V) */
         body.tema-oscuro {
-            --bg-color: #111827;
-            --card-bg: #1f2937;
-            --text-color: #f9fafb;
-            --border-color: #374151;
+            --bg-color: #111827; --card-bg: #1f2937;
+            --text-color: #f9fafb; --border-color: #374151;
         }
-        body.tema-oscuro .container {
-            background: #1f2937;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-            border: 1px solid #374151;
-        }
+        body.tema-oscuro .container { background: #1f2937; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); border: 1px solid #374151; }
         body.tema-oscuro .header-info { border-bottom-color: #374151; }
         body.tema-oscuro h2 { color: #a5b4fc; }
         body.tema-oscuro .student-badge { background: #312e81; color: #e0e7ff; }
@@ -259,35 +223,23 @@
         body.tema-oscuro .btn-secundario:hover { background-color: #4b5563; }
         body.tema-oscuro .matching-actions { border-top-color: #374151; }
 
-        /* Serie IV: iframe */
         .iframe-wrapper {
-            position: relative;
-            width: 100%;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            border: 2px solid #374151;
-            background: #000;
+            position: relative; width: 100%;
+            border-radius: 0.75rem; overflow: hidden;
+            border: 2px solid #374151; background: #000;
             margin-bottom: 1.5rem;
         }
         .iframe-wrapper iframe {
-            display: block;
-            width: 100%;
-            height: 700px;
-            border: 0;
-            background: #fff;
+            display: block; width: 100%; height: 700px;
+            border: 0; background: #fff;
         }
         .btn-captura {
-            width: 100%;
-            padding: 1.2rem;
-            font-size: 1.15rem;
-            font-weight: 700;
+            width: 100%; padding: 1.2rem;
+            font-size: 1.15rem; font-weight: 700;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, #10b981, #059669);
-            color: #fff;
-            border: none;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            margin-top: 0.5rem;
+            color: #fff; border: none; border-radius: 0.75rem;
+            cursor: pointer; margin-top: 0.5rem;
             box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
             transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
         }
@@ -296,180 +248,93 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 24px rgba(16, 185, 129, 0.5);
         }
-        .btn-captura:disabled {
-            background: #6b7280;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
+        .btn-captura:disabled { background: #6b7280; cursor: not-allowed; transform: none; box-shadow: none; }
         .aviso-captura {
-            background: #78350f;
-            color: #fde68a;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.95rem;
-            margin-top: 1rem;
+            background: #78350f; color: #fde68a;
+            padding: 0.75rem 1rem; border-radius: 0.5rem;
+            font-size: 0.95rem; margin-top: 1rem;
             border-left: 4px solid #f59e0b;
         }
 
-        /* Serie IV de 2do: layout de 2 columnas */
         .wordpad-layout {
             display: grid;
             grid-template-columns: 320px 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            gap: 1.5rem; margin-bottom: 1.5rem;
         }
         .caja-texto {
-            background: #fef3c7;
-            border: 2px solid #f59e0b;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            color: #78350f;
+            background: #fef3c7; border: 2px solid #f59e0b;
+            border-radius: 0.75rem; padding: 1.25rem; color: #78350f;
         }
-        .caja-texto h4 {
-            margin: 0 0 0.75rem 0;
-            color: #92400e;
-            font-size: 1.05rem;
-        }
+        .caja-texto h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
         .caja-texto .texto-copiar {
-            background: #fff;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #000;
-            margin-bottom: 1rem;
-            border: 1px solid #fbbf24;
+            background: #fff; padding: 1rem; border-radius: 0.5rem;
+            font-size: 1rem; line-height: 1.6; color: #000;
+            margin-bottom: 1rem; border: 1px solid #fbbf24;
         }
         .caja-texto .ejemplo {
-            background: #fffbeb;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            line-height: 1.7;
-            color: #78350f;
+            background: #fffbeb; padding: 0.75rem; border-radius: 0.5rem;
+            font-size: 0.9rem; line-height: 1.7; color: #78350f;
             border-left: 3px solid #f59e0b;
         }
-        body.tema-oscuro .caja-texto {
-            background: #422006;
-            border-color: #d97706;
-            color: #fde68a;
-        }
+        body.tema-oscuro .caja-texto { background: #422006; border-color: #d97706; color: #fde68a; }
         body.tema-oscuro .caja-texto h4 { color: #fbbf24; }
-        body.tema-oscuro .caja-texto .texto-copiar {
-            background: #1f2937;
-            color: #f3f4f6;
-            border-color: #4b5563;
-        }
-        body.tema-oscuro .caja-texto .ejemplo {
-            background: #1c1917;
-            color: #fde68a;
-        }
+        body.tema-oscuro .caja-texto .texto-copiar { background: #1f2937; color: #f3f4f6; border-color: #4b5563; }
+        body.tema-oscuro .caja-texto .ejemplo { background: #1c1917; color: #fde68a; }
 
-        /* Modal de confirmación de foto */
         .modal-overlay {
-            display: none;
-            position: fixed;
+            display: none; position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.85);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
+            z-index: 9999; justify-content: center; align-items: center;
             padding: 20px;
         }
-        .modal-overlay.activo {
-            display: flex;
-        }
+        .modal-overlay.activo { display: flex; }
         .modal-contenido {
-            background: #fff;
-            border-radius: 12px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 95vh;
-            overflow-y: auto;
-            padding: 24px;
+            background: #fff; border-radius: 12px;
+            max-width: 800px; width: 100%; max-height: 95vh;
+            overflow-y: auto; padding: 24px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
-        .modal-contenido h3 {
-            margin: 0 0 16px 0;
-            color: #1f2937;
-            text-align: center;
-        }
+        .modal-contenido h3 { margin: 0 0 16px 0; color: #1f2937; text-align: center; }
         .modal-contenido img {
-            width: 100%;
-            border-radius: 8px;
-            border: 2px solid #e5e7eb;
-            margin-bottom: 20px;
+            width: 100%; border-radius: 8px;
+            border: 2px solid #e5e7eb; margin-bottom: 20px;
         }
-        .modal-acciones {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .modal-acciones { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
         .btn-modal {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
+            padding: 12px 24px; border: none; border-radius: 8px;
+            font-weight: bold; cursor: pointer; font-size: 1rem;
         }
-        .btn-confirmar {
-            background: #10b981;
-            color: white;
-        }
+        .btn-confirmar { background: #10b981; color: white; }
         .btn-confirmar:hover { background: #059669; }
-        .btn-recapturar {
-            background: #f59e0b;
-            color: white;
-        }
+        .btn-recapturar { background: #f59e0b; color: white; }
         .btn-recapturar:hover { background: #d97706; }
 
-        /* Serie Extra */
         .extra-card {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            padding: 1.25rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1.5rem;
+            background: #f9fafb; border: 1px solid #e5e7eb;
+            padding: 1.25rem; border-radius: 0.75rem; margin-bottom: 1.5rem;
         }
         .extra-oracion {
-            min-height: 60px;
-            border: 2px dashed #9ca3af;
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            background: #fff;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            min-height: 60px; border: 2px dashed #9ca3af;
+            border-radius: 0.5rem; padding: 0.75rem;
+            background: #fff; display: flex; flex-wrap: wrap;
+            gap: 0.5rem; margin-bottom: 1rem;
         }
         .extra-oracion.vacia::before {
             content: "Haz clic en las palabras de abajo para colocarlas aquí...";
-            color: #9ca3af;
-            font-style: italic;
+            color: #9ca3af; font-style: italic;
         }
         .extra-palabra {
-            background: #e0e7ff;
-            color: #3730a3;
-            padding: 0.4rem 0.8rem;
-            border-radius: 0.4rem;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95rem;
-            user-select: none;
-            transition: all 0.15s;
+            background: #e0e7ff; color: #3730a3;
+            padding: 0.4rem 0.8rem; border-radius: 0.4rem;
+            cursor: pointer; font-weight: 600; font-size: 0.95rem;
+            user-select: none; transition: all 0.15s;
         }
         .extra-palabra:hover { background: #c7d2fe; transform: scale(1.05); }
         .extra-palabra.colocada { background: #d1fae5; color: #065f46; }
         .extra-palabras-disponibles {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 0.75rem;
-            background: #f3f4f6;
-            border-radius: 0.5rem;
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            padding: 0.75rem; background: #f3f4f6; border-radius: 0.5rem;
         }
         body.tema-oscuro .extra-card { background: #111827; border-color: #374151; }
         body.tema-oscuro .extra-oracion { background: #1f2937; border-color: #4b5563; }
@@ -478,57 +343,29 @@
         body.tema-oscuro .extra-palabra.colocada { background: #064e3b; color: #a7f3d0; }
         body.tema-oscuro .extra-palabras-disponibles { background: #1f2937; }
 
-        /* Serie IV Parte 2 - Gmail */
         .gmail-panel {
-            background: #fff;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            border: 2px solid #e5e7eb;
+            background: #fff; border-radius: 0.75rem;
+            padding: 1.5rem; border: 2px solid #e5e7eb;
         }
-        body.tema-oscuro .gmail-panel {
-            background: #111827;
-            border-color: #374151;
-        }
+        body.tema-oscuro .gmail-panel { background: #111827; border-color: #374151; }
         .btn-gmail {
-            display: block;
-            width: 100%;
-            padding: 1.2rem;
+            display: block; width: 100%; padding: 1.2rem;
             background: linear-gradient(135deg, #ea4335, #c5221f);
-            color: white;
-            text-decoration: none;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.15rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
-            transition: all 0.2s;
+            color: white; text-decoration: none; text-align: center;
+            font-weight: bold; font-size: 1.15rem; border-radius: 0.75rem;
+            margin-bottom: 1rem; transition: all 0.2s;
         }
-        .btn-gmail:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(234, 67, 53, 0.4);
-        }
-        .btn-espera {
-            background: #9ca3af !important;
-            cursor: not-allowed !important;
-        }
+        .btn-gmail:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(234, 67, 53, 0.4); }
         .aviso-espera {
-            text-align: center;
-            font-size: 0.9rem;
-            color: #6b7280;
-            margin-top: 0.5rem;
-            font-style: italic;
+            text-align: center; font-size: 0.9rem;
+            color: #6b7280; margin-top: 0.5rem; font-style: italic;
         }
         body.tema-oscuro .aviso-espera { color: #9ca3af; }
 
-        /* Panel examen calificado */
         .panel-examen-listo { margin-top: 1rem; }
         .panel-examen-listo .btn-accion { margin-top: 0.75rem; }
-        .btn-qr-alumno {
-            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-        }
-        .btn-qr-alumno:hover {
-            background: linear-gradient(135deg, #d97706, #b45309) !important;
-        }
+        .btn-qr-alumno { background: linear-gradient(135deg, #f59e0b, #d97706) !important; }
+        .btn-qr-alumno:hover { background: linear-gradient(135deg, #d97706, #b45309) !important; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -539,7 +376,6 @@
 
     <div class="container">
         
-        <!-- PANTALLA 1: LOGIN -->
         <div id="seccion-login" class="login-card-inner">
             <h2>Evaluación Virtual</h2>
             <p style="color: #6b7280; font-size: 1rem; margin-bottom: 2rem;">Ingresa tu código único de estudiante</p>
@@ -558,7 +394,6 @@
             <div id="mensaje-error"></div>
         </div>
 
-        <!-- SERIE I -->
         <div id="seccion-serie1" style="display: none;">
             <div class="header-info">
                 <h2>Evaluación de Computación</h2>
@@ -570,7 +405,6 @@
             <button class="btn-accion" onclick="procesarSerie1()">Siguiente Serie &rarr;</button>
         </div>
 
-        <!-- SERIE II -->
         <div id="seccion-serie2" style="display: none;">
             <div class="header-info">
                 <h2>Evaluación de Computación</h2>
@@ -582,7 +416,6 @@
             <button class="btn-accion" onclick="procesarSerie2()">Siguiente Serie &rarr;</button>
         </div>
 
-        <!-- SERIE III -->
         <div id="seccion-serie3" style="display: none;">
             <div class="header-info">
                 <h2>Evaluación de Computación</h2>
@@ -606,7 +439,6 @@
             <button class="btn-accion" onclick="pasarASerie4()">Ir a la Serie IV (Práctica) &rarr;</button>
         </div>
 
-        <!-- SERIE IV - PARTE 1 (WordPad) -->
         <div id="seccion-serie4" style="display: none;">
             <div class="header-info">
                 <h2>Serie IV: Práctica</h2>
@@ -615,7 +447,6 @@
             <div class="serie-title" id="titulo-grado-s4">Serie IV: Práctica en WordPad (Revisión del Docente)</div>
             <div class="instructions" id="instrucciones-s4"></div>
 
-            <!-- Layout especial SOLO para 2do -->
             <div id="layout-2do" class="wordpad-layout" style="display: none;">
                 <div class="caja-texto">
                     <h4>📝 Texto para copiar:</h4>
@@ -637,7 +468,6 @@
                 </div>
             </div>
 
-            <!-- Layout normal para otros grados -->
             <div id="layout-normal" style="display: none;">
                 <div class="iframe-wrapper">
                     <iframe id="iframe-wordpad-normal" src="./wordpad/index.html" title="Simulador de WordPad"></iframe>
@@ -645,7 +475,7 @@
             </div>
 
             <div class="aviso-captura">
-                ⚠️ <strong>Asegúrate de que TODO tu texto se vea en la pantalla del simulador antes de capturar.</strong> Así tal como lo ves, lo verá el profesor. Cuando estés listo, presiona el botón verde.
+                ⚠️ <strong>Asegúrate de que TODO tu texto se vea en la pantalla del simulador antes de capturar.</strong> Así tal como lo ves, lo verá el profesor.
             </div>
 
             <button class="btn-captura" id="btn-finalizar-todo" onclick="tomarCapturaYPasarAExtra()">
@@ -657,16 +487,34 @@
         <!-- SERIE IV - PARTE 2 (Gmail) - SOLO 5TO -->
         <div id="seccion-serie4-gmail" style="display: none;">
             <div class="header-info">
-                <h2>Serie IV - Parte 2: Correo</h2>
+                <h2>Serie IV - Parte 2: Crear Cuentas de Google</h2>
                 <div class="student-badge" id="badge-info-s4-gmail">Cargando...</div>
             </div>
-            <div class="serie-title">Serie IV: Envío de Correo Electrónico</div>
-            
+            <div class="serie-title">Serie IV: Práctica en el Simulador de Gmail</div>
+
+            <!-- INSTRUCCIONES ARRIBA -->
             <div class="gmail-panel">
                 <div class="instructions" style="font-size: 1.15rem; line-height: 1.7;">
-                    <strong>📧 Instrucciones:</strong><br><br>
-                    Debes usar el simulador que ya practicaste para crear <strong>5 cuentas de Google diferentes</strong>, tal como lo hiciste en clase.<br><br>
-                    Luego, entra a tu <strong>Gmail real</strong> y envía un correo a:<br>
+                    <strong>📧 Instrucciones del simulador:</strong><br><br>
+                    Usa el simulador de Gmail que aparece abajo para crear <strong>5 cuentas de Google diferentes</strong>, tal como practicaste en clase.<br><br>
+                    Cuando termines, presiona el botón verde para <strong>tomar una captura</strong> y revisa que se vean todas tus cuentas creadas. Si todo está bien, confirma.
+                </div>
+            </div>
+
+            <!-- IFRAME DEL SIMULADOR -->
+            <div class="iframe-wrapper" style="margin-top: 1rem;">
+                <iframe id="iframe-gmail" src="./gmail/index.html" title="Simulador de Gmail"></iframe>
+            </div>
+
+            <button class="btn-captura" id="btn-capturar-gmail" onclick="tomarCapturaGmail()">
+                📸 Tomar Captura de mi Práctica
+            </button>
+
+            <!-- INSTRUCCIONES DEL CORREO REAL (ABAJO) -->
+            <div class="gmail-panel" style="margin-top: 2rem;">
+                <div class="instructions" style="font-size: 1.15rem; line-height: 1.7;">
+                    <strong>✉️ Ahora envía un correo real:</strong><br><br>
+                    Entra a tu <strong>Gmail real</strong> y envía un correo a:<br>
                     <strong style="color: #ea4335; font-size: 1.2rem;">pinedaj5448@gmail.com</strong><br><br>
                     El correo debe contener:<br>
                     ✅ Un saludo cordial<br>
@@ -693,7 +541,6 @@
             </p>
         </div>
 
-        <!-- SERIE EXTRA -->
         <div id="seccion-extra" style="display: none;">
             <div class="header-info">
                 <h2>Serie Extra</h2>
@@ -717,7 +564,7 @@
     <!-- MODAL DE CONFIRMACIÓN DE FOTO -->
     <div class="modal-overlay" id="modal-foto">
         <div class="modal-contenido">
-            <h3>📸 Revisa tu captura antes de continuar</h3>
+            <h3 id="modal-titulo">📸 Revisa tu captura antes de continuar</h3>
             <p style="text-align: center; color: #6b7280; margin-top: 0;">
                 Así es como el profesor verá tu trabajo. Si falta algo, puedes volver a capturar.
             </p>
@@ -726,7 +573,7 @@
                 <button class="btn-modal btn-recapturar" onclick="volverACapturar()">
                     🔄 Volver a capturar
                 </button>
-                <button class="btn-modal btn-confirmar" onclick="confirmarCaptura()">
+                <button class="btn-modal btn-confirmar" onclick="confirmarCapturaModal()">
                     ✅ Se ve bien, continuar
                 </button>
             </div>
@@ -756,14 +603,11 @@
         let elementoSeleccionadoIzq = null;
         let conexiones = [];
         let capturaTemporal = null;
+        let capturaGmailURL = null;
         let esGrado5to = false;
 
         let examenCompleto = {
-            serie1: [],
-            serie2: [],
-            serie3: [],
-            serie4: null,
-            extra: null
+            serie1: [], serie2: [], serie3: [], serie4: null, extra: null
         };
 
         const coloresLineas = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16', '#6366f1', '#f97316'];
@@ -779,7 +623,7 @@
             }
         }
 
-        // ================= BANCOS =================
+        // ================= BANCOS (idénticos, omitidos por brevedad en este mensaje) =================
         const bancoFV_2 = [
             { id: 1, texto: "WordPad sirve para escribir textos.", respuesta: "V" },
             { id: 2, texto: "Para abrir WordPad, lo buscamos en la computadora.", respuesta: "V" },
@@ -1009,10 +853,7 @@
             btnValidar.disabled = true;
 
             const { data: estudianteData, error: estudianteError } = await _supabase
-                .from('estudiantes')
-                .select('*')
-                .eq('codigo', codigoInput)
-                .maybeSingle();
+                .from('estudiantes').select('*').eq('codigo', codigoInput).maybeSingle();
 
             if (estudianteError || !estudianteData) {
                 mensajeError.textContent = 'Código no encontrado en la base de datos.';
@@ -1030,7 +871,6 @@
             document.getElementById('info-estudiante').style.display = 'block';
 
             const gradosHabilitados = ['2', '3', '4', '5', '6'];
-
             if (!gradosHabilitados.includes(gradoLimpio)) {
                 mensajeError.style.color = '#d97706';
                 mensajeError.textContent = `Hola ${estudianteData.nombres}, tu evaluación para este grado aún no está habilitada.`;
@@ -1040,10 +880,7 @@
             }
 
             const { data: evaluacionPrevia } = await _supabase
-                .from('resultados_evaluacion')
-                .select('*')
-                .eq('codigo_estudiante', codigoInput)
-                .maybeSingle();
+                .from('resultados_evaluacion').select('*').eq('codigo_estudiante', codigoInput).maybeSingle();
 
             if (evaluacionPrevia) {
                 const yaCalificado = evaluacionPrevia.revisado_por_profesor === true;
@@ -1071,7 +908,6 @@
             btnValidar.setAttribute('onclick', 'iniciarEvaluacion()');
         }
 
-        // ================= PANEL EXAMEN LISTO =================
         function mostrarPanelExamenListo(estudiante, examen) {
             const btnValidar = document.getElementById('btn-validar');
             const mensajeError = document.getElementById('mensaje-error');
@@ -1108,51 +944,31 @@
             `;
         }
 
-        // ================= DESCARGAR QR ALUMNO =================
         async function descargarInvitacionExamen(codigo, nombreCompleto, gradoTexto) {
             try {
                 if (typeof QRCode === 'undefined' || !QRCode.toDataURL) {
-                    alert('⚠️ La librería de QR no está disponible. Verifica tu conexión.');
+                    alert('⚠️ La librería de QR no está disponible.');
                     return;
                 }
-
                 const enlace = `${URL_VER_EXAMEN}?codigo=${encodeURIComponent(codigo)}`;
-
                 const qrDataURL = await QRCode.toDataURL(enlace, {
                     width: 300, margin: 2,
                     color: { dark: '#000000', light: '#ffffff' }
                 });
 
                 const html = `
-                    <div id="invitacion-alumno" style="
-                        font-family: Arial, sans-serif; padding: 40px; max-width: 600px; margin: auto;
-                        border: 3px solid #4f46e5; border-radius: 12px; background: #fff; color: #000;
-                    ">
+                    <div id="invitacion-alumno" style="font-family: Arial; padding: 40px; max-width: 600px; margin: auto; border: 3px solid #4f46e5; border-radius: 12px; background: #fff; color: #000;">
                         <div style="text-align: center; border-bottom: 2px solid #4f46e5; padding-bottom: 12px;">
                             <h1 style="margin: 0; color: #4f46e5;">🎓 Mi Examen de Computación</h1>
-                            <p style="margin: 4px 0; font-size: 14px; color: #666;">Evaluación Virtual - Cuarto Bimestre</p>
                         </div>
                         <div style="margin-top: 20px; text-align: center;">
-                            <h2 style="margin: 0; font-size: 20px;">${nombreCompleto}</h2>
-                            <p style="margin: 4px 0; color: #888;">${gradoTexto}</p>
-                        </div>
-                        <div style="margin-top: 24px; padding: 14px; background: #eef2ff; border-radius: 8px;">
-                            <p style="margin: 0; font-size: 14px; color: #333;">
-                                <strong>Descripción:</strong> Escanea este código QR o abre el enlace para 
-                                consultar tu examen calificado con todas tus respuestas y el punteo obtenido.
-                            </p>
+                            <h2 style="margin: 0;">${nombreCompleto}</h2>
+                            <p style="color: #888;">${gradoTexto}</p>
                         </div>
                         <div style="text-align: center; margin-top: 24px;">
-                            <p style="margin-bottom: 10px; font-weight: bold;">📱 Escanea este código QR:</p>
                             <img src="${qrDataURL}" crossorigin="anonymous" style="width: 240px; height: 240px;">
                         </div>
-                        <div style="margin-top: 20px; text-align: center;">
-                            <p style="font-size: 12px; color: #666; margin: 4px 0;">O abre este enlace:</p>
-                            <p style="font-size: 12px; color: #4f46e5; word-break: break-all;">${enlace}</p>
-                        </div>
-                        <p style="text-align: center; margin-top: 24px; font-style: italic; color: #888; font-size: 12px;">
-                            "Tus pequeñas acciones de hoy pueden crear grandes cambios mañana."
-                        </p>
+                        <p style="text-align: center; font-size: 12px; color: #4f46e5; word-break: break-all;">${enlace}</p>
                     </div>
                 `;
 
@@ -1173,14 +989,12 @@
                 }).from(contenedor.querySelector('#invitacion-alumno')).save();
 
                 document.body.removeChild(contenedor);
-
             } catch (error) {
-                console.error('Error al generar QR:', error);
-                alert('❌ Error al generar el PDF: ' + error.message);
+                console.error(error);
+                alert('❌ Error: ' + error.message);
             }
         }
 
-        // ================= INICIAR =================
         function iniciarEvaluacion() {
             document.getElementById('seccion-login').style.display = 'none';
             document.getElementById('seccion-serie1').style.display = 'block';
@@ -1202,7 +1016,6 @@
             document.getElementById('titulo-grado-s4').textContent = `Serie IV: Práctica en WordPad - (${nombreGradoTexto})`;
             document.getElementById('titulo-grado-extra').textContent = `Serie Extra: Ordena la Oración - (${nombreGradoTexto})`;
 
-            // Configurar instrucciones de la Serie IV según el grado
             const instruccionesS4 = document.getElementById('instrucciones-s4');
             if (gradoLimpio === '2') {
                 instruccionesS4.innerHTML = `En la parte izquierda de la página verás un cuadro con un pequeño texto que debes escribir en el simulador de WordPad. Copia el texto tal como aparece. Al final, escribe tu nombre completo, grado, país y edad. Abajo verás un ejemplo.`;
@@ -1243,10 +1056,7 @@
             preguntasSMMezcladas = barajarArreglo(bancoSM);
             paresOriginalesActivos = bancoUnion;
             derechaMezclada = barajarArreglo(bancoUnion);
-            preguntasExtra = bancoExtra.map(p => ({
-                ...p,
-                palabrasDesordenadas: barajarArreglo(p.palabrasDesordenadas)
-            }));
+            preguntasExtra = bancoExtra.map(p => ({ ...p, palabrasDesordenadas: barajarArreglo(p.palabrasDesordenadas) }));
             respuestasExtra = {};
             preguntasExtra.forEach(p => respuestasExtra[p.id] = []);
 
@@ -1282,7 +1092,6 @@
             contenedorSM.innerHTML = htmlSM;
         }
 
-        // ================= SERIE I =================
         function procesarSerie1() {
             let respondidasTodas = true;
             punteoSerie1 = 0;
@@ -1296,8 +1105,7 @@
                     const esCorrecto = seleccionada.value === p.respuesta;
                     if (esCorrecto) punteoSerie1 += 1;
                     examenCompleto.serie1.push({
-                        id: p.id,
-                        texto: p.texto,
+                        id: p.id, texto: p.texto,
                         respuesta_alumno: seleccionada.value,
                         respuesta_correcta: p.respuesta,
                         correcto: esCorrecto
@@ -1315,7 +1123,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ================= SERIE II =================
         function procesarSerie2() {
             let respondidasTodas = true;
             punteoSerie2 = 0;
@@ -1329,8 +1136,7 @@
                     const esCorrecto = seleccionada.value === p.respuesta;
                     if (esCorrecto) punteoSerie2 += 1;
                     examenCompleto.serie2.push({
-                        id: p.id,
-                        texto: p.texto,
+                        id: p.id, texto: p.texto,
                         opciones_mostradas: p.opciones,
                         letra_elegida: seleccionada.value,
                         letra_correcta: p.respuesta,
@@ -1351,7 +1157,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ================= SERIE III =================
         function renderizarColumnasUnion() {
             const colIzq = document.getElementById('col-izquierda');
             const colDer = document.getElementById('col-derecha');
@@ -1408,7 +1213,6 @@
                 renderizarColumnasUnion();
                 return;
             }
-
             if (elementoSeleccionadoIzq !== null) {
                 conexiones = conexiones.filter(c => c.idIzq !== elementoSeleccionadoIzq);
                 const colorAsignado = coloresLineas[conexiones.length % coloresLineas.length];
@@ -1457,7 +1261,6 @@
             svg.innerHTML = svgContent;
         }
 
-        // ================= PASAR A SERIE IV =================
         function pasarASerie4() {
             if (conexiones.length < 10) {
                 alert('Por favor, completa todas las uniones (deben ser 10) antes de pasar.');
@@ -1468,8 +1271,7 @@
                 const parIzq = paresOriginalesActivos.find(p => p.id === c.idIzq);
                 const parDer = paresOriginalesActivos.find(p => p.id === c.idDer);
                 return {
-                    idIzq: c.idIzq,
-                    idDer: c.idDer,
+                    idIzq: c.idIzq, idDer: c.idDer,
                     izquierda: parIzq ? parIzq.izquierda : '',
                     derecha: parDer ? parDer.derecha : '',
                     correcto: c.idIzq === c.idDer
@@ -1482,7 +1284,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ================= SERIE IV: CAPTURAR Y MOSTRAR MODAL =================
+        // ================= SERIE IV PARTE 1: CAPTURAR WORDPAD =================
         async function tomarCapturaYPasarAExtra() {
             const btn = document.getElementById('btn-finalizar-todo');
             const mensajeEstado = document.getElementById('mensaje-estado');
@@ -1500,15 +1302,10 @@
                 if (!bodyInterno) throw new Error('No se pudo acceder al simulador.');
 
                 const canvas = await html2canvas(bodyInterno, {
-                    backgroundColor: '#ffffff',
-                    scale: 1,
-                    useCORS: true,
-                    allowTaint: true,
-                    logging: false,
-                    width: iframe.clientWidth,
-                    height: iframe.clientHeight,
-                    windowWidth: iframe.clientWidth,
-                    windowHeight: iframe.clientHeight
+                    backgroundColor: '#ffffff', scale: 1, useCORS: true,
+                    allowTaint: true, logging: false,
+                    width: iframe.clientWidth, height: iframe.clientHeight,
+                    windowWidth: iframe.clientWidth, windowHeight: iframe.clientHeight
                 });
 
                 capturaTemporal = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
@@ -1518,15 +1315,15 @@
                     texto_escrito: bodyInterno.innerText || bodyInterno.textContent || ''
                 };
 
-                // Mostrar modal de confirmación
                 const urlPreview = URL.createObjectURL(capturaTemporal);
+                document.getElementById('modal-titulo').textContent = '📸 Revisa tu captura de WordPad';
                 document.getElementById('img-modal-preview').src = urlPreview;
+                document.getElementById('modal-foto').setAttribute('data-tipo', 'wordpad');
                 document.getElementById('modal-foto').classList.add('activo');
 
                 btn.disabled = false;
                 btn.textContent = '📸 Tomar Captura y Continuar';
                 mensajeEstado.textContent = '';
-
             } catch (error) {
                 console.error(error);
                 alert('Error al capturar: ' + error.message);
@@ -1535,32 +1332,108 @@
             }
         }
 
+        // ================= SERIE IV PARTE 2: CAPTURAR GMAIL =================
+        async function tomarCapturaGmail() {
+            const btn = document.getElementById('btn-capturar-gmail');
+            const iframe = document.getElementById('iframe-gmail');
+
+            btn.disabled = true;
+            btn.textContent = '📸 Capturando simulador...';
+
+            try {
+                const docInterno = iframe.contentDocument || iframe.contentWindow.document;
+                const bodyInterno = docInterno.body;
+                if (!bodyInterno) throw new Error('No se pudo acceder al simulador de Gmail.');
+
+                const canvas = await html2canvas(bodyInterno, {
+                    backgroundColor: '#ffffff', scale: 1, useCORS: true,
+                    allowTaint: true, logging: false,
+                    width: iframe.clientWidth, height: iframe.clientHeight,
+                    windowWidth: iframe.clientWidth, windowHeight: iframe.clientHeight
+                });
+
+                const capturaGmailBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                if (!capturaGmailBlob) throw new Error('No se pudo generar la captura.');
+
+                // Subir inmediatamente a Supabase
+                const timestamp = Date.now();
+                const nombreArchivo = `gmail_${estudianteActual.codigo}_${timestamp}.png`;
+
+                const { error: uploadError } = await _supabase
+                    .storage.from(NOMBRE_BUCKET)
+                    .upload(nombreArchivo, capturaGmailBlob, {
+                        contentType: 'image/png', cacheControl: '3600', upsert: false
+                    });
+
+                if (uploadError) throw new Error('Error subiendo captura: ' + uploadError.message);
+
+                const { data: urlData } = _supabase
+                    .storage.from(NOMBRE_BUCKET).getPublicUrl(nombreArchivo);
+
+                capturaGmailURL = urlData.publicUrl;
+
+                // Mostrar modal para confirmar
+                const urlPreview = URL.createObjectURL(capturaGmailBlob);
+                document.getElementById('modal-titulo').textContent = '📸 Revisa tu captura de Gmail';
+                document.getElementById('img-modal-preview').src = urlPreview;
+                document.getElementById('modal-foto').setAttribute('data-tipo', 'gmail');
+                document.getElementById('modal-foto').classList.add('activo');
+
+                btn.textContent = '📸 Tomar Captura de mi Práctica';
+                btn.disabled = false;
+            } catch (error) {
+                console.error(error);
+                alert('Error al capturar: ' + error.message);
+                btn.disabled = false;
+                btn.textContent = '📸 Tomar Captura de mi Práctica';
+            }
+        }
+
+        // ================= MODAL: VOLVER A CAPTURAR / CONFIRMAR =================
         function volverACapturar() {
             document.getElementById('modal-foto').classList.remove('activo');
             document.getElementById('mensaje-estado').textContent = 'Puedes seguir editando tu texto. Cuando termines, vuelve a presionar el botón verde.';
         }
 
-        function confirmarCaptura() {
+        function confirmarCapturaModal() {
+            const tipo = document.getElementById('modal-foto').getAttribute('data-tipo') || 'wordpad';
             document.getElementById('modal-foto').classList.remove('activo');
+            document.getElementById('modal-foto').removeAttribute('data-tipo');
 
-            // Si es 5to, pasar a la Serie IV Parte 2 (Gmail). Si no, pasar directo a Serie Extra.
-            if (esGrado5to) {
-                document.getElementById('seccion-serie4').style.display = 'none';
-                document.getElementById('seccion-serie4-gmail').style.display = 'block';
+            if (tipo === 'gmail') {
+                // NO avanza a Serie Extra. Solo cierra el modal.
+                // El alumno sigue en la pantalla de Gmail con las instrucciones del correo.
+                // Iniciar el contador de 30 segundos del botón "Continuar a Serie Extra".
                 iniciarEsperaGmail();
+                // Hacer scroll hacia las instrucciones del correo real
+                setTimeout(() => {
+                    window.scrollTo({ top: document.body.scrollHeight - 700, behavior: 'smooth' });
+                }, 300);
             } else {
-                document.getElementById('seccion-serie4').style.display = 'none';
-                document.getElementById('seccion-extra').style.display = 'block';
-                renderizarSerieExtra();
+                // Es la captura del WordPad
+                if (esGrado5to) {
+                    // 5to: pasar a la Parte 2 (Gmail)
+                    document.getElementById('seccion-serie4').style.display = 'none';
+                    document.getElementById('seccion-serie4-gmail').style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    // Otros grados: pasar a Serie Extra
+                    document.getElementById('seccion-serie4').style.display = 'none';
+                    document.getElementById('seccion-extra').style.display = 'block';
+                    renderizarSerieExtra();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ================= SERIE IV PARTE 2: GMAIL (SOLO 5TO) =================
+        // ================= ESPERA DE 30 SEG EN GMAIL =================
         function iniciarEsperaGmail() {
             const btn = document.getElementById('btn-continuar-gmail');
             const aviso = document.getElementById('aviso-espera-txt');
             let segundos = 30;
+
+            // Evitar duplicar el intervalo si ya está corriendo
+            if (btn.disabled === false) return;
 
             btn.disabled = true;
             btn.style.background = '#9ca3af';
@@ -1607,7 +1480,7 @@
                             `).join('')}
                         </div>
                         <div class="extra-palabras-disponibles">
-                            ${p.palabrasDesordenadas.map((palabra, i) => {
+                            ${p.palabrasDesordenadas.map((palabra) => {
                                 const vecesColocada = palabrasColocadas.filter(x => x === palabra).length;
                                 const vecesEnBanco = p.palabrasDesordenadas.filter(x => x === palabra).length;
                                 const yaUsada = vecesColocada >= vecesEnBanco;
@@ -1655,7 +1528,7 @@
             btn.disabled = true;
             btn.textContent = '📤 Subiendo todo...';
             mensajeEstado.style.color = '#a5b4fc';
-            mensajeEstado.textContent = 'Subiendo captura...';
+            mensajeEstado.textContent = 'Subiendo captura del WordPad...';
 
             try {
                 const timestamp = Date.now();
@@ -1664,16 +1537,13 @@
                 const { error: uploadError } = await _supabase
                     .storage.from(NOMBRE_BUCKET)
                     .upload(nombreArchivo, capturaTemporal, {
-                        contentType: 'image/png',
-                        cacheControl: '3600',
-                        upsert: false
+                        contentType: 'image/png', cacheControl: '3600', upsert: false
                     });
 
                 if (uploadError) throw new Error('Error subiendo captura: ' + uploadError.message);
 
                 const { data: urlData } = _supabase
-                    .storage.from(NOMBRE_BUCKET)
-                    .getPublicUrl(nombreArchivo);
+                    .storage.from(NOMBRE_BUCKET).getPublicUrl(nombreArchivo);
 
                 const urlPublica = urlData.publicUrl;
 
@@ -1728,6 +1598,7 @@
                         serie3_json: examenCompleto.serie3,
                         serie4_json: { url_captura: urlPublica, texto_escrito: examenCompleto.serie4.texto_escrito },
                         extra_json: examenCompleto.extra,
+                        gmail_captura_url: capturaGmailURL,
                         punteo_s1: punteoSerie1,
                         punteo_s2: punteoSerie2,
                         punteo_s3: punteoSerie3,
@@ -1764,7 +1635,6 @@
             }
         }
 
-        // ================= AUTO-VALIDAR POR URL =================
         window.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const codigoURL = params.get('codigo');
