@@ -63,6 +63,7 @@
             background: #f9fafb;
             padding: 10px;
             text-align: center;
+            margin-bottom: 18px;
         }
         .visor-imagen img {
             width: 100%;
@@ -96,6 +97,95 @@
             padding: 60px 20px;
             color: #6b7280;
             font-size: 1.05rem;
+        }
+
+        /* Capturas del PowerPoint */
+        .seccion-capturas-ppt {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+        }
+        .seccion-capturas-ppt h2 {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            margin: 0 0 4px 0;
+        }
+        .seccion-capturas-ppt p {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin: 4px 0 16px 0;
+        }
+        .capturas-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .captura-item {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 12px;
+        }
+        .captura-titulo {
+            font-weight: bold;
+            color: #4f46e5;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .captura-titulo .num {
+            background: #4f46e5;
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+        .captura-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            display: block;
+        }
+        .captura-vacia {
+            background: #fef3c7;
+            border: 2px dashed #f59e0b;
+            color: #92400e;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        .aviso-ppt {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 12px 16px;
+            border-radius: 6px;
+            color: #1e40af;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .seccion-gmail {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+        }
+        .seccion-gmail h2 {
+            color: #ea4335;
+            font-size: 1.2rem;
+            margin: 0 0 4px 0;
+        }
+        .seccion-gmail p {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin: 4px 0 16px 0;
         }
     </style>
 </head>
@@ -131,22 +221,18 @@
             return;
         }
 
+        // 1) Buscar estudiante
         const { data: est, error: errorEst } = await _supabase
-            .from('estudiantes')
-            .select('*')
-            .eq('codigo', codigo)
-            .maybeSingle();
+            .from('estudiantes').select('*').eq('codigo', codigo).maybeSingle();
 
         if (errorEst || !est) {
             caja.innerHTML = '<div class="mensaje-error">❌ No se encontró al estudiante con ese código.</div>';
             return;
         }
 
+        // 2) Buscar examen (resumen)
         const { data: examen, error: errorExamen } = await _supabase
-            .from('resultados_evaluacion')
-            .select('*')
-            .eq('codigo_estudiante', codigo)
-            .maybeSingle();
+            .from('resultados_evaluacion').select('*').eq('codigo_estudiante', codigo).maybeSingle();
 
         if (errorExamen || !examen) {
             caja.innerHTML = `
@@ -166,6 +252,27 @@
             return;
         }
 
+        // 3) Buscar detalle
+        const { data: detalle } = await _supabase
+            .from('detalle_respuestas').select('*').eq('codigo_estudiante', codigo)
+            .order('fecha_envio', { ascending: false }).limit(1).maybeSingle();
+
+        // 4) Cargar capturas del PowerPoint si hay token
+        let capturasPPT = [];
+        if (detalle && detalle.token_capturador) {
+            const { data: caps } = await _supabase
+                .from('capturas_powerpoint')
+                .select('*')
+                .eq('token', detalle.token_capturador)
+                .order('numero_diapositiva');
+            capturasPPT = caps || [];
+        }
+
+        const esGradoPPT = ['4', '5', '6'].includes(String(est.grado).trim());
+        const esGrado5to = String(est.grado).trim() === '5';
+        const gmailCaptura = detalle ? detalle.gmail_captura_url : null;
+
+        // Si no hay imagen del examen subida aún, mostrar aviso
         if (!examen.pdf_url) {
             caja.innerHTML = `
                 <div class="cabecera">
@@ -178,7 +285,7 @@
                     <p><strong>Punteo:</strong> ${(examen.punteo_total || 0) + (examen.punteo_extra || 0)} / 40 pts</p>
                 </div>
                 <div class="mensaje-error">
-                    ⏳ El examen aún no ha sido publicado.<br>
+                    ⏳ El examen aún no ha sido publicado por el docente.<br>
                     Por favor, contacta al docente.
                 </div>
             `;
@@ -187,6 +294,79 @@
 
         const total = (examen.punteo_total || 0) + (examen.punteo_extra || 0);
 
+        // ============ CONSTRUIR CAPTURAS PPT ============
+        let capturasPPTHtml = '';
+        if (esGradoPPT) {
+            let items = '';
+
+            if (capturasPPT.length === 0) {
+                capturasPPTHtml = `
+                    <div class="seccion-capturas-ppt">
+                        <h2>📸 Capturas de la Presentación de PowerPoint</h2>
+                        <p>Presentación con 6 diapositivas sobre las comidas más famosas del mundo.</p>
+                        <div class="captura-vacia">
+                            ⚠️ No hay capturas del PowerPoint disponibles.
+                        </div>
+                    </div>
+                `;
+            } else {
+                for (let i = 1; i <= 6; i++) {
+                    const cap = capturasPPT.find(c => c.numero_diapositiva === i);
+                    if (cap) {
+                        items += `
+                            <div class="captura-item">
+                                <div class="captura-titulo">
+                                    <span class="num">${i}</span>
+                                    Diapositiva ${i}
+                                </div>
+                                <img src="${cap.url_captura}" alt="Diapositiva ${i}" loading="lazy">
+                            </div>
+                        `;
+                    } else {
+                        items += `
+                            <div class="captura-item">
+                                <div class="captura-titulo">
+                                    <span class="num">${i}</span>
+                                    Diapositiva ${i}
+                                </div>
+                                <div class="captura-vacia" style="padding:14px; font-size:0.85rem;">
+                                    Sin captura
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                capturasPPTHtml = `
+                    <div class="seccion-capturas-ppt">
+                        <h2>📸 Capturas de la Presentación de PowerPoint</h2>
+                        <p>Presentación con 6 diapositivas sobre las comidas más famosas del mundo.</p>
+                        <div class="aviso-ppt">
+                            📊 Capturas recibidas: ${capturasPPT.length} / 6
+                        </div>
+                        <div class="capturas-grid">
+                            ${items}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ============ CONSTRUIR SECCIÓN GMAIL (solo 5to) ============
+        let gmailHtml = '';
+        if (esGrado5to && gmailCaptura) {
+            gmailHtml = `
+                <div class="seccion-gmail">
+                    <h2>📧 Práctica en el Simulador de Gmail</h2>
+                    <p>Creación de 5 cuentas de Google (práctica previa al envío del correo real).</p>
+                    <div class="visor-imagen">
+                        <img src="${gmailCaptura}" alt="Captura del simulador de Gmail">
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============ MOSTRAR TODO ============
         caja.innerHTML = `
             <div class="cabecera">
                 <h1>📋 Examen de Computación</h1>
@@ -197,6 +377,7 @@
                 <p><strong>Grado:</strong> ${obtenerNombreGrado(est.grado)}</p>
                 <p><strong>Punteo:</strong> ${total} / 40 pts</p>
             </div>
+
             <div class="visor-imagen">
                 <img src="${examen.pdf_url}" alt="Examen de ${est.nombres}">
             </div>
@@ -205,6 +386,9 @@
                     📥 Descargar Imagen del Examen
                 </a>
             </div>
+
+            ${capturasPPTHtml}
+            ${gmailHtml}
         `;
     }
 
