@@ -142,7 +142,6 @@
             font-weight: 600;
         }
 
-        /* Unión de Columnas */
         .matching-wrapper {
             position: relative;
             display: flex;
@@ -181,67 +180,32 @@
             position: relative;
             user-select: none;
         }
-        .match-item:hover {
-            border-color: var(--primary);
-            background: #eef2ff;
-        }
-        .match-item.selected {
-            border-color: var(--primary);
-            background: #e0e7ff;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-        }
-        .match-item.connected {
-            border-color: var(--success);
-            background: #ecfdf5;
-        }
+        .match-item:hover { border-color: var(--primary); background: #eef2ff; }
+        .match-item.selected { border-color: var(--primary); background: #e0e7ff; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); }
+        .match-item.connected { border-color: var(--success); background: #ecfdf5; }
         .badge-num {
-            background: #e5e7eb;
-            color: #374151;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
-            flex-shrink: 0;
+            background: #e5e7eb; color: #374151;
+            width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: bold; flex-shrink: 0;
         }
-        .match-item.connected .badge-num {
-            background: var(--success);
-            color: white;
-        }
+        .match-item.connected .badge-num { background: var(--success); color: white; }
         .matching-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;
         }
         .btn-secundario {
-            background-color: #e5e7eb;
-            color: #374151;
-            border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
+            background-color: #e5e7eb; color: #374151; border: none;
+            padding: 0.6rem 1rem; border-radius: 0.5rem;
+            font-weight: 600; cursor: pointer;
         }
         .btn-secundario:hover { background-color: #d1d5db; }
 
-        /* TEMA OSCURO (Series IV y V) */
         body.tema-oscuro {
-            --bg-color: #111827;
-            --card-bg: #1f2937;
-            --text-color: #f9fafb;
-            --border-color: #374151;
+            --bg-color: #111827; --card-bg: #1f2937;
+            --text-color: #f9fafb; --border-color: #374151;
         }
-        body.tema-oscuro .container {
-            background: #1f2937;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-            border: 1px solid #374151;
-        }
+        body.tema-oscuro .container { background: #1f2937; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); border: 1px solid #374151; }
         body.tema-oscuro .header-info { border-bottom-color: #374151; }
         body.tema-oscuro h2 { color: #a5b4fc; }
         body.tema-oscuro .student-badge { background: #312e81; color: #e0e7ff; }
@@ -259,35 +223,25 @@
         body.tema-oscuro .btn-secundario:hover { background-color: #4b5563; }
         body.tema-oscuro .matching-actions { border-top-color: #374151; }
 
-        /* Iframe */
         .iframe-wrapper {
-            position: relative;
-            width: 100%;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            border: 2px solid #374151;
-            background: #000;
+            position: relative; width: 100%;
+            border-radius: 0.75rem; overflow: hidden;
+            border: 2px solid #374151; background: #000;
             margin-bottom: 1.5rem;
         }
         .iframe-wrapper iframe {
-            display: block;
-            width: 100%;
-            height: 700px;
-            border: 0;
-            background: #fff;
+            display: block; width: 100%; height: 700px;
+            border: 0; background: #fff;
         }
+        .iframe-wrapper-word iframe { height: 900px !important; }
+
         .btn-captura {
-            width: 100%;
-            padding: 1.2rem;
-            font-size: 1.15rem;
-            font-weight: 700;
+            width: 100%; padding: 1.2rem;
+            font-size: 1.15rem; font-weight: 700;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, #10b981, #059669);
-            color: #fff;
-            border: none;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            margin-top: 0.5rem;
+            color: #fff; border: none; border-radius: 0.75rem;
+            cursor: pointer; margin-top: 0.5rem;
             box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
             transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
         }
@@ -296,35 +250,22 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 24px rgba(16, 185, 129, 0.5);
         }
-        .btn-captura:disabled {
-            background: #6b7280;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
+        .btn-captura:disabled { background: #6b7280; cursor: not-allowed; transform: none; box-shadow: none; }
         .aviso-captura {
-            background: #78350f;
-            color: #fde68a;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.95rem;
-            margin-top: 1rem;
+            background: #78350f; color: #fde68a;
+            padding: 0.75rem 1rem; border-radius: 0.5rem;
+            font-size: 0.95rem; margin-top: 1rem;
             border-left: 4px solid #f59e0b;
         }
 
-        /* Layout 2do WordPad */
         .wordpad-layout {
             display: grid;
             grid-template-columns: 320px 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            gap: 1.5rem; margin-bottom: 1.5rem;
         }
         .caja-texto {
-            background: #fef3c7;
-            border: 2px solid #f59e0b;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            color: #78350f;
+            background: #fef3c7; border: 2px solid #f59e0b;
+            border-radius: 0.75rem; padding: 1.25rem; color: #78350f;
         }
         .caja-texto h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
         .caja-texto .texto-copiar {
@@ -342,26 +283,18 @@
         body.tema-oscuro .caja-texto .texto-copiar { background: #1f2937; color: #f3f4f6; border-color: #4b5563; }
         body.tema-oscuro .caja-texto .ejemplo { background: #1c1917; color: #fde68a; }
 
-        /* Modal */
         .modal-overlay {
-            display: none;
-            position: fixed;
+            display: none; position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.85);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
+            z-index: 9999; justify-content: center; align-items: center;
             padding: 20px;
         }
         .modal-overlay.activo { display: flex; }
         .modal-contenido {
-            background: #fff;
-            border-radius: 12px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 95vh;
-            overflow-y: auto;
-            padding: 24px;
+            background: #fff; border-radius: 12px;
+            max-width: 800px; width: 100%; max-height: 95vh;
+            overflow-y: auto; padding: 24px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
         .modal-contenido h3 { margin: 0 0 16px 0; color: #1f2937; text-align: center; }
@@ -379,7 +312,6 @@
         .btn-recapturar { background: #f59e0b; color: white; }
         .btn-recapturar:hover { background: #d97706; }
 
-        /* Serie Extra */
         .extra-card {
             background: #f9fafb; border: 1px solid #e5e7eb;
             padding: 1.25rem; border-radius: 0.75rem; margin-bottom: 1.5rem;
@@ -413,13 +345,6 @@
         body.tema-oscuro .extra-palabra.colocada { background: #064e3b; color: #a7f3d0; }
         body.tema-oscuro .extra-palabras-disponibles { background: #1f2937; }
 
-        /* Panel Examen Listo */
-        .panel-examen-listo { margin-top: 1rem; }
-        .panel-examen-listo .btn-accion { margin-top: 0.75rem; }
-        .btn-qr-alumno { background: linear-gradient(135deg, #f59e0b, #d97706) !important; }
-        .btn-qr-alumno:hover { background: linear-gradient(135deg, #d97706, #b45309) !important; }
-
-        /* ============ SERIE IV POWERPOINT ============ */
         .powerpoint-box {
             background: #f0f4ff;
             border: 2px solid #4f46e5;
@@ -427,15 +352,8 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
-        body.tema-oscuro .powerpoint-box {
-            background: #1e1b4b;
-            border-color: #6366f1;
-        }
-        .powerpoint-box h3 {
-            color: #4f46e5;
-            margin-top: 0;
-            font-size: 1.2rem;
-        }
+        body.tema-oscuro .powerpoint-box { background: #1e1b4b; border-color: #6366f1; }
+        .powerpoint-box h3 { color: #4f46e5; margin-top: 0; font-size: 1.2rem; }
         body.tema-oscuro .powerpoint-box h3 { color: #a5b4fc; }
 
         .ejemplos-powerpoint {
@@ -482,18 +400,13 @@
             line-height: 1.4;
         }
         .ejemplo-caption strong { color: #4f46e5; }
-        body.tema-oscuro .ejemplos-powerpoint {
-            background: #111827;
-            border-color: #374151;
-        }
+        body.tema-oscuro .ejemplos-powerpoint { background: #111827; border-color: #374151; }
         body.tema-oscuro .ejemplos-powerpoint h3 { color: #a5b4fc; }
         body.tema-oscuro .ejemplos-descripcion { color: #d1d5db; }
         body.tema-oscuro .ejemplo-item img { border-color: #4b5563; }
         body.tema-oscuro .ejemplo-caption { color: #e5e7eb; }
         body.tema-oscuro .ejemplo-caption strong { color: #a5b4fc; }
-        @media (max-width: 700px) {
-            .ejemplos-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 700px) { .ejemplos-grid { grid-template-columns: 1fr; } }
 
         .contador-capturas-box {
             background: #dbeafe;
@@ -504,67 +417,144 @@
             margin-bottom: 1rem;
             text-align: center;
         }
-        body.tema-oscuro .contador-capturas-box {
-            background: #1e3a8a;
-            border-color: #3b82f6;
-        }
+        body.tema-oscuro .contador-capturas-box { background: #1e3a8a; border-color: #3b82f6; }
         .contador-capturas-box .num {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #1e40af;
+            font-size: 2rem; font-weight: 900; color: #1e40af;
         }
         body.tema-oscuro .contador-capturas-box .num { color: #93c5fd; }
-        .contador-capturas-box .lbl {
-            font-size: 1rem;
-            color: #1e40af;
-            font-weight: 600;
-        }
+        .contador-capturas-box .lbl { font-size: 1rem; color: #1e40af; font-weight: 600; }
         body.tema-oscuro .contador-capturas-box .lbl { color: #93c5fd; }
 
         .btn-powerpoint {
-            width: 100%;
-            padding: 1.3rem;
-            font-size: 1.2rem;
-            font-weight: 800;
+            width: 100%; padding: 1.3rem;
+            font-size: 1.2rem; font-weight: 800;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, #d24726, #b03a1e);
-            color: #fff;
-            border: none;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            margin-top: 1rem;
+            color: #fff; border: none; border-radius: 0.75rem;
+            cursor: pointer; margin-top: 1rem;
             box-shadow: 0 6px 18px rgba(210, 71, 38, 0.35);
             transition: transform 0.15s, box-shadow 0.15s;
         }
-        .btn-powerpoint:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(210, 71, 38, 0.5);
-        }
-        .btn-powerpoint:disabled {
-            background: #6b7280;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
+        .btn-powerpoint:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(210, 71, 38, 0.5); }
+        .btn-powerpoint:disabled { background: #6b7280; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        .modal-zoom-contenido {
-            max-width: 95vw;
-            max-height: 95vh;
-            text-align: center;
-        }
+        .modal-zoom-contenido { max-width: 95vw; max-height: 95vh; text-align: center; }
         .modal-zoom-contenido img {
-            max-width: 100%;
-            max-height: 90vh;
-            border-radius: 12px;
-            border: 4px solid #fff;
+            max-width: 100%; max-height: 90vh;
+            border-radius: 12px; border: 4px solid #fff;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
         }
         .cerrar-hint {
-            color: #fff;
-            margin-top: 12px;
-            font-size: 0.9rem;
-            opacity: 0.7;
+            color: #fff; margin-top: 12px;
+            font-size: 0.9rem; opacity: 0.7;
         }
+
+        .panel-examen-listo { margin-top: 1rem; }
+        .panel-examen-listo .btn-accion { margin-top: 0.75rem; }
+        .btn-qr-alumno { background: linear-gradient(135deg, #f59e0b, #d97706) !important; }
+        .btn-qr-alumno:hover { background: linear-gradient(135deg, #d97706, #b45309) !important; }
+
+        .instrucciones-3ro {
+            font-size: 1.2rem !important;
+            line-height: 1.8 !important;
+            color: #1f2937 !important;
+        }
+        .instrucciones-3ro strong { color: #dc2626; }
+        body.tema-oscuro .instrucciones-3ro { color: #e5e7eb !important; }
+
+        /* ================ PANTALLA DE EVALUACIONES DESHABILITADAS ================ */
+        .pantalla-bloqueo {
+            text-align: center;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .pantalla-bloqueo .icono-grande {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .pantalla-bloqueo .titulo-bloqueo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #dc2626;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+        .pantalla-bloqueo .card-info {
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            border: 3px solid #4f46e5;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem auto;
+            max-width: 700px;
+            text-align: left;
+        }
+        body.tema-oscuro .pantalla-bloqueo .card-info {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            border-color: #6366f1;
+        }
+        .pantalla-bloqueo .card-info h3 {
+            color: #4f46e5;
+            margin: 0 0 1rem 0;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+        body.tema-oscuro .pantalla-bloqueo .card-info h3 { color: #a5b4fc; }
+        .pantalla-bloqueo .dato-alumno {
+            font-size: 1.3rem;
+            margin: 0.75rem 0;
+            color: #1f2937;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #c7d2fe;
+        }
+        body.tema-oscuro .pantalla-bloqueo .dato-alumno { color: #e5e7eb; border-bottom-color: #4c1d95; }
+        .pantalla-bloqueo .dato-alumno strong {
+            color: #4f46e5;
+            display: inline-block;
+            min-width: 140px;
+        }
+        body.tema-oscuro .pantalla-bloqueo .dato-alumno strong { color: #a5b4fc; }
+        .pantalla-bloqueo .mensaje-bloqueo {
+            background: #fef3c7;
+            border-left: 6px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem auto;
+            max-width: 700px;
+            text-align: left;
+            color: #78350f;
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+        body.tema-oscuro .pantalla-bloqueo .mensaje-bloqueo {
+            background: #422006;
+            color: #fde68a;
+            border-left-color: #d97706;
+        }
+        .pantalla-bloqueo .mensaje-bloqueo strong { color: #dc2626; }
+        body.tema-oscuro .pantalla-bloqueo .mensaje-bloqueo strong { color: #fbbf24; }
+        .btn-salir-bloqueo {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 12px 30px;
+            background: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-salir-bloqueo:hover { background: #4b5563; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -592,6 +582,31 @@
 
             <button class="btn-accion" id="btn-validar" onclick="verificarCodigo()">Validar Código</button>
             <div id="mensaje-error"></div>
+        </div>
+
+        <!-- PANTALLA DE BLOQUEO (evaluaciones deshabilitadas) -->
+        <div id="seccion-bloqueo" style="display: none;">
+            <div class="pantalla-bloqueo">
+                <div class="icono-grande">🔒</div>
+                <div class="titulo-bloqueo">EVALUACIONES DESHABILITADAS</div>
+
+                <div class="card-info">
+                    <h3>👤 Tus datos</h3>
+                    <p class="dato-alumno"><strong>Nombre:</strong> <span id="bloqueo-nombre"></span></p>
+                    <p class="dato-alumno"><strong>Grado:</strong> <span id="bloqueo-grado"></span></p>
+                    <p class="dato-alumno"><strong>Código:</strong> <span id="bloqueo-codigo"></span></p>
+                </div>
+
+                <div class="mensaje-bloqueo">
+                    <strong>📅 Las evaluaciones todavía no están habilitadas.</strong><br><br>
+                    El profesor las habilitará cuando sea el momento adecuado.<br><br>
+                    Por favor, <strong>espera a que tu profesor te avise</strong> para poder comenzar.
+                </div>
+
+                <button class="btn-salir-bloqueo" onclick="window.location.reload()">
+                    🔄 Volver a intentar
+                </button>
+            </div>
         </div>
 
         <!-- SERIE I -->
@@ -642,7 +657,7 @@
             <button class="btn-accion" onclick="pasarASerie4()">Ir a la Serie IV (Práctica) &rarr;</button>
         </div>
 
-        <!-- SERIE IV (POWERPOINT para 4to, 5to, 6to / WORDPAD para 2do, 3ro) -->
+        <!-- SERIE IV -->
         <div id="seccion-serie4" style="display: none;">
             <div class="header-info">
                 <h2>Serie IV: Práctica</h2>
@@ -670,7 +685,6 @@
                     </div>
                 </div>
 
-                <!-- Ejemplos -->
                 <div class="ejemplos-powerpoint">
                     <h3>📸 Ejemplo de cómo debe verse tu presentación:</h3>
                     <p class="ejemplos-descripcion">
@@ -700,12 +714,10 @@
                     </div>
                 </div>
 
-                <!-- Botón capturador -->
                 <button class="btn-powerpoint" id="btn-iniciar-capturador" onclick="iniciarCapturadorPowerPoint()">
                     🚀 Abrir PowerPoint y tomar mis fotos
                 </button>
 
-                <!-- Contador de capturas -->
                 <div class="contador-capturas-box" id="contador-capturas-box" style="display: none;">
                     <div class="num" id="contador-num">0 / 6</div>
                     <div class="lbl">📸 Capturas subidas a tu profesor</div>
@@ -714,16 +726,15 @@
                     </p>
                 </div>
 
-                <!-- Botón continuar (bloqueado hasta 6/6) -->
                 <button class="btn-accion" id="btn-continuar-powerpoint" onclick="continuarDesdePowerPoint()" disabled>
                     Continuar a la siguiente serie &rarr;
                 </button>
                 <p id="mensaje-estado-powerpoint" style="text-align: center; font-weight: 600; margin-top: 1rem;"></p>
             </div>
 
-            <!-- BLOQUE WORDPAD (2do y 3ro) -->
+            <!-- BLOQUE WORDPAD (solo 2do) -->
             <div id="bloque-wordpad" style="display: none;">
-                <div id="layout-2do" class="wordpad-layout" style="display: none;">
+                <div id="layout-2do" class="wordpad-layout">
                     <div class="caja-texto">
                         <h4>📝 Texto para copiar:</h4>
                         <div class="texto-copiar">
@@ -744,12 +755,6 @@
                     </div>
                 </div>
 
-                <div id="layout-normal" style="display: none;">
-                    <div class="iframe-wrapper">
-                        <iframe id="iframe-wordpad-normal" src="./wordpad/index.html" title="Simulador de WordPad"></iframe>
-                    </div>
-                </div>
-
                 <div class="aviso-captura">
                     ⚠️ <strong>Asegúrate de que TODO tu texto se vea en la pantalla del simulador antes de capturar.</strong>
                 </div>
@@ -758,6 +763,22 @@
                     📸 Tomar Captura y Continuar
                 </button>
                 <p id="mensaje-estado"></p>
+            </div>
+
+            <!-- BLOQUE WORD (solo 3ro) -->
+            <div id="bloque-word" style="display: none;">
+                <div class="iframe-wrapper iframe-wrapper-word">
+                    <iframe id="iframe-word-normal" src="./word/index.html" title="Simulador de Word"></iframe>
+                </div>
+
+                <div class="aviso-captura" style="font-size: 1.05rem;">
+                    ⚠️ <strong>Asegúrate de que TODO tu texto se vea en la pantalla antes de capturar.</strong>
+                </div>
+
+                <button class="btn-captura" id="btn-finalizar-word" onclick="tomarCapturaYPasarAExtra()">
+                    📸 Tomar Captura y Continuar
+                </button>
+                <p id="mensaje-estado-word"></p>
             </div>
         </div>
 
@@ -902,7 +923,7 @@
             }
         }
 
-        // ============ BANCOS (los mismos que tenías) ============
+        // ============ BANCOS ============
         const bancoFV_2 = [
             { id: 1, texto: "WordPad sirve para escribir textos.", respuesta: "V" },
             { id: 2, texto: "Para abrir WordPad, lo buscamos en la computadora.", respuesta: "V" },
@@ -1155,10 +1176,12 @@
                 return;
             }
 
+            // PRIMERO: Verificar si ya hizo el examen
             const { data: evaluacionPrevia } = await _supabase
                 .from('resultados_evaluacion').select('*').eq('codigo_estudiante', codigoInput).maybeSingle();
 
             if (evaluacionPrevia) {
+                // Ya hizo el examen → verificar si está calificado
                 const yaCalificado = evaluacionPrevia.revisado_por_profesor === true;
                 const tienePDF = !!evaluacionPrevia.pdf_url;
 
@@ -1179,6 +1202,27 @@
                 return;
             }
 
+            // SEGUNDO: Verificar si las evaluaciones están habilitadas
+            const { data: configData } = await _supabase
+                .from('configuracion')
+                .select('valor')
+                .eq('clave', 'evaluaciones_habilitadas')
+                .maybeSingle();
+
+            const habilitadas = configData && configData.valor === 'true';
+
+            if (!habilitadas) {
+                // Mostrar pantalla de bloqueo
+                document.getElementById('seccion-login').style.display = 'none';
+                document.getElementById('seccion-bloqueo').style.display = 'block';
+                document.getElementById('bloqueo-nombre').textContent = `${estudianteData.nombres} ${estudianteData.apellidos}`;
+                document.getElementById('bloqueo-grado').textContent = obtenerNombreGrado(gradoLimpio);
+                document.getElementById('bloqueo-codigo').textContent = estudianteData.codigo;
+                document.body.classList.add('tema-oscuro');
+                return;
+            }
+
+            // TERCERO: Todo OK → permitir comenzar
             btnValidar.textContent = 'Comenzar Evaluación';
             btnValidar.disabled = false;
             btnValidar.setAttribute('onclick', 'iniciarEvaluacion()');
@@ -1294,20 +1338,40 @@
             if (gradoLimpio === '2') {
                 instruccionesS4.innerHTML = `En la parte izquierda de la página verás un cuadro con un pequeño texto que debes escribir en el simulador de WordPad. Copia el texto tal como aparece. Al final, escribe tu nombre completo, grado, país y edad. Abajo verás un ejemplo.`;
                 document.getElementById('bloque-wordpad').style.display = 'block';
+                document.getElementById('bloque-word').style.display = 'none';
                 document.getElementById('bloque-powerpoint').style.display = 'none';
-                document.getElementById('layout-2do').style.display = 'grid';
-                document.getElementById('layout-normal').style.display = 'none';
+
             } else if (gradoLimpio === '3') {
-                instruccionesS4.innerHTML = `Utiliza el simulador de WordPad y escribe el cuento de los 3 cerditos, de Caperucita Roja o Cenicienta con tus palabras. Colócale color rojo al título y que sea más grande que el resto del texto, la historia déjala de color negro y al final coloca cuáles eran los personajes principales con color azul.`;
-                document.getElementById('bloque-wordpad').style.display = 'block';
+                instruccionesS4.classList.add('instrucciones-3ro');
+                instruccionesS4.innerHTML = `
+                    <strong>📌 En el simulador de Word deberás realizar lo siguiente:</strong><br><br>
+                    
+                    <strong>1. Título principal en color rojo:</strong> Escribe con letra grande el texto <strong>"Mi Animal Favorito"</strong>.<br><br>
+                    
+                    <strong>2. Nombre del animal en color rojo:</strong> Debajo del título, escribe el nombre de tu animal favorito. ⚠️ <strong>El animal debe ser diferente al del ejemplo (no puede ser un tiburón).</strong><br><br>
+                    
+                    <strong>3. Descripción en color negro:</strong> Escribe <strong>5 líneas</strong> contando cosas sobre tu animal: cómo es, qué te gusta de él, dónde vive, si come carne o plantas, etc.<br><br>
+                    
+                    <strong>4. Imagen del animal:</strong> Busca en internet una imagen de tu animal favorito, pégala en el documento y acompáñala como se ve en el ejemplo.<br><br>
+                    
+                    <strong>5. ⚠️ MUY IMPORTANTE — Borra el ejemplo:</strong> Elimina del documento el ejemplo que aparece (tiburón) y <strong>reemplázalo con los datos de tu animal favorito</strong>.<br><br>
+                    
+                    <strong>6. Tomar captura:</strong> Cuando termines, presiona el botón <strong>"Tomar Captura"</strong>. Te aparecerá una vista previa.<br><br>
+                    
+                    ⚠️ <strong>Asegúrate de que en la foto se vea TODO lo que escribiste</strong>, porque esa foto la verá el profesor.<br><br>
+                    
+                    Si la foto se ve bien, presiona <strong>"Se ve bien, continuar"</strong>. Si no, presiona <strong>"Volver a tomar"</strong> y repítela.
+                `;
+                document.getElementById('bloque-word').style.display = 'block';
+                document.getElementById('bloque-wordpad').style.display = 'none';
                 document.getElementById('bloque-powerpoint').style.display = 'none';
-                document.getElementById('layout-2do').style.display = 'none';
-                document.getElementById('layout-normal').style.display = 'block';
+
             } else {
-                // 4to, 5to, 6to → PowerPoint
+                instruccionesS4.classList.remove('instrucciones-3ro');
                 instruccionesS4.innerHTML = `En esta serie harás una presentación en PowerPoint. Lee con cuidado las instrucciones y revisa los ejemplos antes de comenzar.`;
                 document.getElementById('bloque-powerpoint').style.display = 'block';
                 document.getElementById('bloque-wordpad').style.display = 'none';
+                document.getElementById('bloque-word').style.display = 'none';
             }
 
             cargarPreguntasPorNumero(gradoLimpio);
@@ -1570,11 +1634,9 @@
             btn.textContent = '⏳ Abriendo PowerPoint...';
 
             try {
-                // 1) Generar token único
                 const token = crypto.randomUUID();
                 tokenCapturadorActual = token;
 
-                // 2) Guardar en tokens_capturador
                 const { error } = await _supabase
                     .from('tokens_capturador')
                     .insert([{
@@ -1589,14 +1651,11 @@
 
                 if (error) throw new Error('Error al generar el token: ' + error.message);
 
-                // 3) Mostrar contador
                 document.getElementById('contador-capturas-box').style.display = 'block';
 
-                // 4) Lanzar capturador
                 const url = `capturador://iniciar?token=${token}`;
                 window.location.href = url;
 
-                // 5) Iniciar realtime + polling
                 escucharCapturas(token);
 
                 btn.textContent = '✅ PowerPoint abierto. Toma tus fotos.';
@@ -1611,7 +1670,6 @@
         }
 
         function escucharCapturas(token) {
-            // Realtime
             if (canalRealtime) _supabase.removeChannel(canalRealtime);
 
             canalRealtime = _supabase
@@ -1627,11 +1685,9 @@
                 })
                 .subscribe();
 
-            // Polling de respaldo cada 5s
             if (intervalPolling) clearInterval(intervalPolling);
             intervalPolling = setInterval(() => actualizarContadorCapturas(token), 5000);
 
-            // Consulta inicial
             actualizarContadorCapturas(token);
         }
 
@@ -1663,12 +1719,10 @@
 
         async function continuarDesdePowerPoint() {
             if (esGrado5to) {
-                // Pasa a la Parte 2 (Gmail)
                 document.getElementById('seccion-serie4').style.display = 'none';
                 document.getElementById('seccion-serie4-gmail').style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                // Pasa a Serie Extra (4to y 6to)
                 document.getElementById('seccion-serie4').style.display = 'none';
                 document.getElementById('seccion-extra').style.display = 'block';
                 renderizarSerieExtra();
@@ -1676,17 +1730,32 @@
             }
         }
 
-        // ============ WORDPAD (2do y 3ro) ============
+        // ============ WORDPAD (2do) y WORD (3ro) ============
         async function tomarCapturaYPasarAExtra() {
-            const btn = document.getElementById('btn-finalizar-todo');
-            const mensajeEstado = document.getElementById('mensaje-estado');
-            const iframeId = (String(estudianteActual.grado).trim() === '2') ? 'iframe-wordpad' : 'iframe-wordpad-normal';
+            const gradoActual = String(estudianteActual.grado).trim();
+            
+            let iframeId, btnId, mensajeId;
+            if (gradoActual === '2') {
+                iframeId = 'iframe-wordpad';
+                btnId = 'btn-finalizar-todo';
+                mensajeId = 'mensaje-estado';
+            } else if (gradoActual === '3') {
+                iframeId = 'iframe-word-normal';
+                btnId = 'btn-finalizar-word';
+                mensajeId = 'mensaje-estado-word';
+            } else {
+                alert('Error: este grado no tiene captura configurada.');
+                return;
+            }
+
+            const btn = document.getElementById(btnId);
+            const mensajeEstado = document.getElementById(mensajeId);
             const iframe = document.getElementById(iframeId);
 
             btn.disabled = true;
             btn.textContent = '📸 Capturando pantalla...';
             mensajeEstado.style.color = '#a5b4fc';
-            mensajeEstado.textContent = 'Capturando tu trabajo en WordPad...';
+            mensajeEstado.textContent = 'Capturando tu trabajo...';
 
             try {
                 const docInterno = iframe.contentDocument || iframe.contentWindow.document;
@@ -1708,7 +1777,7 @@
                 };
 
                 const urlPreview = URL.createObjectURL(capturaTemporal);
-                document.getElementById('modal-titulo').textContent = '📸 Revisa tu captura de WordPad';
+                document.getElementById('modal-titulo').textContent = '📸 Revisa tu captura';
                 document.getElementById('img-modal-preview').src = urlPreview;
                 document.getElementById('modal-foto').setAttribute('data-tipo', 'wordpad');
                 document.getElementById('modal-foto').classList.add('activo');
@@ -1791,7 +1860,6 @@
             if (tipo === 'gmail') {
                 iniciarEsperaGmail();
             } else {
-                // WordPad confirmado → Serie Extra (solo 2do y 3ro)
                 document.getElementById('seccion-serie4').style.display = 'none';
                 document.getElementById('seccion-extra').style.display = 'block';
                 renderizarSerieExtra();
@@ -1904,7 +1972,6 @@
             try {
                 let urlPublica = null;
 
-                // Si es WordPad (2do, 3ro), subimos la captura
                 if (capturaTemporal) {
                     const timestamp = Date.now();
                     const nombreArchivo = `${estudianteActual.codigo}_${timestamp}.png`;
