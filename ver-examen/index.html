@@ -99,7 +99,140 @@
             font-size: 1.05rem;
         }
 
-        /* Capturas del PowerPoint */
+        /* ============ SERIE IV ESCRITURA (2DO) ============ */
+        .seccion-serie4 {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+        }
+        .seccion-serie4 h2 {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            margin: 0 0 4px 0;
+        }
+        .seccion-serie4 p.subtitulo {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin: 4px 0 16px 0;
+        }
+
+        .datos-alumno-box {
+            background: #eef2ff;
+            border-left: 4px solid #4f46e5;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+        .datos-alumno-box p {
+            margin: 4px 0;
+            font-size: 0.95rem;
+            color: #1f2937;
+        }
+        .datos-alumno-box strong { color: #4f46e5; }
+
+        .subtitulo-serie4 {
+            font-weight: bold;
+            color: #4f46e5;
+            font-size: 1rem;
+            margin: 16px 0 8px 0;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .fila-detalle {
+            display: grid;
+            grid-template-columns: 30px 1fr 1fr 90px;
+            gap: 8px;
+            padding: 8px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.9rem;
+            align-items: center;
+        }
+        .fila-detalle:last-child { border-bottom: none; }
+        .fila-detalle.header {
+            background: #eef2ff;
+            font-weight: bold;
+            color: #4f46e5;
+            border-radius: 6px 6px 0 0;
+            border-bottom: 2px solid #4f46e5;
+        }
+        .fila-detalle.correcto { background: #ecfdf5; }
+        .fila-detalle.incorrecto { background: #fef2f2; }
+
+        .celda-num {
+            font-weight: bold;
+            color: #6b7280;
+            text-align: center;
+        }
+        .celda-palabra {
+            font-weight: 600;
+            color: #1f2937;
+            text-transform: capitalize;
+        }
+        .celda-escrito {
+            color: #4b5563;
+            font-family: 'Courier New', monospace;
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+            min-width: 60px;
+            text-align: center;
+        }
+        .celda-errores {
+            text-align: center;
+            font-weight: bold;
+        }
+        .errores-0 { color: #059669; }
+        .errores-1 { color: #d97706; }
+        .errores-2mas { color: #dc2626; }
+
+        .resumen-serie4 {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: #1e40af;
+        }
+        .resumen-serie4 strong { color: #1e40af; }
+
+        .teclas-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .tecla-item {
+            background: #fff;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px 12px;
+            text-align: center;
+            min-width: 70px;
+        }
+        .tecla-item .tecla-letra {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #1f2937;
+        }
+        .tecla-item.correcto {
+            border-color: #10b981;
+            background: #ecfdf5;
+        }
+        .tecla-item.incorrecto {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+        .tecla-item .errores-txt {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        /* Sección de capturas PPT */
         .seccion-capturas-ppt {
             margin-top: 24px;
             padding-top: 20px;
@@ -230,7 +363,7 @@
             return;
         }
 
-        // 2) Buscar examen (resumen)
+        // 2) Buscar examen
         const { data: examen, error: errorExamen } = await _supabase
             .from('resultados_evaluacion').select('*').eq('codigo_estudiante', codigo).maybeSingle();
 
@@ -257,7 +390,7 @@
             .from('detalle_respuestas').select('*').eq('codigo_estudiante', codigo)
             .order('fecha_envio', { ascending: false }).limit(1).maybeSingle();
 
-        // 4) Cargar capturas del PowerPoint si hay token
+        // 4) Capturas del PowerPoint
         let capturasPPT = [];
         if (detalle && detalle.token_capturador) {
             const { data: caps } = await _supabase
@@ -270,9 +403,10 @@
 
         const esGradoPPT = ['4', '5', '6'].includes(String(est.grado).trim());
         const esGrado5to = String(est.grado).trim() === '5';
+        const esGrado2do = String(est.grado).trim() === '2';
         const gmailCaptura = detalle ? detalle.gmail_captura_url : null;
 
-        // Si no hay imagen del examen subida aún, mostrar aviso
+        // Si no hay imagen del examen subida aún
         if (!examen.pdf_url) {
             caja.innerHTML = `
                 <div class="cabecera">
@@ -294,7 +428,7 @@
 
         const total = (examen.punteo_total || 0) + (examen.punteo_extra || 0);
 
-        // ============ CONSTRUIR CAPTURAS PPT ============
+        // ============ CAPTURAS PPT ============
         let capturasPPTHtml = '';
         if (esGradoPPT) {
             let items = '';
@@ -352,7 +486,116 @@
             }
         }
 
-        // ============ CONSTRUIR SECCIÓN GMAIL (solo 5to) ============
+        // ============ SERIE IV ESCRITURA (2DO) ============
+        let serie4EscrituraHtml = '';
+        if (esGrado2do && detalle) {
+            const escritura = detalle.serie4_escritura_json || null;
+            const teclas = detalle.serie4_teclas_json || null;
+
+            if (escritura || teclas) {
+                // ===== Datos del alumno =====
+                let datosAlumnoHtml = '';
+                if (escritura && escritura.datos_alumno) {
+                    datosAlumnoHtml = `
+                        <div class="datos-alumno-box">
+                            <p><strong>👤 Nombre:</strong> ${escritura.datos_alumno.nombre || '-'}</p>
+                            <p><strong>🎓 Grado:</strong> ${escritura.datos_alumno.grado || '-'}</p>
+                            <p><strong>🌎 País:</strong> ${escritura.datos_alumno.pais || '-'}</p>
+                        </div>
+                    `;
+                }
+
+                // ===== Tabla de palabras =====
+                let palabrasHtml = '';
+                if (escritura && escritura.palabras && escritura.palabras.length > 0) {
+                    let filas = '';
+                    escritura.palabras.forEach((p, i) => {
+                        const errores = p.intentos_fallidos || 0;
+                        let claseErrores = 'errores-0';
+                        let textoErrores = '✓ Sin errores';
+                        if (errores === 1) {
+                            claseErrores = 'errores-1';
+                            textoErrores = '⚠️ 1 error';
+                        } else if (errores >= 2) {
+                            claseErrores = 'errores-2mas';
+                            textoErrores = `❌ ${errores} errores`;
+                        }
+                        const claseFila = errores === 0 ? 'correcto' : 'incorrecto';
+                        filas += `
+                            <div class="fila-detalle ${claseFila}">
+                                <div class="celda-num">${i + 1}</div>
+                                <div class="celda-palabra">${p.palabra}</div>
+                                <div><span class="celda-escrito">${p.escritura_final || '-'}</span></div>
+                                <div class="celda-errores ${claseErrores}">${textoErrores}</div>
+                            </div>
+                        `;
+                    });
+
+                    palabrasHtml = `
+                        <div class="subtitulo-serie4">✍️ Escritura de palabras (${escritura.punteo_escritura || 0} / 5 pts)</div>
+                        <div class="fila-detalle header">
+                            <div>#</div>
+                            <div>Palabra</div>
+                            <div>Escribió</div>
+                            <div>Errores</div>
+                        </div>
+                        ${filas}
+                    `;
+                }
+
+                // ===== Teclas =====
+                let teclasHtml = '';
+                if (teclas && teclas.teclas && teclas.teclas.length > 0) {
+                    let items = '';
+                    teclas.teclas.forEach(t => {
+                        const errores = t.intentos_fallidos || 0;
+                        const clase = errores === 0 ? 'correcto' : 'incorrecto';
+                        const textoErrores = errores === 0 ? '✓' : `❌ ${errores}`;
+                        items += `
+                            <div class="tecla-item ${clase}">
+                                <div class="tecla-letra">${t.tecla}</div>
+                                <div class="errores-txt">${textoErrores}</div>
+                            </div>
+                        `;
+                    });
+
+                    teclasHtml = `
+                        <div class="subtitulo-serie4">⌨️ Presionar teclas (${teclas.punteo_teclas || 0} / 5 pts)</div>
+                        <div class="teclas-grid">
+                            ${items}
+                        </div>
+                    `;
+                }
+
+                // ===== Resumen =====
+                let resumenHtml = '';
+                if (escritura && teclas) {
+                    const totalErrores = (escritura.palabras || []).reduce((s, p) => s + (p.intentos_fallidos || 0), 0) +
+                                         (teclas.teclas || []).reduce((s, t) => s + (t.intentos_fallidos || 0), 0);
+                    const punteoTotal = (escritura.punteo_escritura || 0) + (teclas.punteo_teclas || 0);
+                    resumenHtml = `
+                        <div class="resumen-serie4">
+                            <strong>📊 Resumen:</strong> 
+                            Punteo Serie IV: <strong>${punteoTotal.toFixed(1)} / 10</strong> · 
+                            Total de errores: <strong>${totalErrores}</strong>
+                        </div>
+                    `;
+                }
+
+                serie4EscrituraHtml = `
+                    <div class="seccion-serie4">
+                        <h2>✍️ Serie IV: Escritura y Teclas</h2>
+                        <p class="subtitulo">Detalle de las palabras escritas y las teclas presionadas por el estudiante.</p>
+                        ${datosAlumnoHtml}
+                        ${palabrasHtml}
+                        ${teclasHtml}
+                        ${resumenHtml}
+                    </div>
+                `;
+            }
+        }
+
+        // ============ GMAIL ============
         let gmailHtml = '';
         if (esGrado5to && gmailCaptura) {
             gmailHtml = `
@@ -387,6 +630,7 @@
                 </a>
             </div>
 
+            ${serie4EscrituraHtml}
             ${capturasPPTHtml}
             ${gmailHtml}
         `;
