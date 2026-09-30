@@ -258,31 +258,6 @@
             border-left: 4px solid #f59e0b;
         }
 
-        .wordpad-layout {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 1.5rem; margin-bottom: 1.5rem;
-        }
-        .caja-texto {
-            background: #fef3c7; border: 2px solid #f59e0b;
-            border-radius: 0.75rem; padding: 1.25rem; color: #78350f;
-        }
-        .caja-texto h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
-        .caja-texto .texto-copiar {
-            background: #fff; padding: 1rem; border-radius: 0.5rem;
-            font-size: 1rem; line-height: 1.6; color: #000;
-            margin-bottom: 1rem; border: 1px solid #fbbf24;
-        }
-        .caja-texto .ejemplo {
-            background: #fffbeb; padding: 0.75rem; border-radius: 0.5rem;
-            font-size: 0.9rem; line-height: 1.7; color: #78350f;
-            border-left: 3px solid #f59e0b;
-        }
-        body.tema-oscuro .caja-texto { background: #422006; border-color: #d97706; color: #fde68a; }
-        body.tema-oscuro .caja-texto h4 { color: #fbbf24; }
-        body.tema-oscuro .caja-texto .texto-copiar { background: #1f2937; color: #f3f4f6; border-color: #4b5563; }
-        body.tema-oscuro .caja-texto .ejemplo { background: #1c1917; color: #fde68a; }
-
         .modal-overlay {
             display: none; position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -462,99 +437,188 @@
         .instrucciones-3ro strong { color: #dc2626; }
         body.tema-oscuro .instrucciones-3ro { color: #e5e7eb !important; }
 
-        /* ================ PANTALLA DE EVALUACIONES DESHABILITADAS ================ */
-        .pantalla-bloqueo {
-            text-align: center;
-            padding: 2rem 1rem;
-            animation: fadeIn 0.5s ease;
+        /* ============ SERIE IV ESCRITURA (2DO) ============ */
+        .escritura-container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        body.tema-oscuro .escritura-container {
+            background: #111827;
+        }
+        .escritura-fase {
+            animation: fadeIn 0.3s ease;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .pantalla-bloqueo .icono-grande {
-            font-size: 6rem;
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
+        .form-datos-alumno {
+            max-width: 500px;
+            margin: 0 auto;
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        .pantalla-bloqueo .titulo-bloqueo {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #dc2626;
+        .form-datos-alumno .campo {
             margin-bottom: 1.5rem;
-            letter-spacing: 1px;
-        }
-        .pantalla-bloqueo .card-info {
-            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
-            border: 3px solid #4f46e5;
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 1.5rem auto;
-            max-width: 700px;
             text-align: left;
         }
-        body.tema-oscuro .pantalla-bloqueo .card-info {
+        .form-datos-alumno label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+        body.tema-oscuro .form-datos-alumno label { color: #e5e7eb; }
+        .form-datos-alumno input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: 3px solid #d1d5db;
+            border-radius: 10px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .form-datos-alumno input:focus { border-color: #4f46e5; }
+        .form-datos-alumno input::placeholder { color: #9ca3af; }
+
+        .palabra-display {
+            text-align: center;
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            border: 4px solid #4f46e5;
+            border-radius: 16px;
+            padding: 2.5rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        body.tema-oscuro .palabra-display {
             background: linear-gradient(135deg, #1e1b4b, #312e81);
             border-color: #6366f1;
         }
-        .pantalla-bloqueo .card-info h3 {
-            color: #4f46e5;
-            margin: 0 0 1rem 0;
-            font-size: 1.4rem;
-            text-align: center;
-        }
-        body.tema-oscuro .pantalla-bloqueo .card-info h3 { color: #a5b4fc; }
-        .pantalla-bloqueo .dato-alumno {
-            font-size: 1.3rem;
-            margin: 0.75rem 0;
-            color: #1f2937;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #c7d2fe;
-        }
-        body.tema-oscuro .pantalla-bloqueo .dato-alumno { color: #e5e7eb; border-bottom-color: #4c1d95; }
-        .pantalla-bloqueo .dato-alumno strong {
-            color: #4f46e5;
-            display: inline-block;
-            min-width: 140px;
-        }
-        body.tema-oscuro .pantalla-bloqueo .dato-alumno strong { color: #a5b4fc; }
-        .pantalla-bloqueo .mensaje-bloqueo {
-            background: #fef3c7;
-            border-left: 6px solid #f59e0b;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem auto;
-            max-width: 700px;
-            text-align: left;
-            color: #78350f;
-            font-size: 1.15rem;
-            line-height: 1.7;
-        }
-        body.tema-oscuro .pantalla-bloqueo .mensaje-bloqueo {
-            background: #422006;
-            color: #fde68a;
-            border-left-color: #d97706;
-        }
-        .pantalla-bloqueo .mensaje-bloqueo strong { color: #dc2626; }
-        body.tema-oscuro .pantalla-bloqueo .mensaje-bloqueo strong { color: #fbbf24; }
-        .btn-salir-bloqueo {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 12px 30px;
-            background: #6b7280;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
+        .palabra-display .etiqueta {
             font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
-        .btn-salir-bloqueo:hover { background: #4b5563; }
+        body.tema-oscuro .palabra-display .etiqueta { color: #9ca3af; }
+        .palabra-display .palabra-grande {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #4f46e5;
+            letter-spacing: 3px;
+        }
+        body.tema-oscuro .palabra-display .palabra-grande { color: #a5b4fc; }
+
+        .input-escritura-grande {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.5rem;
+            border: 3px solid #d1d5db;
+            border-radius: 12px;
+            outline: none;
+            text-align: center;
+            box-sizing: border-box;
+            font-weight: 600;
+        }
+        .input-escritura-grande:focus { border-color: #4f46e5; }
+        .input-escritura-grande.correcto { border-color: #10b981; background: #ecfdf5; }
+        .input-escritura-grande.incorrecto { border-color: #dc2626; background: #fef2f2; animation: shake 0.3s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .progreso-escritura {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            background: #f3f4f6;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        body.tema-oscuro .progreso-escritura { background: #1f2937; }
+        .progreso-escritura .contador {
+            color: #4f46e5;
+            font-size: 1.1rem;
+        }
+        .progreso-escritura .errores {
+            color: #dc2626;
+            font-size: 0.95rem;
+        }
+
+        .tecla-display {
+            text-align: center;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 4px solid #f59e0b;
+            border-radius: 16px;
+            padding: 2.5rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        body.tema-oscuro .tecla-display {
+            background: linear-gradient(135deg, #422006, #78350f);
+            border-color: #d97706;
+        }
+        .tecla-display .etiqueta {
+            font-size: 1rem;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        body.tema-oscuro .tecla-display .etiqueta { color: #fde68a; }
+        .tecla-display .tecla-grande {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #f59e0b;
+            letter-spacing: 3px;
+        }
+        body.tema-oscuro .tecla-display .tecla-grande { color: #fbbf24; }
+
+        .input-tecla {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            display: block;
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            border: 4px solid #d1d5db;
+            border-radius: 16px;
+            outline: none;
+            text-transform: uppercase;
+            box-sizing: border-box;
+        }
+        .input-tecla:focus { border-color: #f59e0b; }
+        .input-tecla.correcto { border-color: #10b981; background: #ecfdf5; }
+        .input-tecla.incorrecto { border-color: #dc2626; background: #fef2f2; animation: shake 0.3s; }
+
+        .resultado-serie4 {
+            text-align: center;
+            padding: 2rem;
+        }
+        .resultado-serie4 .icono {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+        .resultado-serie4 h2 {
+            font-size: 2rem;
+            color: #4f46e5;
+            margin-bottom: 1rem;
+        }
+        .resultado-serie4 .punteo {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #10b981;
+            margin: 1rem 0;
+        }
+        .resultado-serie4 p {
+            font-size: 1.1rem;
+            color: #4b5563;
+        }
+        body.tema-oscuro .resultado-serie4 p { color: #d1d5db; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -565,7 +629,7 @@
 
     <div class="container">
         
-        <!-- PANTALLA 1: LOGIN -->
+        <!-- LOGIN -->
         <div id="seccion-login" class="login-card-inner">
             <h2>Evaluación Virtual</h2>
             <p style="color: #6b7280; font-size: 1rem; margin-bottom: 2rem;">Ingresa tu código único de estudiante</p>
@@ -584,26 +648,25 @@
             <div id="mensaje-error"></div>
         </div>
 
-        <!-- PANTALLA DE BLOQUEO (evaluaciones deshabilitadas) -->
+        <!-- BLOQUEO -->
         <div id="seccion-bloqueo" style="display: none;">
-            <div class="pantalla-bloqueo">
-                <div class="icono-grande">🔒</div>
-                <div class="titulo-bloqueo">EVALUACIONES DESHABILITADAS</div>
-
-                <div class="card-info">
-                    <h3>👤 Tus datos</h3>
-                    <p class="dato-alumno"><strong>Nombre:</strong> <span id="bloqueo-nombre"></span></p>
-                    <p class="dato-alumno"><strong>Grado:</strong> <span id="bloqueo-grado"></span></p>
-                    <p class="dato-alumno"><strong>Código:</strong> <span id="bloqueo-codigo"></span></p>
+            <div style="text-align: center; padding: 2rem 1rem;">
+                <div style="font-size: 6rem; margin-bottom: 1rem;">🔒</div>
+                <div style="font-size: 2.2rem; font-weight: 900; color: #dc2626; margin-bottom: 1.5rem;">
+                    EVALUACIONES DESHABILITADAS
                 </div>
-
-                <div class="mensaje-bloqueo">
+                <div style="background: linear-gradient(135deg, #eef2ff, #e0e7ff); border: 3px solid #4f46e5; border-radius: 16px; padding: 2rem; margin: 1.5rem auto; max-width: 700px; text-align: left;">
+                    <h3 style="color: #4f46e5; margin: 0 0 1rem 0; font-size: 1.4rem; text-align: center;">👤 Tus datos</h3>
+                    <p style="font-size: 1.3rem; margin: 0.75rem 0;"><strong style="color: #4f46e5;">Nombre:</strong> <span id="bloqueo-nombre"></span></p>
+                    <p style="font-size: 1.3rem; margin: 0.75rem 0;"><strong style="color: #4f46e5;">Grado:</strong> <span id="bloqueo-grado"></span></p>
+                    <p style="font-size: 1.3rem; margin: 0.75rem 0;"><strong style="color: #4f46e5;">Código:</strong> <span id="bloqueo-codigo"></span></p>
+                </div>
+                <div style="background: #fef3c7; border-left: 6px solid #f59e0b; border-radius: 8px; padding: 1.5rem; margin: 1.5rem auto; max-width: 700px; text-align: left; color: #78350f; font-size: 1.15rem; line-height: 1.7;">
                     <strong>📅 Las evaluaciones todavía no están habilitadas.</strong><br><br>
                     El profesor las habilitará cuando sea el momento adecuado.<br><br>
                     Por favor, <strong>espera a que tu profesor te avise</strong> para poder comenzar.
                 </div>
-
-                <button class="btn-salir-bloqueo" onclick="window.location.reload()">
+                <button onclick="window.location.reload()" style="padding: 12px 30px; background: #6b7280; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer;">
                     🔄 Volver a intentar
                 </button>
             </div>
@@ -666,9 +729,8 @@
             <div class="serie-title" id="titulo-grado-s4">Serie IV: Práctica</div>
             <div class="instructions" id="instrucciones-s4"></div>
 
-            <!-- BLOQUE POWERPOINT (solo 4to, 5to, 6to) -->
+            <!-- POWERPOINT -->
             <div id="bloque-powerpoint" style="display: none;">
-                
                 <div class="powerpoint-box">
                     <h3>📋 Instrucciones detalladas:</h3>
                     <div style="font-size: 1.05rem; line-height: 1.7;">
@@ -732,40 +794,7 @@
                 <p id="mensaje-estado-powerpoint" style="text-align: center; font-weight: 600; margin-top: 1rem;"></p>
             </div>
 
-            <!-- BLOQUE WORDPAD (solo 2do) -->
-            <div id="bloque-wordpad" style="display: none;">
-                <div id="layout-2do" class="wordpad-layout">
-                    <div class="caja-texto">
-                        <h4>📝 Texto para copiar:</h4>
-                        <div class="texto-copiar">
-                            Mi computadora es una maquina que me ayuda a hacer la tarea de la escuela. Con ella puedo escribir, dibujar y aprender cosas nuevas cada dia.
-                        </div>
-                        <h4>✍️ Al final escribe:</h4>
-                        <div class="ejemplo">
-                            Nombre: David Alexander Lopez Reyes<br>
-                            Grado: 2do Primaria<br>
-                            Pais: Guatemala<br>
-                            Edad: 8 Años
-                        </div>
-                    </div>
-                    <div>
-                        <div class="iframe-wrapper">
-                            <iframe id="iframe-wordpad" src="./wordpad/index.html" title="Simulador de WordPad"></iframe>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="aviso-captura">
-                    ⚠️ <strong>Asegúrate de que TODO tu texto se vea en la pantalla del simulador antes de capturar.</strong>
-                </div>
-
-                <button class="btn-captura" id="btn-finalizar-todo" onclick="tomarCapturaYPasarAExtra()">
-                    📸 Tomar Captura y Continuar
-                </button>
-                <p id="mensaje-estado"></p>
-            </div>
-
-            <!-- BLOQUE WORD (solo 3ro) -->
+            <!-- WORD (3ro) -->
             <div id="bloque-word" style="display: none;">
                 <div class="iframe-wrapper iframe-wrapper-word">
                     <iframe id="iframe-word-normal" src="./word/index.html" title="Simulador de Word"></iframe>
@@ -780,9 +809,99 @@
                 </button>
                 <p id="mensaje-estado-word"></p>
             </div>
+
+            <!-- ESCRITURA (2DO) -->
+            <div id="bloque-escritura" style="display: none;">
+                <div class="escritura-container">
+                    
+                    <!-- FASE 1: Datos -->
+                    <div id="fase-datos" class="escritura-fase">
+                        <h3 style="text-align: center; color: #4f46e5; margin-bottom: 1.5rem;">
+                            ✍️ Antes de empezar, escribe tus datos:
+                        </h3>
+                        <div class="form-datos-alumno">
+                            <div class="campo">
+                                <label for="input-nombre">👤 Tu nombre completo:</label>
+                                <input type="text" id="input-nombre" maxlength="60" placeholder="Escribe tu nombre aquí...">
+                            </div>
+                            <div class="campo">
+                                <label for="input-grado">🎓 Tu grado:</label>
+                                <input type="text" id="input-grado" maxlength="30" placeholder="Ej: 2do Primaria">
+                            </div>
+                            <div class="campo">
+                                <label for="input-pais">🌎 Tu país:</label>
+                                <input type="text" id="input-pais" maxlength="30" placeholder="Ej: Guatemala">
+                            </div>
+                            <button class="btn-accion" onclick="comenzarEscritura()">
+                                Comenzar a escribir &rarr;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- FASE 2: Palabras -->
+                    <div id="fase-palabras" class="escritura-fase" style="display: none;">
+                        <div class="progreso-escritura">
+                            <span class="contador">📝 Palabra <span id="num-palabra-actual">1</span> de 10</span>
+                            <span class="errores" id="errores-palabra-actual"></span>
+                        </div>
+
+                        <div class="palabra-display">
+                            <div class="etiqueta">Escribe la palabra:</div>
+                            <div class="palabra-grande" id="palabra-mostrada">sol</div>
+                        </div>
+
+                        <input type="text" 
+                               id="input-palabra" 
+                               class="input-escritura-grande" 
+                               maxlength="20"
+                               placeholder="Escribe aquí..."
+                               autocomplete="off"
+                               autocorrect="off"
+                               autocapitalize="off"
+                               spellcheck="false"
+                               oninput="verificarPalabra()">
+
+                        <p id="feedback-palabra" style="text-align: center; font-size: 1.2rem; font-weight: 700; margin-top: 1rem; min-height: 2rem;"></p>
+                    </div>
+
+                    <!-- FASE 3: Teclas -->
+                    <div id="fase-teclas" class="escritura-fase" style="display: none;">
+                        <div class="progreso-escritura">
+                            <span class="contador">⌨️ Tecla <span id="num-tecla-actual">1</span> de 10</span>
+                            <span class="errores" id="errores-tecla-actual"></span>
+                        </div>
+
+                        <div class="tecla-display">
+                            <div class="etiqueta">Presiona la tecla:</div>
+                            <div class="tecla-grande" id="tecla-mostrada">A</div>
+                        </div>
+
+                        <input type="text" 
+                               id="input-tecla" 
+                               class="input-tecla" 
+                               maxlength="1"
+                               autocomplete="off"
+                               autocorrect="off"
+                               autocapitalize="off"
+                               spellcheck="false"
+                               oninput="verificarTecla()">
+
+                        <p id="feedback-tecla" style="text-align: center; font-size: 1.2rem; font-weight: 700; margin-top: 1rem; min-height: 2rem;"></p>
+                    </div>
+
+                    <!-- FASE 4: Resultado -->
+                    <div id="fase-resultado" class="escritura-fase resultado-serie4" style="display: none;">
+                        <div class="icono">🎉</div>
+                        <h2>¡Excelente trabajo!</h2>
+                        <div class="punteo" id="punteo-final-mostrado">0 / 10</div>
+                        <p id="resumen-final"></p>
+                        <p style="margin-top: 1.5rem;">Guardando tu puntuación y avanzando...</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- SERIE IV - PARTE 2 (Gmail) SOLO 5TO -->
+        <!-- SERIE IV - PARTE 2 (Gmail) 5TO -->
         <div id="seccion-serie4-gmail" style="display: none;">
             <div class="header-info">
                 <h2>Serie IV - Parte 2: Crear Cuentas de Google</h2>
@@ -885,6 +1004,20 @@
 
         const NOMBRE_BUCKET = 'capturas-evaluacion';
         const URL_VER_EXAMEN = 'https://jp-zeu-2007.github.io/PAGINA-EXAMENES/ver-examen/';
+
+        const PALABRAS_SERIE4_2DO = ['sol', 'pez', 'arbol', 'casa', 'gato', 'mesa', 'silla', 'libro', 'luna', 'ferrocarril'];
+        const TECLAS_SERIE4_2DO = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+        let serie4DatosAlumno = { nombre: '', grado: '', pais: '' };
+        let serie4PalabrasActuales = [];
+        let serie4TeclasActuales = [];
+        let serie4IndicePalabra = 0;
+        let serie4IndiceTecla = 0;
+        let serie4PunteoEscritura = 0;
+        let serie4PunteoTeclas = 0;
+        let serie4DetallePalabras = [];
+        let serie4DetalleTeclas = [];
+        let serie4PalabraBloqueada = false;
 
         let estudianteActual = null;
         let preguntasFVMezcladas = [];
@@ -1176,12 +1309,10 @@
                 return;
             }
 
-            // PRIMERO: Verificar si ya hizo el examen
             const { data: evaluacionPrevia } = await _supabase
                 .from('resultados_evaluacion').select('*').eq('codigo_estudiante', codigoInput).maybeSingle();
 
             if (evaluacionPrevia) {
-                // Ya hizo el examen → verificar si está calificado
                 const yaCalificado = evaluacionPrevia.revisado_por_profesor === true;
                 const tienePDF = !!evaluacionPrevia.pdf_url;
 
@@ -1202,7 +1333,6 @@
                 return;
             }
 
-            // SEGUNDO: Verificar si las evaluaciones están habilitadas
             const { data: configData } = await _supabase
                 .from('configuracion')
                 .select('valor')
@@ -1212,7 +1342,6 @@
             const habilitadas = configData && configData.valor === 'true';
 
             if (!habilitadas) {
-                // Mostrar pantalla de bloqueo
                 document.getElementById('seccion-login').style.display = 'none';
                 document.getElementById('seccion-bloqueo').style.display = 'block';
                 document.getElementById('bloqueo-nombre').textContent = `${estudianteData.nombres} ${estudianteData.apellidos}`;
@@ -1222,7 +1351,6 @@
                 return;
             }
 
-            // TERCERO: Todo OK → permitir comenzar
             btnValidar.textContent = 'Comenzar Evaluación';
             btnValidar.disabled = false;
             btnValidar.setAttribute('onclick', 'iniciarEvaluacion()');
@@ -1336,8 +1464,8 @@
             const instruccionesS4 = document.getElementById('instrucciones-s4');
 
             if (gradoLimpio === '2') {
-                instruccionesS4.innerHTML = `En la parte izquierda de la página verás un cuadro con un pequeño texto que debes escribir en el simulador de WordPad. Copia el texto tal como aparece. Al final, escribe tu nombre completo, grado, país y edad. Abajo verás un ejemplo.`;
-                document.getElementById('bloque-wordpad').style.display = 'block';
+                instruccionesS4.innerHTML = `En esta serie vas a escribir palabras y presionar teclas. Lee con cuidado las instrucciones en pantalla.`;
+                document.getElementById('bloque-escritura').style.display = 'block';
                 document.getElementById('bloque-word').style.display = 'none';
                 document.getElementById('bloque-powerpoint').style.display = 'none';
 
@@ -1363,14 +1491,14 @@
                     Si la foto se ve bien, presiona <strong>"Se ve bien, continuar"</strong>. Si no, presiona <strong>"Volver a tomar"</strong> y repítela.
                 `;
                 document.getElementById('bloque-word').style.display = 'block';
-                document.getElementById('bloque-wordpad').style.display = 'none';
+                document.getElementById('bloque-escritura').style.display = 'none';
                 document.getElementById('bloque-powerpoint').style.display = 'none';
 
             } else {
                 instruccionesS4.classList.remove('instrucciones-3ro');
                 instruccionesS4.innerHTML = `En esta serie harás una presentación en PowerPoint. Lee con cuidado las instrucciones y revisa los ejemplos antes de comenzar.`;
                 document.getElementById('bloque-powerpoint').style.display = 'block';
-                document.getElementById('bloque-wordpad').style.display = 'none';
+                document.getElementById('bloque-escritura').style.display = 'none';
                 document.getElementById('bloque-word').style.display = 'none';
             }
 
@@ -1627,7 +1755,244 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ============ SERIE IV POWERPOINT: CAPTURADOR ============
+        // ============ SERIE IV ESCRITURA (2DO) ============
+        function comenzarEscritura() {
+            const nombre = document.getElementById('input-nombre').value.trim();
+            const grado = document.getElementById('input-grado').value.trim();
+            const pais = document.getElementById('input-pais').value.trim();
+
+            if (nombre.length < 3) {
+                alert('Por favor, escribe tu nombre completo (mínimo 3 letras).');
+                document.getElementById('input-nombre').focus();
+                return;
+            }
+            if (grado.length < 2) {
+                alert('Por favor, escribe tu grado (por ejemplo: 2do Primaria).');
+                document.getElementById('input-grado').focus();
+                return;
+            }
+            if (pais.length < 2) {
+                alert('Por favor, escribe tu país (por ejemplo: Guatemala).');
+                document.getElementById('input-pais').focus();
+                return;
+            }
+
+            serie4DatosAlumno = { nombre, grado, pais };
+            serie4PalabrasActuales = barajarArreglo([...PALABRAS_SERIE4_2DO]);
+            serie4TeclasActuales = barajarArreglo([...TECLAS_SERIE4_2DO]).slice(0, 10);
+            serie4IndicePalabra = 0;
+            serie4IndiceTecla = 0;
+            serie4PunteoEscritura = 0;
+            serie4PunteoTeclas = 0;
+            serie4DetallePalabras = [];
+            serie4DetalleTeclas = [];
+            serie4PalabraBloqueada = false;
+
+            document.getElementById('fase-datos').style.display = 'none';
+            document.getElementById('fase-palabras').style.display = 'block';
+
+            mostrarPalabraActual();
+        }
+
+        function mostrarPalabraActual() {
+            if (serie4IndicePalabra >= serie4PalabrasActuales.length) {
+                document.getElementById('fase-palabras').style.display = 'none';
+                document.getElementById('fase-teclas').style.display = 'block';
+                mostrarTeclaActual();
+                return;
+            }
+
+            const palabra = serie4PalabrasActuales[serie4IndicePalabra];
+            document.getElementById('palabra-mostrada').textContent = palabra.charAt(0).toUpperCase() + palabra.slice(1);
+            document.getElementById('num-palabra-actual').textContent = serie4IndicePalabra + 1;
+            document.getElementById('errores-palabra-actual').textContent = '';
+
+            serie4PalabraBloqueada = false;
+
+            const input = document.getElementById('input-palabra');
+            input.value = '';
+            input.classList.remove('correcto', 'incorrecto');
+            input.disabled = false;
+            input.focus();
+            document.getElementById('feedback-palabra').textContent = '';
+        }
+
+        function verificarPalabra() {
+            if (serie4PalabraBloqueada) return;
+
+            const palabra = serie4PalabrasActuales[serie4IndicePalabra];
+            const input = document.getElementById('input-palabra');
+            const valorEscrito = input.value;
+            const feedback = document.getElementById('feedback-palabra');
+            const erroresSpan = document.getElementById('errores-palabra-actual');
+
+            if (valorEscrito.length === 0) {
+                input.classList.remove('correcto', 'incorrecto');
+                feedback.textContent = '';
+                return;
+            }
+
+            let detalleActual = serie4DetallePalabras.find(d => d.palabra === palabra);
+            if (!detalleActual) {
+                detalleActual = {
+                    palabra: palabra,
+                    intentos: 0,
+                    intentos_fallidos: 0,
+                    escritura_final: '',
+                    errores: []
+                };
+                serie4DetallePalabras.push(detalleActual);
+            }
+
+            // Solo comparar cuando el largo coincida con la palabra correcta
+            if (valorEscrito.length === palabra.length) {
+                if (valorEscrito.toLowerCase() === palabra.toLowerCase()) {
+                    // ✅ ¡Correcto!
+                    input.classList.remove('incorrecto');
+                    input.classList.add('correcto');
+                    feedback.textContent = '✅ ¡Correcto!';
+                    feedback.style.color = '#10b981';
+                    detalleActual.escritura_final = valorEscrito;
+                    detalleActual.intentos += 1;
+
+                    serie4PunteoEscritura += 0.5;
+                    serie4PalabraBloqueada = true;
+                    input.disabled = true;
+
+                    setTimeout(() => {
+                        serie4IndicePalabra++;
+                        mostrarPalabraActual();
+                    }, 900);
+
+                } else {
+                    // ❌ Incorrecto
+                    input.classList.remove('correcto');
+                    input.classList.add('incorrecto');
+                    feedback.textContent = '❌ Inténtalo de nuevo';
+                    feedback.style.color = '#dc2626';
+
+                    detalleActual.intentos += 1;
+                    detalleActual.intentos_fallidos += 1;
+                    detalleActual.errores.push(valorEscrito);
+                    erroresSpan.textContent = `Errores: ${detalleActual.intentos_fallidos}`;
+
+                    // Limpiar el input después de 600ms
+                    setTimeout(() => {
+                        input.classList.remove('incorrecto');
+                        input.value = '';
+                        input.focus();
+                    }, 600);
+                }
+            }
+            // Si el largo no coincide todavía, no pasa nada. Deja seguir escribiendo.
+        }
+
+        function mostrarTeclaActual() {
+            if (serie4IndiceTecla >= serie4TeclasActuales.length) {
+                finalizarSerie4Escritura();
+                return;
+            }
+
+            const tecla = serie4TeclasActuales[serie4IndiceTecla];
+            document.getElementById('tecla-mostrada').textContent = tecla;
+            document.getElementById('num-tecla-actual').textContent = serie4IndiceTecla + 1;
+            document.getElementById('errores-tecla-actual').textContent = '';
+
+            const input = document.getElementById('input-tecla');
+            input.value = '';
+            input.classList.remove('correcto', 'incorrecto');
+            input.disabled = false;
+            input.focus();
+            document.getElementById('feedback-tecla').textContent = '';
+        }
+
+        function verificarTecla() {
+            const tecla = serie4TeclasActuales[serie4IndiceTecla];
+            const input = document.getElementById('input-tecla');
+            const valorEscrito = input.value.trim().toUpperCase();
+            const feedback = document.getElementById('feedback-tecla');
+            const erroresSpan = document.getElementById('errores-tecla-actual');
+
+            if (valorEscrito.length === 0) return;
+
+            let detalleActual = serie4DetalleTeclas.find(d => d.tecla === tecla);
+            if (!detalleActual) {
+                detalleActual = {
+                    tecla: tecla,
+                    intentos: 0,
+                    intentos_fallidos: 0,
+                    errores: []
+                };
+                serie4DetalleTeclas.push(detalleActual);
+            }
+
+            if (valorEscrito === tecla) {
+                input.classList.remove('incorrecto');
+                input.classList.add('correcto');
+                feedback.textContent = '✅ ¡Bien!';
+                feedback.style.color = '#10b981';
+                detalleActual.intentos += 1;
+                input.disabled = true;
+
+                serie4PunteoTeclas += 0.5;
+
+                setTimeout(() => {
+                    serie4IndiceTecla++;
+                    mostrarTeclaActual();
+                }, 600);
+
+            } else {
+                input.classList.remove('correcto');
+                input.classList.add('incorrecto');
+                feedback.textContent = '❌ Presiona la tecla correcta';
+                feedback.style.color = '#dc2626';
+
+                detalleActual.intentos += 1;
+                detalleActual.intentos_fallidos += 1;
+                detalleActual.errores.push(valorEscrito);
+                erroresSpan.textContent = `Errores: ${detalleActual.intentos_fallidos}`;
+
+                setTimeout(() => {
+                    input.classList.remove('incorrecto');
+                    input.value = '';
+                    input.focus();
+                }, 600);
+            }
+        }
+
+        async function finalizarSerie4Escritura() {
+            document.getElementById('fase-teclas').style.display = 'none';
+            document.getElementById('fase-resultado').style.display = 'block';
+
+            const punteoTotal = serie4PunteoEscritura + serie4PunteoTeclas;
+            document.getElementById('punteo-final-mostrado').textContent = `${punteoTotal.toFixed(1)} / 10`;
+
+            const totalErrores = serie4DetallePalabras.reduce((s, d) => s + d.intentos_fallidos, 0) +
+                                 serie4DetalleTeclas.reduce((s, d) => s + d.intentos_fallidos, 0);
+            document.getElementById('resumen-final').textContent =
+                `Escribiste las 10 palabras y presionaste las 10 teclas. Total de errores: ${totalErrores}`;
+
+            examenCompleto.serie4 = {
+                tipo: 'escritura_teclas',
+                datos_alumno: serie4DatosAlumno,
+                palabras: serie4DetallePalabras,
+                teclas: serie4DetalleTeclas,
+                punteo_escritura: serie4PunteoEscritura,
+                punteo_teclas: serie4PunteoTeclas,
+                punteo_total: punteoTotal
+            };
+
+            window.punteoSerie4Guardado = punteoTotal;
+
+            setTimeout(() => {
+                document.getElementById('seccion-serie4').style.display = 'none';
+                document.getElementById('seccion-extra').style.display = 'block';
+                renderizarSerieExtra();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2200);
+        }
+
+        // ============ POWERPOINT ============
         async function iniciarCapturadorPowerPoint() {
             const btn = document.getElementById('btn-iniciar-capturador');
             btn.disabled = true;
@@ -1730,16 +2095,12 @@
             }
         }
 
-        // ============ WORDPAD (2do) y WORD (3ro) ============
+        // ============ WORD (3ro) ============
         async function tomarCapturaYPasarAExtra() {
             const gradoActual = String(estudianteActual.grado).trim();
             
             let iframeId, btnId, mensajeId;
-            if (gradoActual === '2') {
-                iframeId = 'iframe-wordpad';
-                btnId = 'btn-finalizar-todo';
-                mensajeId = 'mensaje-estado';
-            } else if (gradoActual === '3') {
+            if (gradoActual === '3') {
                 iframeId = 'iframe-word-normal';
                 btnId = 'btn-finalizar-word';
                 mensajeId = 'mensaje-estado-word';
@@ -1793,7 +2154,7 @@
             }
         }
 
-        // ============ GMAIL (5to - Parte 2) ============
+        // ============ GMAIL (5to) ============
         async function tomarCapturaGmail() {
             const btn = document.getElementById('btn-capturar-gmail');
             const iframe = document.getElementById('iframe-gmail');
@@ -1991,7 +2352,20 @@
                 }
 
                 const punteoSerie3 = examenCompleto.serie3.filter(c => c.correcto).length;
-                const punteoSerie4 = 0;
+                const gradoActual = String(estudianteActual.grado).trim();
+                const esGrado2do = gradoActual === '2';
+
+                let punteoSerie4 = 0;
+                let serie4Json = null;
+
+                if (esGrado2do && window.punteoSerie4Guardado !== undefined) {
+                    punteoSerie4 = window.punteoSerie4Guardado;
+                    serie4Json = examenCompleto.serie4;
+                } else if (urlPublica) {
+                    serie4Json = { url_captura: urlPublica, texto_escrito: examenCompleto.serie4?.texto_escrito || '' };
+                } else if (tokenCapturadorActual) {
+                    serie4Json = { tipo: 'powerpoint', token: tokenCapturadorActual };
+                }
 
                 let aciertosExtra = 0;
                 examenCompleto.extra = preguntasExtra.map(p => {
@@ -2029,28 +2403,38 @@
 
                 if (insertError) throw new Error('Error en resultados: ' + insertError.message);
 
+                const insertData = {
+                    codigo_estudiante: estudianteActual.codigo,
+                    grado: String(estudianteActual.grado),
+                    serie1_json: examenCompleto.serie1,
+                    serie2_json: examenCompleto.serie2,
+                    serie3_json: examenCompleto.serie3,
+                    serie4_json: serie4Json,
+                    extra_json: examenCompleto.extra,
+                    gmail_captura_url: capturaGmailURL,
+                    token_capturador: tokenCapturadorActual,
+                    punteo_s1: punteoSerie1,
+                    punteo_s2: punteoSerie2,
+                    punteo_s3: punteoSerie3,
+                    punteo_s4: punteoSerie4,
+                    punteo_extra: punteoExtra,
+                    punteo_total: punteoTotal,
+                    estado: 'Completado'
+                };
+
+                if (esGrado2do) {
+                    insertData.serie4_escritura_json = {
+                        datos_alumno: serie4DatosAlumno,
+                        palabras: serie4DetallePalabras
+                    };
+                    insertData.serie4_teclas_json = {
+                        teclas: serie4DetalleTeclas
+                    };
+                }
+
                 const { error: detalleError } = await _supabase
                     .from('detalle_respuestas')
-                    .insert([{
-                        codigo_estudiante: estudianteActual.codigo,
-                        grado: String(estudianteActual.grado),
-                        serie1_json: examenCompleto.serie1,
-                        serie2_json: examenCompleto.serie2,
-                        serie3_json: examenCompleto.serie3,
-                        serie4_json: urlPublica 
-                            ? { url_captura: urlPublica, texto_escrito: examenCompleto.serie4?.texto_escrito || '' }
-                            : { tipo: 'powerpoint', token: tokenCapturadorActual },
-                        extra_json: examenCompleto.extra,
-                        gmail_captura_url: capturaGmailURL,
-                        token_capturador: tokenCapturadorActual,
-                        punteo_s1: punteoSerie1,
-                        punteo_s2: punteoSerie2,
-                        punteo_s3: punteoSerie3,
-                        punteo_s4: punteoSerie4,
-                        punteo_extra: punteoExtra,
-                        punteo_total: punteoTotal,
-                        estado: 'Completado'
-                    }]);
+                    .insert([insertData]);
 
                 if (detalleError) throw new Error('Error en detalle: ' + detalleError.message);
 
@@ -2062,7 +2446,7 @@
                     `- Serie I: ${punteoSerie1}/10\n` +
                     `- Serie II: ${punteoSerie2}/10\n` +
                     `- Serie III: ${punteoSerie3}/10\n` +
-                    `- Serie IV: Pendiente de revisión\n` +
+                    `- Serie IV: ${punteoSerie4}/10\n` +
                     `- Serie Extra: +${punteoExtra}/5\n\n` +
                     `Punteo automático: ${punteoTotal}/30`
                 );
