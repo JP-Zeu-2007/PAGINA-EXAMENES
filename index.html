@@ -437,47 +437,30 @@
         .instrucciones-3ro strong { color: #dc2626; }
         body.tema-oscuro .instrucciones-3ro { color: #e5e7eb !important; }
 
-        /* ============ SERIE IV ESCRITURA (2DO) ============ */
+        /* SERIE IV ESCRITURA (2DO) */
         .escritura-container {
             background: #fff;
             border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        body.tema-oscuro .escritura-container {
-            background: #111827;
-        }
-        .escritura-fase {
-            animation: fadeIn 0.3s ease;
-        }
+        body.tema-oscuro .escritura-container { background: #111827; }
+        .escritura-fase { animation: fadeIn 0.3s ease; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .form-datos-alumno {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .form-datos-alumno .campo {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
+        .form-datos-alumno { max-width: 500px; margin: 0 auto; }
+        .form-datos-alumno .campo { margin-bottom: 1.5rem; text-align: left; }
         .form-datos-alumno label {
-            display: block;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #374151;
+            display: block; font-size: 1.1rem; font-weight: 600;
+            margin-bottom: 0.5rem; color: #374151;
         }
         body.tema-oscuro .form-datos-alumno label { color: #e5e7eb; }
         .form-datos-alumno input {
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.2rem;
-            border: 3px solid #d1d5db;
-            border-radius: 10px;
-            outline: none;
-            box-sizing: border-box;
+            width: 100%; padding: 1rem; font-size: 1.2rem;
+            border: 3px solid #d1d5db; border-radius: 10px;
+            outline: none; box-sizing: border-box;
             transition: border-color 0.2s;
         }
         .form-datos-alumno input:focus { border-color: #4f46e5; }
@@ -496,30 +479,21 @@
             border-color: #6366f1;
         }
         .palabra-display .etiqueta {
-            font-size: 1rem;
-            color: #6b7280;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-size: 1rem; color: #6b7280;
+            margin-bottom: 0.5rem; font-weight: 600;
         }
         body.tema-oscuro .palabra-display .etiqueta { color: #9ca3af; }
         .palabra-display .palabra-grande {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #4f46e5;
-            letter-spacing: 3px;
+            font-size: 3.5rem; font-weight: 900;
+            color: #4f46e5; letter-spacing: 3px;
         }
         body.tema-oscuro .palabra-display .palabra-grande { color: #a5b4fc; }
 
         .input-escritura-grande {
-            width: 100%;
-            padding: 1.2rem;
-            font-size: 1.5rem;
-            border: 3px solid #d1d5db;
-            border-radius: 12px;
-            outline: none;
-            text-align: center;
-            box-sizing: border-box;
-            font-weight: 600;
+            width: 100%; padding: 1.2rem; font-size: 1.5rem;
+            border: 3px solid #d1d5db; border-radius: 12px;
+            outline: none; text-align: center;
+            box-sizing: border-box; font-weight: 600;
         }
         .input-escritura-grande:focus { border-color: #4f46e5; }
         .input-escritura-grande.correcto { border-color: #10b981; background: #ecfdf5; }
@@ -531,24 +505,14 @@
         }
 
         .progreso-escritura {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0.75rem 1rem;
-            background: #f3f4f6;
-            border-radius: 8px;
-            font-weight: 600;
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 1rem;
+            padding: 0.75rem 1rem; background: #f3f4f6;
+            border-radius: 8px; font-weight: 600;
         }
         body.tema-oscuro .progreso-escritura { background: #1f2937; }
-        .progreso-escritura .contador {
-            color: #4f46e5;
-            font-size: 1.1rem;
-        }
-        .progreso-escritura .errores {
-            color: #dc2626;
-            font-size: 0.95rem;
-        }
+        .progreso-escritura .contador { color: #4f46e5; font-size: 1.1rem; }
+        .progreso-escritura .errores { color: #dc2626; font-size: 0.95rem; }
 
         .tecla-display {
             text-align: center;
@@ -563,61 +527,34 @@
             border-color: #d97706;
         }
         .tecla-display .etiqueta {
-            font-size: 1rem;
-            color: #92400e;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-size: 1rem; color: #92400e;
+            margin-bottom: 0.5rem; font-weight: 600;
         }
         body.tema-oscuro .tecla-display .etiqueta { color: #fde68a; }
         .tecla-display .tecla-grande {
-            font-size: 5rem;
-            font-weight: 900;
-            color: #f59e0b;
-            letter-spacing: 3px;
+            font-size: 5rem; font-weight: 900;
+            color: #f59e0b; letter-spacing: 3px;
         }
         body.tema-oscuro .tecla-display .tecla-grande { color: #fbbf24; }
 
         .input-tecla {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto;
-            display: block;
-            font-size: 3rem;
-            font-weight: 900;
-            text-align: center;
-            border: 4px solid #d1d5db;
-            border-radius: 16px;
-            outline: none;
-            text-transform: uppercase;
-            box-sizing: border-box;
+            width: 120px; height: 120px; margin: 0 auto; display: block;
+            font-size: 3rem; font-weight: 900; text-align: center;
+            border: 4px solid #d1d5db; border-radius: 16px;
+            outline: none; text-transform: uppercase; box-sizing: border-box;
         }
         .input-tecla:focus { border-color: #f59e0b; }
         .input-tecla.correcto { border-color: #10b981; background: #ecfdf5; }
         .input-tecla.incorrecto { border-color: #dc2626; background: #fef2f2; animation: shake 0.3s; }
 
-        .resultado-serie4 {
-            text-align: center;
-            padding: 2rem;
-        }
-        .resultado-serie4 .icono {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-        .resultado-serie4 h2 {
-            font-size: 2rem;
-            color: #4f46e5;
-            margin-bottom: 1rem;
-        }
+        .resultado-serie4 { text-align: center; padding: 2rem; }
+        .resultado-serie4 .icono { font-size: 5rem; margin-bottom: 1rem; }
+        .resultado-serie4 h2 { font-size: 2rem; color: #4f46e5; margin-bottom: 1rem; }
         .resultado-serie4 .punteo {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #10b981;
-            margin: 1rem 0;
+            font-size: 3rem; font-weight: 900;
+            color: #10b981; margin: 1rem 0;
         }
-        .resultado-serie4 p {
-            font-size: 1.1rem;
-            color: #4b5563;
-        }
+        .resultado-serie4 p { font-size: 1.1rem; color: #4b5563; }
         body.tema-oscuro .resultado-serie4 p { color: #d1d5db; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -901,7 +838,7 @@
             </div>
         </div>
 
-        <!-- SERIE IV - PARTE 2 (Gmail) 5TO -->
+        <!-- SERIE IV - PARTE 2 (Gmail) SOLO 5TO -->
         <div id="seccion-serie4-gmail" style="display: none;">
             <div class="header-info">
                 <h2>Serie IV - Parte 2: Crear Cuentas de Google</h2>
@@ -911,9 +848,9 @@
 
             <div class="powerpoint-box">
                 <div style="font-size: 1.15rem; line-height: 1.7;">
-                    <strong>📧 Instrucciones del simulador:</strong><br><br>
+                    <strong>📧 Instrucciones:</strong><br><br>
                     Usa el simulador de Gmail que aparece abajo para crear <strong>5 cuentas de Google diferentes</strong>, tal como practicaste en clase.<br><br>
-                    Cuando termines, presiona el botón verde para <strong>tomar una captura</strong> y revisa que se vean todas tus cuentas creadas. Si todo está bien, confirma.
+                    Cuando termines, presiona el botón verde para <strong>tomar una captura</strong> y revisa que se vean todas tus cuentas creadas. Si todo está bien, confirma para continuar a la Serie Extra.
                 </div>
             </div>
 
@@ -925,25 +862,7 @@
                 📸 Tomar Captura de mi Práctica
             </button>
 
-            <div class="powerpoint-box" style="margin-top: 2rem;">
-                <div style="font-size: 1.15rem; line-height: 1.7;">
-                    <strong>✉️ Ahora envía un correo real:</strong><br><br>
-                    Entra a tu <strong>Gmail real</strong> y envía un correo a:<br>
-                    <strong style="color: #ea4335; font-size: 1.2rem;">pinedaj5448@gmail.com</strong><br><br>
-                    El correo debe contener:<br>
-                    ✅ Un saludo cordial<br>
-                    ✅ Una lista de <strong>10 animales diferentes</strong><br>
-                    ✅ Tu nombre completo al final<br><br>
-                    <strong style="color: #dc2626;">⚠️ MUCHO CUIDADO con lo que escribes.</strong><br>
-                    El profesor revisará este correo cuando entregues el examen.
-                </div>
-
-                <a href="https://mail.google.com" target="_blank" class="btn-accion" style="background: linear-gradient(135deg, #ea4335, #c5221f); margin-top: 1rem;">
-                    📧 Abrir Gmail en una nueva pestaña
-                </a>
-            </div>
-
-            <button class="btn-captura" id="btn-continuar-gmail" onclick="continuarASerieExtra()" disabled style="background: #9ca3af;">
+            <button class="btn-captura" id="btn-continuar-gmail" onclick="continuarASerieExtra()" disabled style="background: #9ca3af; margin-top: 1rem;">
                 Continuar a Serie Extra &rarr;
             </button>
             <p class="aviso-espera" id="aviso-espera-txt" style="text-align:center; font-size:0.9rem; color:#6b7280; font-style:italic; margin-top:0.5rem;">
@@ -1844,10 +1763,8 @@
                 serie4DetallePalabras.push(detalleActual);
             }
 
-            // Solo comparar cuando el largo coincida con la palabra correcta
             if (valorEscrito.length === palabra.length) {
                 if (valorEscrito.toLowerCase() === palabra.toLowerCase()) {
-                    // ✅ ¡Correcto!
                     input.classList.remove('incorrecto');
                     input.classList.add('correcto');
                     feedback.textContent = '✅ ¡Correcto!';
@@ -1865,7 +1782,6 @@
                     }, 900);
 
                 } else {
-                    // ❌ Incorrecto
                     input.classList.remove('correcto');
                     input.classList.add('incorrecto');
                     feedback.textContent = '❌ Inténtalo de nuevo';
@@ -1876,7 +1792,6 @@
                     detalleActual.errores.push(valorEscrito);
                     erroresSpan.textContent = `Errores: ${detalleActual.intentos_fallidos}`;
 
-                    // Limpiar el input después de 600ms
                     setTimeout(() => {
                         input.classList.remove('incorrecto');
                         input.value = '';
@@ -1884,7 +1799,6 @@
                     }, 600);
                 }
             }
-            // Si el largo no coincide todavía, no pasa nada. Deja seguir escribiendo.
         }
 
         function mostrarTeclaActual() {
